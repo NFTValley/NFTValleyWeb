@@ -164,9 +164,25 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 40p
 .add-layer-btn:hover{border-color:var(--p);color:var(--p)}
 
 .main-area{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.main-toolbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.canvas-area{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px}
-#preview-canvas{border-radius:10px;background:repeating-conic-gradient(#44444420 0% 25%,transparent 0% 50%) 0 0/16px 16px;display:block;max-width:300px;max-height:300px}
+.main-toolbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.canvas-area{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:16px;gap:16px}
+.canvas-pane{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;min-width:0}
+.canvas-pane-label{position:absolute;top:10px;left:12px;font-size:11px;font-weight:600;color:var(--t3);background:var(--bg2);padding:3px 8px;border-radius:5px;border:1px solid var(--border)}
+#preview-canvas{border-radius:10px;background:repeating-conic-gradient(#44444420 0% 25%,transparent 0% 50%) 0 0/16px 16px;display:block;max-width:90%;max-height:90%}
+#trait-preview-img{border-radius:10px;display:none;max-width:90%;max-height:90%;object-fit:contain;background:repeating-conic-gradient(#44444420 0% 25%,transparent 0% 50%) 0 0/16px 16px}
+.view-mode-bar{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:3px}
+.vm-btn{padding:5px 11px;border-radius:6px;font-size:11px;font-weight:500;background:none;border:none;color:var(--t2);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:.15s}
+.vm-btn.active{background:var(--p);color:#fff}
+.vm-btn:hover:not(.active){background:var(--bg4);color:var(--t1)}
+.trait-click-hint{font-size:11px;color:var(--t3);font-style:italic}
+/* Sidebar independent scroll */
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.spanel{display:none;padding:12px;flex:1;overflow-y:auto;overflow-x:hidden}
+.spanel.active{display:flex;flex-direction:column}
+/* trait row clickable highlight */
+.trait-row{cursor:pointer;transition:background .12s,border-color .12s}
+.trait-row:hover{background:var(--bg3);border-color:var(--border2)}
+.trait-row.selected{border-color:var(--p);background:rgba(127,119,221,.12)}
 .gen-method-bar{background:var(--bg2);border-top:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap}
 .gm-btn{padding:6px 13px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border2);background:none;color:var(--t2);transition:.15s;cursor:pointer}
 .gm-btn.active{background:var(--p);border-color:var(--p);color:#fff}
@@ -394,20 +410,30 @@ input[type=file]{display:none}
   </div>
 
   <div class="studio-wrap">
+
+    <!-- ===== SIDEBAR ===== -->
     <div class="sidebar">
       <div class="stabs">
         <button class="stab active" onclick="switchStab('sl','stab-layers')">Layers</button>
         <button class="stab" onclick="switchStab('ss','stab-settings')">Settings</button>
         <button class="stab" onclick="switchStab('sr','stab-rules')">Rules</button>
       </div>
-      <div id="sl" class="spanel active">
-        <div id="layerList"></div>
-        <button class="add-layer-btn" onclick="openModal('addlayer-modal')"><i class="ti ti-plus"></i> Add trait / layer</button>
-        <div style="font-size:11px;color:var(--t3);margin-top:8px;line-height:1.5;padding:0 2px">Traits are: backgrounds, bodies, hats, accessories, etc. Use ↑↓ to reorder layers.</div>
+
+      <!-- LAYERS panel — scrolls independently -->
+      <div id="sl" class="spanel active" style="padding:10px;gap:0">
+        <div id="layerList" style="flex:1;min-height:0"></div>
+        <div style="flex-shrink:0;padding-top:8px;border-top:1px solid var(--border);margin-top:8px">
+          <button class="add-layer-btn" onclick="openModal('addlayer-modal')"><i class="ti ti-plus"></i> Add trait / layer</button>
+          <div style="font-size:10px;color:var(--t3);margin-top:6px;line-height:1.5;text-align:center">
+            <i class="ti ti-info-circle" style="font-size:11px"></i> Click any trait image to preview it on the right
+          </div>
+        </div>
       </div>
+
+      <!-- SETTINGS panel -->
       <div id="ss" class="spanel">
         <div class="field"><label>Collection name</label><input id="s-name" value="My Collection" /></div>
-        <div class="field"><label>Collection size (max 100,000)</label><input id="s-size" type="number" value="100" min="1" max="100000" /><div class="hint">Generation runs 100% on your device</div></div>
+        <div class="field"><label>Collection size (max 100,000)</label><input id="s-size" type="number" value="100" min="1" max="100000" oninput="renderLayers()" /><div class="hint">Generation runs 100% on your device. Changing this updates trait estimates live.</div></div>
         <div class="field"><label>Canvas width (px)</label><input id="s-w" type="number" value="512" min="64" max="2048" step="64" /></div>
         <div class="field"><label>Canvas height (px)</label><input id="s-h" type="number" value="512" min="64" max="2048" step="64" /></div>
         <div class="field"><label>Image format</label><select id="s-fmt"><option value="png">PNG (lossless)</option><option value="jpeg">JPG (smaller files)</option></select></div>
@@ -416,6 +442,8 @@ input[type=file]{display:none}
         <div class="field"><label>External URL</label><input id="s-url" placeholder="https://yourproject.com" /></div>
         <div class="field"><label>Prevent duplicates</label><select id="s-dupes"><option value="1">Yes — guarantee unique combinations</option><option value="0">No — allow duplicates</option></select></div>
       </div>
+
+      <!-- RULES panel -->
       <div id="sr" class="spanel">
         <div style="font-size:12px;color:var(--t2);line-height:1.55;margin-bottom:14px">Rules control trait compatibility. Example: if Hat = Crown, then Body must = Royal Robe.</div>
         <button class="btn btn-sm" style="width:100%" onclick="alert('Visual rule builder — coming in v2!')"><i class="ti ti-plus"></i> Add compatibility rule</button>
@@ -423,29 +451,68 @@ input[type=file]{display:none}
       </div>
     </div>
 
+    <!-- ===== MAIN AREA ===== -->
     <div class="main-area">
+
+      <!-- Toolbar with view mode toggle -->
       <div class="main-toolbar">
-        <span style="font-size:13px;color:var(--t2);font-weight:500">Live Preview</span>
+        <span style="font-size:13px;color:var(--t2);font-weight:500">Preview</span>
         <button class="btn btn-sm" onclick="randomPreview()"><i class="ti ti-refresh"></i> Shuffle</button>
+
+        <!-- View mode toggle -->
+        <div class="view-mode-bar">
+          <button class="vm-btn active" id="vm1" onclick="setViewMode(1)" title="Combined final image">
+            <i class="ti ti-photo"></i> Combined
+          </button>
+          <button class="vm-btn" id="vm2" onclick="setViewMode(2)" title="Single trait view">
+            <i class="ti ti-layers-subtract"></i> Trait
+          </button>
+          <button class="vm-btn" id="vm3" onclick="setViewMode(3)" title="Dual window">
+            <i class="ti ti-layout-columns"></i> Dual
+          </button>
+        </div>
+
+        <span id="view-mode-hint" class="trait-click-hint">Shuffle to see combined preview</span>
+
         <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-          <span id="preview-label" style="font-size:11px;color:var(--t3)">No traits loaded</span>
+          <span id="preview-label" style="font-size:11px;color:var(--t3);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
           <button class="btn btn-sm btn-primary" id="dl-btn" style="display:none" onclick="openModal('download-modal')"><i class="ti ti-download"></i> Download</button>
         </div>
       </div>
-      <div class="canvas-area">
-        <div id="placeholder-msg" style="text-align:center;color:var(--t3);font-size:13px;line-height:1.7">
-          <i class="ti ti-layers-subtract" style="font-size:40px;display:block;margin-bottom:10px"></i>
-          Add layers and upload trait images to begin.<br>
-          <span style="font-size:11px">Generation runs entirely on your device — no uploads to any server.</span>
+
+      <!-- Canvas area — flex row, supports 1 or 2 panes -->
+      <div class="canvas-area" id="canvas-area">
+
+        <!-- Pane 1: Combined preview -->
+        <div class="canvas-pane" id="pane-combined">
+          <div class="canvas-pane-label" id="pane1-label" style="display:none"><i class="ti ti-photo" style="font-size:10px"></i> Combined</div>
+          <div id="placeholder-msg" style="text-align:center;color:var(--t3);font-size:13px;line-height:1.7;padding:20px">
+            <i class="ti ti-layers-subtract" style="font-size:40px;display:block;margin-bottom:10px"></i>
+            Add layers and upload trait images to begin.<br>
+            <span style="font-size:11px">All generation runs on your device — nothing is uploaded.</span>
+          </div>
+          <canvas id="preview-canvas" width="512" height="512" style="display:none;max-width:90%;max-height:90%;border-radius:10px;background:repeating-conic-gradient(#44444420 0% 25%,transparent 0% 50%) 0 0/16px 16px"></canvas>
         </div>
-        <canvas id="preview-canvas" width="512" height="512" style="display:none"></canvas>
+
+        <!-- Pane 2: Single trait / dual right side (hidden by default) -->
+        <div class="canvas-pane" id="pane-trait" style="display:none">
+          <div class="canvas-pane-label"><i class="ti ti-layers-subtract" style="font-size:10px"></i> Trait view</div>
+          <div id="trait-placeholder" style="text-align:center;color:var(--t3);font-size:12px;padding:20px;line-height:1.7">
+            <i class="ti ti-cursor-text" style="font-size:36px;display:block;margin-bottom:8px"></i>
+            Click any trait in the<br>sidebar to preview it here
+          </div>
+          <img id="trait-preview-img" alt="Trait preview" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:10px;display:none;background:repeating-conic-gradient(#44444420 0% 25%,transparent 0% 50%) 0 0/16px 16px" />
+          <div id="trait-preview-name" style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:12px;font-weight:600;color:var(--t2)"></div>
+        </div>
+
       </div>
+
       <div class="gen-method-bar">
         <span style="font-size:12px;font-weight:600;color:var(--t2);margin-right:6px">Method:</span>
         <button class="gm-btn active" onclick="setGenMethod('exact',this)">Exact Generator</button>
         <button class="gm-btn" onclick="setGenMethod('random',this)">Random Generator</button>
         <button class="gm-btn" onclick="setGenMethod('fixed',this)">Random + Fixed Values</button>
-        <span class="gm-info" id="gm-desc">Generates NFTs matching your exact rarity counts — guaranteed trait distribution.</span>
+        <span class="gm-info" id="gm-desc">Weights auto-rebalance to match your collection size exactly.</span>
       </div>
       <div class="bottom-bar">
         <div class="prog-wrap">
@@ -549,6 +616,7 @@ var genMethod='exact', generating=false, cancelFlag=false;
 var genImages=[], genMeta=[], genRounds=0;
 var currentUser=null, isAdmin=false, isLight=false;
 var autoSaveTimer=null, currentLayerUpload=null;
+var viewMode=1, selectedTraitSrc=null, selectedTraitName='';
 var ADMIN_EMAIL='admin@nftforge.com', ADMIN_PASS='admin2026';
 var projects=JSON.parse(localStorage.getItem('nftforge_projects')||'[]');
 
@@ -567,6 +635,67 @@ function showPage(id){
 function toggleTheme(){
   isLight=!isLight;
   document.body.classList.toggle('light',isLight);
+}
+
+// ---- VIEW MODES ----
+var viewHints={
+  1:'Shuffle to see combined random preview',
+  2:'Click any trait in the sidebar to preview it here',
+  3:'Left = combined preview · Right = clicked trait'
+};
+function setViewMode(m){
+  viewMode=m;
+  [1,2,3].forEach(function(n){
+    var b=document.getElementById('vm'+n);
+    if(b) b.classList.toggle('active',n===m);
+  });
+  var hintEl=document.getElementById('view-mode-hint');
+  if(hintEl) hintEl.textContent=viewHints[m]||'';
+  var combined=document.getElementById('pane-combined');
+  var trait=document.getElementById('pane-trait');
+  var lbl=document.getElementById('pane1-label');
+  if(!combined||!trait) return;
+  if(m===1){
+    combined.style.display='flex';trait.style.display='none';
+    if(lbl) lbl.style.display='none';
+  } else if(m===2){
+    combined.style.display='none';trait.style.display='flex';
+    if(lbl) lbl.style.display='none';
+    showTraitPreview();
+  } else {
+    combined.style.display='flex';trait.style.display='flex';
+    if(lbl) lbl.style.display='flex';
+    showTraitPreview();
+  }
+}
+
+function selectTrait(src, name, traitId){
+  selectedTraitSrc=src;
+  selectedTraitName=name;
+  // highlight selected row
+  document.querySelectorAll('.trait-row').forEach(function(r){r.classList.remove('selected')});
+  var row=document.getElementById('tr-'+traitId);
+  if(row) row.classList.add('selected');
+  // if in mode 1, auto-switch to mode 2 or 3
+  if(viewMode===1) setViewMode(2);
+  else showTraitPreview();
+}
+
+function showTraitPreview(){
+  var img=document.getElementById('trait-preview-img');
+  var ph=document.getElementById('trait-placeholder');
+  var nm=document.getElementById('trait-preview-name');
+  if(!img) return;
+  if(selectedTraitSrc){
+    img.src=selectedTraitSrc;
+    img.style.display='block';
+    if(ph) ph.style.display='none';
+    if(nm) nm.textContent=selectedTraitName;
+  } else {
+    img.style.display='none';
+    if(ph) ph.style.display='block';
+    if(nm) nm.textContent='';
+  }
 }
 
 // ---- MODALS ----
@@ -965,7 +1094,73 @@ function updateWeight(lid,tid,val){
   var l=layers.find(function(l){return l.id===lid});
   if(!l) return;
   var t=l.traits.find(function(t){return t.id===tid});
-  if(t) t.weight=val;
+  if(!t) return;
+  var oldVal=t.weight;
+  t.weight=val;
+
+  // ---- EXACT MODE: auto-rebalance other traits ----
+  if(genMethod==='exact' && l.traits.length>1){
+    var collSize=parseInt(document.getElementById('s-size').value)||100;
+    var others=l.traits.filter(function(x){return x.id!==tid});
+    var othersTotal=others.reduce(function(s,x){return s+x.weight},0);
+    var remaining=collSize-val;
+    if(remaining<others.length) remaining=others.length; // min 1 each
+    if(othersTotal>0){
+      // scale others proportionally to fill remaining
+      var scale=remaining/othersTotal;
+      others.forEach(function(x){
+        x.weight=Math.max(1,Math.round(x.weight*scale));
+      });
+      // fix any rounding drift — give/take from largest other trait
+      var newTotal=l.traits.reduce(function(s,x){return s+x.weight},0);
+      var drift=collSize-newTotal;
+      if(drift!==0){
+        var largest=others.slice().sort(function(a,b){return b.weight-a.weight})[0];
+        if(largest) largest.weight=Math.max(1,largest.weight+drift);
+      }
+    }
+  }
+
+  // ---- REFRESH all trait stat displays in this layer ----
+  refreshLayerStats(l);
+}
+
+function refreshLayerStats(layer){
+  var collSize=parseInt(document.getElementById('s-size').value)||100;
+  var total=layer.traits.reduce(function(s,t){return s+t.weight},0);
+  layer.traits.forEach(function(t){
+    // update slider position
+    var slider=document.getElementById('sl-'+t.id);
+    if(slider) slider.value=t.weight;
+    // update weight number
+    var wEl=document.getElementById('rw-'+t.id);
+    if(wEl) wEl.textContent=t.weight;
+    // update % probability
+    var pct=total>0?Math.round(t.weight/total*1000)/10:0;
+    var pctEl=document.getElementById('pct-'+t.id);
+    if(pctEl) pctEl.textContent=pct.toFixed(1)+'%';
+    // update estimated count
+    var est=total>0?Math.round(t.weight/total*collSize):0;
+    var estEl=document.getElementById('est-'+t.id);
+    if(estEl) estEl.textContent='~'+est;
+    // color code: rare=orange, common=purple
+    var color=pct<5?'var(--o)':pct>30?'var(--p)':'var(--t2)';
+    if(pctEl) pctEl.style.color=color;
+    if(estEl) estEl.style.color=color;
+  });
+  // update total weight footer
+  var footEl=document.getElementById('tw-'+layer.id);
+  if(footEl){
+    if(genMethod==='exact'){
+      var collSize2=parseInt(document.getElementById('s-size').value)||100;
+      var diff=total-collSize2;
+      footEl.textContent='Total: '+total+' / '+collSize2+(diff===0?' ✓':diff>0?' (+'+ diff+' over)':' ('+diff+' short)');
+      footEl.style.color=diff===0?'var(--success)':'var(--danger)';
+    } else {
+      footEl.textContent='Total weight: '+total;
+      footEl.style.color='var(--t3)';
+    }
+  }
 }
 function removeTrait(lid,tid){
   var l=layers.find(function(l){return l.id===lid});
@@ -997,13 +1192,31 @@ function renderLayers(){
   var el=document.getElementById('layerList');
   if(!el) return;
   if(!layers.length){el.innerHTML='<div style="font-size:12px;color:var(--t3);text-align:center;padding:20px 0;line-height:1.6">No layers yet.<br>Click "Add trait / layer" below.</div>';return;}
-  el.innerHTML=layers.map(function(layer){
+  var collSize=parseInt(document.getElementById('s-size').value)||100;
+  // mode indicator banner
+  var modeBanner='';
+  if(genMethod==='exact'){
+    modeBanner=`<div style="background:rgba(247,147,26,.1);border:1px solid rgba(247,147,26,.3);border-radius:7px;padding:7px 10px;font-size:11px;color:var(--o);margin-bottom:8px;display:flex;align-items:center;gap:6px"><i class="ti ti-info-circle"></i><span><strong>Exact mode:</strong> Adjusting one trait auto-rebalances others to sum to ${collSize} NFTs.</span></div>`;
+  } else {
+    modeBanner=`<div style="background:rgba(127,119,221,.08);border:1px solid rgba(127,119,221,.25);border-radius:7px;padding:7px 10px;font-size:11px;color:var(--p);margin-bottom:8px;display:flex;align-items:center;gap:6px"><i class="ti ti-info-circle"></i><span><strong>Random mode:</strong> Weights are relative. % and estimated NFT counts shown per trait.</span></div>`;
+  }
+  el.innerHTML=modeBanner+layers.map(function(layer){
     var totalW=layer.traits.reduce(function(s,t){return s+t.weight},0);
+    var footerText='',footerColor='var(--t3)';
+    if(layer.traits.length>1){
+      if(genMethod==='exact'){
+        var diff=totalW-collSize;
+        footerText='Total: '+totalW+' / '+collSize+(diff===0?' ✓':diff>0?' (+'+ diff+' over)':' ('+Math.abs(diff)+' short)');
+        footerColor=diff===0?'var(--success)':'var(--danger)';
+      } else {
+        footerText='Total weight: '+totalW;
+      }
+    }
     return `<div class="layer-card" id="lc-${layer.id}">
       <div class="layer-hdr">
         <i class="ti ti-grip-vertical" style="color:var(--t3);font-size:14px;cursor:grab"></i>
         <input class="lname" value="${layer.name}" onchange="renameLayer(${layer.id},this.value)" title="Click to rename layer" />
-        <span style="font-size:10px;color:var(--t3)">${layer.traits.length}</span>
+        <span style="font-size:10px;color:var(--t3)">${layer.traits.length} traits</span>
         <button class="iBtn" onclick="moveLayer(${layer.id},-1)" title="Move layer up"><i class="ti ti-arrow-up"></i></button>
         <button class="iBtn" onclick="moveLayer(${layer.id},1)" title="Move layer down"><i class="ti ti-arrow-down"></i></button>
         <button class="iBtn" onclick="removeLayer(${layer.id})" title="Delete layer"><i class="ti ti-trash"></i></button>
@@ -1011,23 +1224,35 @@ function renderLayers(){
       <div class="lbody">
         <div class="upload-zone" onclick="openUpload(${layer.id})"><i class="ti ti-upload"></i> Upload trait images (PNG / JPG)</div>
         <div id="traits-${layer.id}">
-          ${layer.traits.map(function(t){return traitRowHTML(layer.id,t)}).join('')}
+          ${layer.traits.map(function(t){return traitRowHTML(layer.id,t,totalW,collSize)}).join('')}
         </div>
-        ${layer.traits.length>1?`<div style="font-size:10px;color:var(--t3);text-align:right;margin-top:5px">Total weight: ${totalW}</div>`:''}
+        ${layer.traits.length>1?`<div id="tw-${layer.id}" style="font-size:10px;text-align:right;margin-top:6px;font-weight:600;color:${footerColor}">${footerText}</div>`:''}
       </div>
     </div>`;
   }).join('');
 }
-function traitRowHTML(lid,t){
-  return `<div class="trait-row" id="tr-${t.id}">
-    <img class="tthumb" src="${t.src}" alt="${t.name}" />
-    <input class="tname" value="${t.name}" onchange="renameTrait(${lid},${t.id},this.value)" title="Click to rename trait" />
-    <div class="rw">
-      <input type="range" min="1" max="100" value="${t.weight}" step="1"
-        oninput="updateWeight(${lid},${t.id},+this.value);document.getElementById('rw-${t.id}').textContent=this.value" />
-      <span class="rval" id="rw-${t.id}">${t.weight}</span>
+function traitRowHTML(lid,t,totalW,collSize){
+  var pct=totalW>0?Math.round(t.weight/totalW*1000)/10:0;
+  var est=totalW>0?Math.round(t.weight/totalW*collSize):0;
+  var color=pct<5?'var(--o)':pct>30?'var(--p)':'var(--t2)';
+  var maxSlider=genMethod==='exact'?collSize:100;
+  var srcSafe=t.src.replace(/'/g,"\\'");
+  var nameSafe=t.name.replace(/'/g,"\\'");
+  return `<div class="trait-row" id="tr-${t.id}" onclick="selectTrait('${srcSafe}','${nameSafe}',${t.id})">
+    <img class="tthumb" src="${t.src}" alt="${t.name}" title="Click to preview this trait" style="cursor:pointer" />
+    <input class="tname" value="${t.name}" onchange="renameTrait(${lid},${t.id},this.value)" onclick="event.stopPropagation()" title="Click to rename trait" />
+    <div class="rw" style="flex-direction:column;align-items:flex-end;gap:2px" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;gap:4px;width:100%">
+        <input type="range" id="sl-${t.id}" min="1" max="${maxSlider}" value="${t.weight}" step="1" style="flex:1"
+          oninput="updateWeight(${lid},${t.id},+this.value)" />
+        <span class="rval" id="rw-${t.id}" style="min-width:28px">${t.weight}</span>
+      </div>
+      <div style="display:flex;gap:6px;font-size:10px;justify-content:flex-end">
+        <span id="pct-${t.id}" style="color:${color};font-weight:600">${pct.toFixed(1)}%</span>
+        <span id="est-${t.id}" style="color:${color}">~${est} NFTs</span>
+      </div>
     </div>
-    <button class="iBtn" onclick="removeTrait(${lid},${t.id})"><i class="ti ti-x"></i></button>
+    <button class="iBtn" onclick="event.stopPropagation();removeTrait(${lid},${t.id})"><i class="ti ti-x"></i></button>
   </div>`;
 }
 
@@ -1041,14 +1266,17 @@ function weightedRandom(traits){
 function randomPreview(){
   var active=layers.filter(function(l){return l.traits.length>0});
   if(!active.length) return;
+  // ensure combined pane is visible
+  if(viewMode===2) setViewMode(3); // switch to dual if in trait-only mode
+  var combined=document.getElementById('pane-combined');
+  if(combined) combined.style.display='flex';
   document.getElementById('placeholder-msg').style.display='none';
   var cv=document.getElementById('preview-canvas');
   cv.style.display='block';
   var w=parseInt(document.getElementById('s-w').value)||512;
   var h=parseInt(document.getElementById('s-h').value)||512;
   cv.width=w;cv.height=h;
-  var size=Math.min(300,window.innerWidth-360);
-  cv.style.width=size+'px';cv.style.height=size+'px';
+  cv.style.maxWidth='90%';cv.style.maxHeight='90%';
   var ctx=cv.getContext('2d');
   ctx.clearRect(0,0,w,h);
   var labels=[];
@@ -1058,7 +1286,7 @@ function randomPreview(){
     ctx.drawImage(t.img,0,0,w,h);
   });
   var lbl=document.getElementById('preview-label');
-  if(lbl) lbl.textContent=labels.join(' · ').substring(0,90);
+  if(lbl) lbl.textContent=labels.join(' · ').substring(0,100);
 }
 function updatePreview(){
   if(layers.some(function(l){return l.traits.length>0})){randomPreview();}
@@ -1074,11 +1302,12 @@ function setGenMethod(m,btn){
   document.querySelectorAll('.gm-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
   var descs={
-    exact:'Exact Generator: produces NFTs matching your rarity weights precisely. E.g. if Background has weight 50 out of 100, exactly 50% will use it.',
-    random:'Random Generator: weighted random selection per NFT. Natural variation — final counts approximate your weights but may differ slightly.',
-    fixed:'Random + Fixed Values: lock certain traits to exact counts (e.g. exactly 10 legendary 1/1s), while the rest generate randomly using weights.'
+    exact:'Exact Generator: weights auto-rebalance to match your collection size exactly. Changing one trait adjusts all others automatically.',
+    random:'Random Generator: weights are probabilities. Live % and estimated NFT count shown per trait — others adjust proportionally.',
+    fixed:'Random + Fixed Values: lock certain traits to exact counts (e.g. exactly 10 legendary 1/1s), while the rest generate randomly.'
   };
   document.getElementById('gm-desc').textContent=descs[m];
+  renderLayers(); // re-render to update banners, slider max, footer
 }
 
 // ---- GENERATION ----
