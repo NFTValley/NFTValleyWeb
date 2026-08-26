@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Valley Index — NFT Price Tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#00D68F;--g2:#00B87A;--g3:#00F5A0;
+  --p:#8B7FF0;--p2:#6C5CE7;
+  --o:#F7931A;
+  --dark:#060E0A;--dark2:#0A160E;--dark3:#0F1E14;--dark4:#142519;
+  --db:rgba(0,214,143,.12);--db2:rgba(0,214,143,.22);
+  --t1:#F0FFF8;--t2:#80C0A0;--t3:#406050;
+  --success:#00D68F;--danger:#FF4757;--warn:#F7931A;
+  --glass:rgba(10,22,14,.88);
+}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--t1);min-height:100vh;overflow-x:hidden}
+body.light{--dark:#F0FFF8;--dark2:#FFFFFF;--dark3:#E8FFF4;--dark4:#D8FFE8;--t1:#0A2A1A;--t2:#2A6040;--t3:#60A080;--glass:rgba(255,255,255,.92);--db:rgba(0,160,80,.1);--db2:rgba(0,160,80,.2)}
+
+.bg-glow{position:fixed;pointer-events:none;z-index:0}
+.bg-1{top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(0,214,143,.08),transparent 65%)}
+.bg-2{bottom:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,127,240,.06),transparent 65%)}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,214,143,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,214,143,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,14,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--db);height:64px;display:flex;align-items:center;padding:0 32px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;letter-spacing:-.5px;margin-right:12px;text-decoration:none;color:var(--t1)}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--g),var(--g2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;box-shadow:0 0 16px rgba(0,214,143,.4)}
+.nav-link{padding:7px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--t2);text-decoration:none;border:none;background:none;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+.nav-link:hover,.nav-link.active{color:var(--t1);background:rgba(0,214,143,.1)}
+.nav-link.active{color:var(--g)}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(0,214,143,.08);color:var(--t1);cursor:pointer;transition:.2s;text-decoration:none;white-space:nowrap;font-family:'Inter',sans-serif}
+.btn:hover{transform:translateY(-1px);border-color:var(--g)}
+.btn-green{background:linear-gradient(135deg,var(--g),var(--g2));border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(0,214,143,.3)}
+.btn-ghost{background:transparent;border:1px solid var(--db2);color:var(--t2)}
+.btn-ghost:hover{color:var(--t1);border-color:var(--g)}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
+
+.main{padding-top:64px;position:relative;z-index:1}
+
+/* HERO STRIP */
+.index-hero{background:linear-gradient(135deg,rgba(0,214,143,.06),transparent);border-bottom:1px solid var(--db);padding:28px 32px}
+.index-hero h1{font-size:30px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
+.index-hero h1 span{background:linear-gradient(135deg,var(--g),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.index-hero p{font-size:14px;color:var(--t2);margin-bottom:16px}
+.global-stats{display:flex;gap:28px;flex-wrap:wrap}
+.gs{display:flex;flex-direction:column}
+.gs-val{font-size:20px;font-weight:800}
+.gs-val.up{color:var(--success)}
+.gs-val.down{color:var(--danger)}
+.gs-lbl{font-size:12px;color:var(--t2);margin-top:2px}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--success);margin-right:5px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* FILTERS */
+.filters{background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--db);padding:10px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:64px;z-index:90}
+.chain-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(0,214,143,.06);color:var(--t2);cursor:pointer;transition:.2s}
+.chain-btn.active,.chain-btn:hover{background:linear-gradient(135deg,var(--g),var(--g2));border-color:transparent;color:#fff}
+.period-btn{padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;border:1px solid var(--db);background:transparent;color:var(--t3);cursor:pointer;transition:.2s}
+.period-btn.active{background:rgba(0,214,143,.12);border-color:var(--db2);color:var(--g)}
+.search-box{padding:7px 14px;border-radius:8px;border:1px solid var(--db2);background:rgba(10,22,14,.7);color:var(--t1);font-size:13px;outline:none;width:240px;font-family:'Inter',sans-serif}
+.search-box:focus{border-color:var(--g)}
+.search-box::placeholder{color:var(--t3)}
+
+/* FEATURED CARDS */
+.featured-section{padding:20px 32px}
+.featured-title{font-size:14px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:28px}
+.feat-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--db);border-radius:14px;padding:16px;transition:.2s;cursor:pointer}
+.feat-card:hover{transform:translateY(-3px);border-color:var(--db2);box-shadow:0 8px 28px rgba(0,214,143,.08)}
+.fc-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fc-img{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fc-name{font-size:15px;font-weight:700}
+.fc-chain{font-size:11px;color:var(--t2);margin-top:2px}
+.fc-price{font-size:22px;font-weight:900;margin-bottom:4px}
+.fc-change{font-size:13px;font-weight:600}
+.fc-vol{font-size:12px;color:var(--t2);margin-top:6px}
+
+/* MAIN TABLE */
+.table-section{padding:0 32px 32px}
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.table-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.nft-table{width:100%;border-collapse:collapse}
+.nft-table thead th{text-align:left;padding:10px 14px;font-size:12px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--db);cursor:pointer;white-space:nowrap;transition:.2s}
+.nft-table thead th:hover{color:var(--g)}
+.nft-table thead th.sorted{color:var(--g)}
+.nft-table tbody tr{border-bottom:1px solid rgba(0,214,143,.05);transition:.15s;cursor:pointer}
+.nft-table tbody tr:hover{background:rgba(0,214,143,.04)}
+.nft-table tbody td{padding:14px;font-size:14px;vertical-align:middle}
+.rank-cell{font-size:16px;font-weight:700;color:var(--t3);width:40px}
+.coll-cell{display:flex;align-items:center;gap:12px}
+.coll-img{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.coll-info .name{font-size:15px;font-weight:700}
+.coll-info .chain-tag{display:inline-block;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700;margin-top:3px}
+.floor-cell{font-size:15px;font-weight:700}
+.vol-cell{color:var(--t2)}
+.change-cell{font-weight:700}
+.change-cell.up{color:var(--success)}
+.change-cell.down{color:var(--danger)}
+.sales-cell{color:var(--t2)}
+.holders-cell{color:var(--t2)}
+.watch-btn{background:none;border:1px solid var(--db);border-radius:7px;color:var(--t3);width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s}
+.watch-btn.active,.watch-btn:hover{border-color:var(--g);color:var(--g);background:rgba(0,214,143,.08)}
+.sparkline{display:flex;align-items:flex-end;gap:2px;height:32px}
+.spark-bar{width:4px;border-radius:2px;background:var(--success);opacity:.7;transition:.3s}
+.spark-bar.down{background:var(--danger)}
+
+/* PORTFOLIO SECTION */
+.portfolio-section{padding:20px 32px 40px;border-top:1px solid var(--db)}
+.portfolio-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.portfolio-empty{background:rgba(0,214,143,.04);border:1px solid var(--db);border-radius:14px;padding:32px;text-align:center;color:var(--t2);font-size:14px}
+
+/* CHAIN COLORS */
+.eth-tag{background:rgba(98,126,234,.2);color:#8FA8F5}
+.sol-tag{background:rgba(153,69,255,.2);color:#C39EFF}
+.btc-tag{background:rgba(247,147,26,.2);color:#FFB84D}
+.base-tag{background:rgba(0,82,255,.2);color:#6699FF}
+.bsc-tag{background:rgba(243,186,47,.2);color:#FFD166}
+.ink-tag{background:rgba(123,47,190,.2);color:#BF7FFF}
+
+.up{color:var(--success)}
+.down{color:var(--danger)}
+.refresh-spin{animation:spin 1s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="bg-glow bg-1"></div>
+<div class="bg-glow bg-2"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="logo-icon">VI</div>
+    Valley Index
+  </a>
+  <a class="nav-link" href="index.html"><i class="ti ti-home"></i> Home</a>
+  <a class="nav-link" href="market.html"><i class="ti ti-shopping-bag"></i> Market</a>
+  <a class="nav-link" href="nft-forge.html"><i class="ti ti-layers"></i> NFT Forge</a>
+  <a class="nav-link" href="launch.html"><i class="ti ti-rocket"></i> Launchpad</a>
+  <a class="nav-link active" href="index-tracker.html"><i class="ti ti-chart-line"></i> Index</a>
+  <div class="nav-actions">
+    <button class="btn btn-ghost btn-sm" onclick="toggleTheme()"><i class="ti ti-sun"></i></button>
+    <button class="btn btn-ghost btn-sm" id="walletBtn" onclick="openWalletModal()"><i class="ti ti-wallet"></i> Connect Wallet</button>
+    <button class="btn btn-green btn-sm" onclick="refreshData()"><i class="ti ti-refresh" id="refreshIcon"></i> Refresh</button>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- HERO STRIP -->
+  <div class="index-hero">
+    <h1>Valley <span>Index</span> — Real-Time NFT Tracker</h1>
+    <p><span class="live-dot"></span>Live floor prices, volume and rankings across ETH, Solana, Bitcoin Ordinals, Base and BSC. Updates every 60 seconds.</p>
+    <div class="global-stats">
+      <div class="gs"><span class="gs-val up" id="gs-vol">$284.2M</span><span class="gs-lbl">24h Total Volume</span></div>
+      <div class="gs"><span class="gs-val" id="gs-cols">48,291</span><span class="gs-lbl">Collections Tracked</span></div>
+      <div class="gs"><span class="gs-val up" id="gs-sales">142,882</span><span class="gs-lbl">24h Sales</span></div>
+      <div class="gs"><span class="gs-val up" id="gs-mc">$12.4B</span><span class="gs-lbl">Total Market Cap</span></div>
+      <div class="gs"><span class="gs-val up" id="gs-traders">38,291</span><span class="gs-lbl">Active Traders</span></div>
+      <div class="gs"><span class="gs-val" id="gs-updated" style="font-size:13px;color:var(--t2)">—</span><span class="gs-lbl">Last Updated</span></div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="chainFilters">
+      <button class="chain-btn active" onclick="filterChain('all',this)">All Chains</button>
+      <button class="chain-btn" onclick="filterChain('eth',this)">Ξ Ethereum</button>
+      <button class="chain-btn" onclick="filterChain('sol',this)">◎ Solana</button>
+      <button class="chain-btn" onclick="filterChain('btc',this)">₿ Ordinals</button>
+      <button class="chain-btn" onclick="filterChain('base',this)">🔵 Base</button>
+      <button class="chain-btn" onclick="filterChain('bsc',this)">🟡 BSC</button>
+    </div>
+    <div style="display:flex;gap:4px" id="periodBtns">
+      <button class="period-btn active" onclick="setPeriod('1h',this)">1H</button>
+      <button class="period-btn" onclick="setPeriod('6h',this)">6H</button>
+      <button class="period-btn active" onclick="setPeriod('24h',this)">24H</button>
+      <button class="period-btn" onclick="setPeriod('7d',this)">7D</button>
+      <button class="period-btn" onclick="setPeriod('30d',this)">30D</button>
+    </div>
+    <input class="search-box" placeholder="🔍 Search collections..." oninput="searchCollections(this.value)" />
+    <div style="margin-left:auto;font-size:12px;color:var(--t3)"><i class="ti ti-info-circle"></i> Data: Reservoir API · Magic Eden API · Satflow API</div>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="featured-section">
+    <div class="featured-title"><i class="ti ti-flame" style="color:var(--o)"></i> Trending Right Now</div>
+    <div class="featured-grid" id="featuredGrid"></div>
+  </div>
+
+  <!-- MAIN TABLE -->
+  <div class="table-section">
+    <div class="table-header">
+      <div class="table-title">All Collections</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select style="padding:7px 12px;border-radius:8px;border:1px solid var(--db2);background:rgba(10,22,14,.8);color:var(--t1);font-size:13px;outline:none;cursor:pointer;font-family:'Inter',sans-serif" onchange="sortTable(this.value)">
+          <option value="vol">Sort: Volume</option>
+          <option value="floor">Sort: Floor Price</option>
+          <option value="change">Sort: 24h Change</option>
+          <option value="sales">Sort: Sales</option>
+          <option value="mc">Sort: Market Cap</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()"><i class="ti ti-download"></i> Export</button>
+      </div>
+    </div>
+    <table class="nft-table">
+      <thead>
+        <tr>
+          <th class="sorted" onclick="sortTable('rank'">#</th>
+          <th>Collection</th>
+          <th onclick="sortTable('floor')">Floor Price <i class="ti ti-selector" style="font-size:11px"></i></th>
+          <th onclick="sortTable('vol')">24h Volume <i class="ti ti-selector" style="font-size:11px"></i></th>
+          <th onclick="sortTable('change')">24h Change <i class="ti ti-selector" style="font-size:11px"></i></th>
+          <th onclick="sortTable('sales')">24h Sales</th>
+          <th>7d Chart</th>
+          <th>Holders</th>
+          <th>Market Cap</th>
+          <th>Watch</th>
+        </tr>
+      </thead>
+      <tbody id="nftTableBody"></tbody>
+    </table>
+    <div style="text-align:center;padding:24px 0">
+      <button class="btn btn-ghost" onclick="loadMore()"><i class="ti ti-refresh"></i> Load More</button>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="portfolio-section">
+    <div class="portfolio-header">
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.3px">📊 My Portfolio</div>
+      <button class="btn btn-green btn-sm" id="portfolioConnectBtn" onclick="openWalletModal()"><i class="ti ti-wallet"></i> Connect to Track Portfolio</button>
+    </div>
+    <div class="portfolio-empty" id="portfolioEmpty">
+      <i class="ti ti-wallet" style="font-size:36px;display:block;margin-bottom:10px;color:var(--t3)"></i>
+      Connect your wallet to see your NFT portfolio value, track floor prices and get price alerts.
+    </div>
+  </div>
+
+</div>
+
+<!-- WALLET MODAL -->
+<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:16px" id="walletModal">
+  <div style="background:rgba(10,22,14,.98);border:1px solid var(--db2);border-radius:20px;padding:28px;max-width:400px;width:100%;position:relative">
+    <button onclick="closeWalletModal()" style="position:absolute;top:14px;right:14px;background:rgba(0,214,143,.1);border:1px solid var(--db);border-radius:8px;color:var(--t2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px"><i class="ti ti-x"></i></button>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:20px;font-weight:800;margin-bottom:6px">Connect Wallet</div>
+      <div style="font-size:14px;color:var(--t2)">Track your NFT portfolio and get price alerts</div>
+    </div>
+    <button onclick="connectWallet('metamask')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(246,133,27,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif">
+      <div style="width:30px;height:30px;border-radius:8px;background:#F6851B;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">M</div>MetaMask
+    </button>
+    <button onclick="connectWallet('phantom')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(171,159,242,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif">
+      <div style="width:30px;height:30px;border-radius:8px;background:#AB9FF2;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">P</div>Phantom
+    </button>
+    <button onclick="connectWallet('okx')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(0,0,0,.2);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:'Inter',sans-serif">
+      <div style="width:30px;height:30px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">O</div>OKX Wallet
+    </button>
+  </div>
+</div>
+
+<script>
+var walletConnected=false,walletAddress='',currentChain='all',currentPeriod='24h',isLight=false;
+var watchlist=new Set();
+
+var collections=[
+  {rank:1,name:'CryptoPunks',chain:'eth',emoji:'👓',color:'#8FA8F5',floor:'48.2 ETH',floorUSD:160100,vol:'$12.1M',volRaw:12100000,change:1.1,sales:284,holders:3524,mc:'$1.6B',sparkData:[40,42,44,41,45,47,48,46,48]},
+  {rank:2,name:'Bored Ape YC',chain:'eth',emoji:'🦍',color:'#627EEA',floor:'12.4 ETH',floorUSD:41200,vol:'$8.2M',volRaw:8200000,change:2.3,sales:412,holders:6284,mc:'$412M',sparkData:[10,11,11.5,11,12,12.2,12.4,12.1,12.4]},
+  {rank:3,name:'Pudgy Penguins',chain:'eth',emoji:'🐧',color:'#4ECDC4',floor:'18.6 ETH',floorUSD:61800,vol:'$6.8M',volRaw:6800000,change:5.4,sales:189,holders:4821,mc:'$165M',sparkData:[15,16,17,16.5,17.5,18,18.2,18.4,18.6]},
+  {rank:4,name:'DeGods',chain:'sol',emoji:'⚡',color:'#9945FF',floor:'220 SOL',floorUSD:31200,vol:'$5.4M',volRaw:5400000,change:4.2,sales:312,holders:5642,mc:'$312M',sparkData:[180,190,200,195,210,215,218,220,220]},
+  {rank:5,name:'NodeMonkes',chain:'btc',emoji:'🐒',color:'#F7931A',floor:'0.18 BTC',floorUSD:17800,vol:'$3.2M',volRaw:3200000,change:7.2,sales:98,holders:1842,mc:'$178M',sparkData:[0.13,0.14,0.15,0.14,0.16,0.17,0.17,0.18,0.18]},
+  {rank:6,name:'Azuki',chain:'eth',emoji:'🌸',color:'#FF6B6B',floor:'6.8 ETH',floorUSD:22600,vol:'$4.1M',volRaw:4100000,change:-0.8,sales:241,holders:4921,mc:'$68M',sparkData:[7.2,7.0,6.9,7.0,6.8,6.9,6.8,6.8,6.8]},
+  {rank:7,name:'Mad Lads',chain:'sol',emoji:'😈',color:'#FFD93D',floor:'180 SOL',floorUSD:25500,vol:'$3.8M',volRaw:3800000,change:3.1,sales:284,holders:5821,mc:'$255M',sparkData:[160,165,170,168,175,178,179,180,180]},
+  {rank:8,name:'Bitcoin Puppets',chain:'btc',emoji:'🎭',color:'#FF8E53',floor:'0.24 BTC',floorUSD:23700,vol:'$2.9M',volRaw:2900000,change:-1.2,sales:76,holders:2841,mc:'$237M',sparkData:[0.26,0.25,0.25,0.26,0.25,0.24,0.24,0.24,0.24]},
+  {rank:9,name:'Milady',chain:'eth',emoji:'👗',color:'#F8A5C2',floor:'3.2 ETH',floorUSD:10600,vol:'$2.1M',volRaw:2100000,change:-2.1,sales:198,holders:8421,mc:'$32M',sparkData:[3.5,3.4,3.3,3.4,3.3,3.2,3.2,3.2,3.2]},
+  {rank:10,name:'Tensorians',chain:'sol',emoji:'🤖',color:'#45B7D1',floor:'95 SOL',floorUSD:13470,vol:'$1.9M',volRaw:1900000,change:1.8,sales:142,holders:3421,mc:'$134.7M',sparkData:[88,90,92,91,93,94,95,94,95]},
+  {rank:11,name:'Based Apes',chain:'base',emoji:'🔵',color:'#0052FF',floor:'0.8 ETH',floorUSD:2660,vol:'$1.2M',volRaw:1200000,change:8.4,sales:412,holders:2841,mc:'$26.6M',sparkData:[0.6,0.65,0.7,0.68,0.72,0.75,0.78,0.80,0.80]},
+  {rank:12,name:'BNB Apes',chain:'bsc',emoji:'🟡',color:'#F3BA2F',floor:'1.2 BNB',floorUSD:800,vol:'$0.9M',volRaw:900000,change:3.2,sales:284,holders:4821,mc:'$8M',sparkData:[1.0,1.05,1.1,1.08,1.12,1.15,1.18,1.20,1.20]},
+  {rank:13,name:'Ordinal Dragons',chain:'btc',emoji:'🐉',color:'#FF4500',floor:'0.08 BTC',floorUSD:7900,vol:'$0.8M',volRaw:800000,change:12.4,sales:42,holders:892,mc:'$79M',sparkData:[0.05,0.055,0.06,0.065,0.07,0.072,0.075,0.078,0.08]},
+  {rank:14,name:'Ink Ghosts',chain:'ink',emoji:'👻',color:'#7B2FBE',floor:'500 INK',floorUSD:1200,vol:'$0.3M',volRaw:300000,change:22.1,sales:89,holders:1284,mc:'$2.4M',sparkData:[300,320,340,360,380,420,460,480,500]},
+  {rank:15,name:'Doodles',chain:'eth',emoji:'🌈',color:'#FFB347',floor:'2.1 ETH',floorUSD:6980,vol:'$1.1M',volRaw:1100000,change:-0.5,sales:156,holders:5421,mc:'$21M',sparkData:[2.2,2.15,2.1,2.12,2.08,2.1,2.1,2.1,2.1]},
+];
+
+var chainTagMap={eth:'eth-tag',sol:'sol-tag',btc:'btc-tag',base:'base-tag',bsc:'bsc-tag',ink:'ink-tag'};
+var chainLabelMap={eth:'ETH',sol:'SOL',btc:'BTC',base:'BASE',bsc:'BSC',ink:'INK'};
+
+function renderFeatured(){
+  var top6=collections.slice(0,6);
+  document.getElementById('featuredGrid').innerHTML=top6.map(function(c){
+    var up=c.change>=0;
+    return `<div class="feat-card" onclick="openCollection('${c.name}')">
+      <div class="fc-header">
+        <div class="fc-img" style="background:linear-gradient(135deg,${c.color}40,${c.color}20)">${c.emoji}</div>
+        <div>
+          <div class="fc-name">${c.name}</div>
+          <div class="fc-chain"><span class="chain-tag ${chainTagMap[c.chain]}" style="padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700">${chainLabelMap[c.chain]}</span></div>
+        </div>
+      </div>
+      <div class="fc-price">${c.floor}</div>
+      <div class="fc-change ${up?'up':'down'}">${up?'▲':'▼'}${Math.abs(c.change)}% (24h)</div>
+      <div class="fc-vol">Vol: ${c.vol} · ${c.sales} sales</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTable(data){
+  var tbody=document.getElementById('nftTableBody');
+  tbody.innerHTML=data.map(function(c){
+    var up=c.change>=0;
+    var tagClass=chainTagMap[c.chain]||'eth-tag';
+    var spark=c.sparkData.map(function(v,i){
+      var max=Math.max.apply(null,c.sparkData);
+      var min=Math.min.apply(null,c.sparkData);
+      var h=max===min?16:Math.round((v-min)/(max-min)*28)+4;
+      var isLast=i===c.sparkData.length-1;
+      return `<div class="spark-bar ${up||isLast?'':'down'}" style="height:${h}px;opacity:${0.4+i/c.sparkData.length*0.6}"></div>`;
+    }).join('');
+    var watched=watchlist.has(c.name);
+    return `<tr onclick="openCollection('${c.name}')">
+      <td class="rank-cell">${c.rank}</td>
+      <td>
+        <div class="coll-cell">
+          <div class="coll-img" style="background:linear-gradient(135deg,${c.color}40,${c.color}15)">${c.emoji}</div>
+          <div class="coll-info">
+            <div class="name">${c.name}</div>
+            <span class="chain-tag ${tagClass}" style="padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700">${chainLabelMap[c.chain]}</span>
+          </div>
+        </div>
+      </td>
+      <td class="floor-cell">
+        <div>${c.floor}</div>
+        <div style="font-size:11px;color:var(--t3)">$${c.floorUSD.toLocaleString()}</div>
+      </td>
+      <td class="vol-cell">${c.vol}</td>
+      <td class="change-cell ${up?'up':'down'}">${up?'▲':'▼'}${Math.abs(c.change)}%</td>
+      <td class="sales-cell">${c.sales.toLocaleString()}</td>
+      <td><div class="sparkline">${spark}</div></td>
+      <td class="holders-cell">${c.holders.toLocaleString()}</td>
+      <td style="color:var(--t2);font-size:13px">${c.mc}</td>
+      <td>
+        <button class="watch-btn ${watched?'active':''}" onclick="event.stopPropagation();toggleWatch('${c.name}',this)" title="${watched?'Remove from watchlist':'Add to watchlist'}">
+          <i class="ti ti-star${watched?'-filled':''}"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterChain(chain,btn){
+  currentChain=chain;
+  document.querySelectorAll('#chainFilters .chain-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  var filtered=chain==='all'?collections:collections.filter(function(c){return c.chain===chain});
+  renderTable(filtered);
+}
+
+function setPeriod(p,btn){
+  currentPeriod=p;
+  document.querySelectorAll('#periodBtns .period-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  // In production: re-fetch data for selected period
+  renderTable(currentChain==='all'?collections:collections.filter(function(c){return c.chain===currentChain}));
+}
+
+function sortTable(by){
+  var data=[...collections];
+  if(by==='vol') data.sort(function(a,b){return b.volRaw-a.volRaw});
+  if(by==='floor') data.sort(function(a,b){return b.floorUSD-a.floorUSD});
+  if(by==='change') data.sort(function(a,b){return b.change-a.change});
+  if(by==='sales') data.sort(function(a,b){return b.sales-a.sales});
+  if(currentChain!=='all') data=data.filter(function(c){return c.chain===currentChain});
+  renderTable(data);
+}
+
+function searchCollections(q){
+  var filtered=collections.filter(function(c){return c.name.toLowerCase().includes(q.toLowerCase())});
+  if(currentChain!=='all') filtered=filtered.filter(function(c){return c.chain===currentChain});
+  renderTable(filtered);
+}
+
+function toggleWatch(name,btn){
+  if(watchlist.has(name)){
+    watchlist.delete(name);
+    btn.classList.remove('active');
+    btn.innerHTML='<i class="ti ti-star"></i>';
+  } else {
+    watchlist.add(name);
+    btn.classList.add('active');
+    btn.innerHTML='<i class="ti ti-star-filled"></i>';
+  }
+}
+
+function openCollection(name){
+  var c=collections.find(function(x){return x.name===name});
+  if(!c) return;
+  alert('📊 '+c.name+'\n\nFloor: '+c.floor+' ($'+c.floorUSD.toLocaleString()+')\n24h Change: '+(c.change>=0?'+':'')+c.change+'%\n24h Volume: '+c.vol+'\n24h Sales: '+c.sales+'\nHolders: '+c.holders.toLocaleString()+'\nMarket Cap: '+c.mc+'\n\nIn production: Opens full collection analytics page with price chart, trait rarity breakdown, recent sales and order book.');
+}
+
+function exportCSV(){
+  var headers='Rank,Collection,Chain,Floor Price,Floor USD,24h Volume,24h Change,24h Sales,Holders,Market Cap\n';
+  var rows=collections.map(function(c){
+    return [c.rank,c.name,chainLabelMap[c.chain],c.floor,'$'+c.floorUSD,c.vol,(c.change>=0?'+':'')+c.change+'%',c.sales,c.holders,c.mc].join(',');
+  }).join('\n');
+  var blob=new Blob([headers+rows],{type:'text/csv'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='valley-index-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+}
+
+function loadMore(){
+  alert('Loading more collections from Reservoir API + Magic Eden API + Satflow API...\n\nIn production: Fetch next page of collections with pagination.');
+}
+
+function refreshData(){
+  var icon=document.getElementById('refreshIcon');
+  icon.classList.add('refresh-spin');
+  document.getElementById('gs-updated').textContent='Refreshing...';
+  // In production: fetch from Reservoir + Magic Eden + Satflow APIs
+  setTimeout(function(){
+    icon.classList.remove('refresh-spin');
+    var now=new Date();
+    document.getElementById('gs-updated').textContent=now.toLocaleTimeString();
+    // Simulate slight price changes
+    collections.forEach(function(c){
+      var delta=(Math.random()-.5)*0.4;
+      c.change=Math.round((c.change+delta)*10)/10;
+    });
+    renderFeatured();
+    renderTable(currentChain==='all'?collections:collections.filter(function(c){return c.chain===currentChain}));
+  },1200);
+}
+
+function openWalletModal(){document.getElementById('walletModal').style.display='flex';}
+function closeWalletModal(){document.getElementById('walletModal').style.display='none';}
+
+async function connectWallet(type){
+  try{
+    if(type==='metamask'){
+      if(!window.ethereum) return alert('MetaMask not installed. Visit metamask.io');
+      var accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+      walletAddress=accounts[0];
+    } else if(type==='phantom'){
+      if(!window.solana||!window.solana.isPhantom) return alert('Phantom not installed. Visit phantom.app');
+      var resp=await window.solana.connect();
+      walletAddress=resp.publicKey.toString();
+    } else {
+      if(!window.okxwallet) return alert('OKX Wallet not installed.');
+      var r=await window.okxwallet.request({method:'eth_requestAccounts'});
+      walletAddress=r[0];
+    }
+    walletConnected=true;
+    closeWalletModal();
+    var short=walletAddress.substring(0,6)+'...'+walletAddress.substring(walletAddress.length-4);
+    var btn=document.getElementById('walletBtn');
+    btn.innerHTML='<i class="ti ti-wallet"></i> '+short;
+    btn.style.color='var(--success)';
+    // Show portfolio
+    document.getElementById('portfolioConnectBtn').style.display='none';
+    document.getElementById('portfolioEmpty').innerHTML='<div style="font-size:15px;color:var(--t2);margin-bottom:8px">Loading portfolio for '+short+'...</div><div style="font-size:13px;color:var(--t3)">In production: Fetches your NFT holdings via Alchemy/Reservoir API and displays real-time portfolio value.</div>';
+  } catch(e){alert('Error: '+(e.message||e));}
+}
+
+function toggleTheme(){isLight=!isLight;document.body.classList.toggle('light',isLight);}
+
+document.getElementById('walletModal').addEventListener('click',function(e){if(e.target===this)closeWalletModal();});
+
+// Auto-refresh every 60 seconds
+setInterval(function(){refreshData();},60000);
+
+// Init
+renderFeatured();
+renderTable(collections);
+document.getElementById('gs-updated').textContent=new Date().toLocaleTimeString();
+</script>
+</body>
+</html>

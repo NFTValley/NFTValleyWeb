@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Valley Market — NFT Valley</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#3399FF;--p2:#0066CC;--p3:#0052FF;
+  --acc:#8B7FF0;--acc2:#6C5CE7;
+  --o:#F7931A;--o2:#E07D0A;
+  --dark:#060612;--dark2:#0B0B1E;--dark3:#111128;--dark4:#181834;
+  --db:rgba(51,153,255,.12);--db2:rgba(51,153,255,.22);
+  --t1:#F0F0FF;--t2:#9090C0;--t3:#5050A0;
+  --success:#00D68F;--danger:#FF4757;
+  --glass:rgba(11,11,30,.85);--gb:rgba(51,153,255,.15);
+}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--t1);min-height:100vh;overflow-x:hidden}
+body.light{--dark:#EEF2FF;--dark2:#FFFFFF;--dark3:#F0F4FF;--dark4:#E8EEFF;--t1:#12122A;--t2:#44447A;--t3:#8080B0;--glass:rgba(255,255,255,.92);--db:rgba(51,100,200,.1);--db2:rgba(51,100,200,.2)}
+
+.bg-glow{position:fixed;pointer-events:none;z-index:0}
+.bg-1{top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(51,153,255,.1),transparent 65%)}
+.bg-2{bottom:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,127,240,.08),transparent 65%)}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(51,153,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(51,153,255,.04) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--db);height:64px;display:flex;align-items:center;padding:0 32px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;letter-spacing:-.5px;margin-right:12px;text-decoration:none;color:var(--t1)}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#3399FF,#0052FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;box-shadow:0 0 16px rgba(51,153,255,.4)}
+.nav-link{padding:7px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--t2);text-decoration:none;border:none;background:none;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+.nav-link:hover,.nav-link.active{color:var(--t1);background:rgba(51,153,255,.1)}
+.nav-link.active{color:var(--p)}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.08);color:var(--t1);cursor:pointer;transition:.2s;text-decoration:none;white-space:nowrap;font-family:'Inter',sans-serif}
+.btn:hover{transform:translateY(-1px);border-color:var(--p)}
+.btn-primary{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(51,153,255,.3)}
+.btn-primary:hover{box-shadow:0 6px 24px rgba(51,153,255,.5)}
+.btn-orange{background:linear-gradient(135deg,var(--o),var(--o2));border-color:transparent;color:#fff}
+.btn-ghost{background:transparent;border:1px solid var(--db2);color:var(--t2)}
+.btn-ghost:hover{color:var(--t1);border-color:var(--p)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-success{background:linear-gradient(135deg,var(--success),#00B87A);border-color:transparent;color:#fff}
+
+/* TICKER */
+.ticker{background:rgba(51,153,255,.05);border-bottom:1px solid var(--db);padding:7px 0;overflow:hidden;position:fixed;top:64px;left:0;right:0;z-index:99}
+.ticker-track{display:flex;gap:0;animation:ticker 35s linear infinite;width:max-content}
+.ticker-item{padding:0 20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;border-right:1px solid var(--db);white-space:nowrap}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* LAYOUT */
+.main{padding-top:calc(64px + 33px);min-height:100vh;position:relative;z-index:1}
+
+/* HERO BANNER */
+.market-hero{background:linear-gradient(135deg,rgba(51,153,255,.08),rgba(139,127,240,.06));border-bottom:1px solid var(--db);padding:32px 32px 24px}
+.market-hero h1{font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:6px}
+.market-hero p{font-size:15px;color:var(--t2);margin-bottom:20px}
+.market-stats{display:flex;gap:32px;flex-wrap:wrap}
+.mstat{text-align:left}
+.mstat-val{font-size:22px;font-weight:800;color:var(--p)}
+.mstat-lbl{font-size:12px;color:var(--t2);margin-top:2px}
+
+/* FILTERS */
+.filters-bar{background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--db);padding:12px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:calc(64px + 33px);z-index:90}
+.chain-filter{display:flex;gap:6px;flex-wrap:wrap}
+.chain-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+.chain-btn:hover,.chain-btn.active{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
+.filter-sep{width:1px;height:24px;background:var(--db2);flex-shrink:0}
+.sort-select{padding:7px 12px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t1);font-size:13px;font-weight:500;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+.search-input{padding:7px 14px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.6);color:var(--t1);font-size:13px;outline:none;width:220px;font-family:'Inter',sans-serif}
+.search-input:focus{border-color:var(--p)}
+.search-input::placeholder{color:var(--t3)}
+.view-btns{display:flex;gap:4px;margin-left:auto}
+.view-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s}
+.view-btn.active,.view-btn:hover{background:rgba(51,153,255,.15);color:var(--p);border-color:var(--p)}
+
+/* CONTENT AREA */
+.content-area{display:grid;grid-template-columns:260px 1fr;gap:0;min-height:calc(100vh - 64px - 33px)}
+
+/* SIDEBAR FILTERS */
+.sidebar-filters{background:rgba(11,11,30,.7);border-right:1px solid var(--db);padding:20px;position:sticky;top:calc(64px+33px+53px);height:fit-content}
+.sf-title{font-size:13px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.sf-section{margin-bottom:24px}
+.price-range{display:flex;gap:8px}
+.price-input{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.8);color:var(--t1);font-size:13px;outline:none;font-family:'Inter',sans-serif}
+.price-input:focus{border-color:var(--p)}
+.checkbox-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--t2);cursor:pointer;transition:.2s}
+.checkbox-item:hover{color:var(--t1)}
+.checkbox-item input{accent-color:var(--p);width:14px;height:14px}
+
+/* NFT GRID */
+.nft-area{padding:20px}
+.category-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.cat-tab{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s}
+.cat-tab.active,.cat-tab:hover{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.nft-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--db);border-radius:16px;overflow:hidden;transition:.25s;cursor:pointer}
+.nft-card:hover{transform:translateY(-4px);border-color:var(--db2);box-shadow:0 12px 40px rgba(51,153,255,.15)}
+.nft-img{width:100%;aspect-ratio:1;position:relative;overflow:hidden}
+.nft-img-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:900;color:rgba(255,255,255,.15)}
+.nft-chain-badge{position:absolute;top:10px;right:10px;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)}
+.nft-like{position:absolute;top:10px;left:10px;width:30px;height:30px;border-radius:8px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:.2s}
+.nft-like:hover{background:rgba(255,71,87,.3);border-color:rgba(255,71,87,.5)}
+.nft-info{padding:14px}
+.nft-collection{font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.nft-name{font-size:15px;font-weight:700;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nft-price-row{display:flex;align-items:center;justify-content:space-between}
+.nft-price{font-size:16px;font-weight:800;color:var(--p)}
+.nft-usd{font-size:11px;color:var(--t3);margin-top:2px}
+.nft-buy-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif}
+.nft-buy-btn:hover{box-shadow:0 4px 16px rgba(51,153,255,.4);transform:translateY(-1px)}
+
+/* TRENDING COLLECTIONS */
+.trending{padding:20px 32px;border-top:1px solid var(--db)}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-hdr h2{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.collections-table{width:100%;border-collapse:collapse}
+.ct-head th{text-align:left;padding:10px 14px;font-size:12px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--db)}
+.ct-row td{padding:14px;border-bottom:1px solid rgba(51,153,255,.06);font-size:14px;transition:.15s}
+.ct-row:hover td{background:rgba(51,153,255,.04)}
+.coll-thumb{width:40px;height:40px;border-radius:10px;display:inline-block;vertical-align:middle;margin-right:10px}
+.coll-name{font-weight:600}
+.coll-sub{font-size:11px;color:var(--t3)}
+.change-up{color:var(--success);font-weight:600}
+.change-down{color:var(--danger);font-weight:600}
+.rank-num{font-size:16px;font-weight:700;color:var(--t3)}
+
+/* BUY MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.modal{background:rgba(11,11,30,.98);border:1px solid var(--db2);border-radius:20px;padding:28px;max-width:420px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.modal-close{position:absolute;top:14px;right:14px;background:rgba(51,153,255,.1);border:1px solid var(--db);border-radius:8px;color:var(--t2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+
+/* CHAIN COLORS */
+.eth-bg{background:linear-gradient(135deg,#627EEA,#3C5BD4)}
+.sol-bg{background:linear-gradient(135deg,#9945FF,#6C35CC)}
+.btc-bg{background:linear-gradient(135deg,#F7931A,#E07D0A)}
+.base-bg{background:linear-gradient(135deg,#0052FF,#003DBD)}
+.bsc-bg{background:linear-gradient(135deg,#F3BA2F,#D4A017)}
+.ink-bg{background:linear-gradient(135deg,#7B2FBE,#5A1A9A)}
+.eth-badge{background:rgba(98,126,234,.25);color:#8FA8F5;border-color:rgba(98,126,234,.4)}
+.sol-badge{background:rgba(153,69,255,.25);color:#C39EFF;border-color:rgba(153,69,255,.4)}
+.btc-badge{background:rgba(247,147,26,.25);color:#FFB84D;border-color:rgba(247,147,26,.4)}
+.base-badge{background:rgba(0,82,255,.25);color:#6699FF;border-color:rgba(0,82,255,.4)}
+.bsc-badge{background:rgba(243,186,47,.25);color:#FFD166;border-color:rgba(243,186,47,.4)}
+</style>
+</head>
+<body>
+<div class="bg-glow bg-1"></div>
+<div class="bg-glow bg-2"></div>
+<div class="bg-grid"></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><span style="color:var(--t2)">BAYC Floor</span><span style="color:var(--t1)">12.4 ETH</span><span style="color:var(--success)">▲2.3%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span style="color:var(--t1)">48.2 ETH</span><span style="color:var(--success)">▲1.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">DeGods Floor</span><span style="color:var(--t1)">220 SOL</span><span style="color:var(--success)">▲4.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Azuki Floor</span><span style="color:var(--t1)">6.8 ETH</span><span style="color:var(--danger)">▼0.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span style="color:var(--t1)">0.18 BTC</span><span style="color:var(--success)">▲7.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span style="color:var(--t1)">18.6 ETH</span><span style="color:var(--success)">▲5.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span style="color:var(--t1)">180 SOL</span><span style="color:var(--success)">▲3.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Bitcoin Puppets</span><span style="color:var(--t1)">0.24 BTC</span><span style="color:var(--danger)">▼1.2%</span></div>
+    <!-- duplicate -->
+    <div class="ticker-item"><span style="color:var(--t2)">BAYC Floor</span><span style="color:var(--t1)">12.4 ETH</span><span style="color:var(--success)">▲2.3%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span style="color:var(--t1)">48.2 ETH</span><span style="color:var(--success)">▲1.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">DeGods Floor</span><span style="color:var(--t1)">220 SOL</span><span style="color:var(--success)">▲4.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Azuki Floor</span><span style="color:var(--t1)">6.8 ETH</span><span style="color:var(--danger)">▼0.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span style="color:var(--t1)">0.18 BTC</span><span style="color:var(--success)">▲7.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span style="color:var(--t1)">18.6 ETH</span><span style="color:var(--success)">▲5.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span style="color:var(--t1)">180 SOL</span><span style="color:var(--success)">▲3.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Bitcoin Puppets</span><span style="color:var(--t1)">0.24 BTC</span><span style="color:var(--danger)">▼1.2%</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="logo-icon">VM</div>
+    Valley Market
+  </a>
+  <a class="nav-link" href="index.html"><i class="ti ti-home"></i> Home</a>
+  <a class="nav-link active" href="market.html"><i class="ti ti-shopping-bag"></i> Market</a>
+  <a class="nav-link" href="nft-forge.html"><i class="ti ti-layers"></i> NFT Forge</a>
+  <a class="nav-link" href="launch.html"><i class="ti ti-rocket"></i> Launchpad</a>
+  <a class="nav-link" href="index-tracker.html"><i class="ti ti-chart-line"></i> Index</a>
+  <div class="nav-actions">
+    <button class="btn btn-ghost btn-sm" onclick="toggleTheme()"><i class="ti ti-sun"></i></button>
+    <button class="btn btn-ghost btn-sm" id="walletBtn" onclick="openWalletModal()"><i class="ti ti-wallet"></i> Connect Wallet</button>
+    <button class="btn btn-primary btn-sm" onclick="showListModal()"><i class="ti ti-plus"></i> List NFT</button>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- MARKET HERO -->
+  <div class="market-hero">
+    <h1>Valley Market <span style="font-size:16px;font-weight:500;color:var(--t2);letter-spacing:0">— Multi-Chain NFT Marketplace</span></h1>
+    <p>Aggregated liquidity from OpenSea, Blur, Magic Eden & Satflow. Trades execute on NFT Valley — you never leave.</p>
+    <div class="market-stats">
+      <div class="mstat"><div class="mstat-val">$2.4B</div><div class="mstat-lbl">Total Volume</div></div>
+      <div class="mstat"><div class="mstat-val" style="color:var(--success)">48,291</div><div class="mstat-lbl">Collections Listed</div></div>
+      <div class="mstat"><div class="mstat-val" style="color:var(--acc)">1.2M</div><div class="mstat-lbl">NFTs Available</div></div>
+      <div class="mstat"><div class="mstat-val" style="color:var(--o)">0.5%</div><div class="mstat-lbl">Platform Fee</div></div>
+    </div>
+  </div>
+
+  <!-- FILTERS BAR -->
+  <div class="filters-bar">
+    <div class="chain-filter">
+      <button class="chain-btn active" onclick="filterChain('all',this)">All Chains</button>
+      <button class="chain-btn" onclick="filterChain('eth',this)">Ξ ETH</button>
+      <button class="chain-btn" onclick="filterChain('sol',this)">◎ SOL</button>
+      <button class="chain-btn" onclick="filterChain('btc',this)">₿ Ordinals</button>
+      <button class="chain-btn" onclick="filterChain('base',this)">🔵 Base</button>
+      <button class="chain-btn" onclick="filterChain('bsc',this)">🟡 BSC</button>
+      <button class="chain-btn" onclick="filterChain('ink',this)">🟣 INK</button>
+    </div>
+    <div class="filter-sep"></div>
+    <select class="sort-select" onchange="sortNFTs(this.value)">
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="recent">Recently Listed</option>
+      <option value="popular">Most Popular</option>
+    </select>
+    <input class="search-input" placeholder="🔍 Search NFTs, collections..." oninput="searchNFTs(this.value)" />
+    <div class="view-btns">
+      <button class="view-btn active" onclick="setView('grid',this)" title="Grid view"><i class="ti ti-layout-grid"></i></button>
+      <button class="view-btn" onclick="setView('list',this)" title="List view"><i class="ti ti-list"></i></button>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-filters">
+      <div class="sf-section">
+        <div class="sf-title">Price Range</div>
+        <div class="price-range">
+          <input class="price-input" placeholder="Min" type="number" />
+          <input class="price-input" placeholder="Max" type="number" />
+        </div>
+      </div>
+      <div class="sf-section">
+        <div class="sf-title">Status</div>
+        <label class="checkbox-item"><input type="checkbox" checked /> Buy Now</label>
+        <label class="checkbox-item"><input type="checkbox" /> On Auction</label>
+        <label class="checkbox-item"><input type="checkbox" /> Has Offers</label>
+        <label class="checkbox-item"><input type="checkbox" /> New</label>
+      </div>
+      <div class="sf-section">
+        <div class="sf-title">Source</div>
+        <label class="checkbox-item"><input type="checkbox" checked /> OpenSea</label>
+        <label class="checkbox-item"><input type="checkbox" checked /> Blur</label>
+        <label class="checkbox-item"><input type="checkbox" checked /> Magic Eden</label>
+        <label class="checkbox-item"><input type="checkbox" checked /> Satflow</label>
+        <label class="checkbox-item"><input type="checkbox" checked /> X2Y2</label>
+        <label class="checkbox-item"><input type="checkbox" checked /> LooksRare</label>
+      </div>
+      <div class="sf-section">
+        <div class="sf-title">Rarity</div>
+        <label class="checkbox-item"><input type="checkbox" /> Top 1%</label>
+        <label class="checkbox-item"><input type="checkbox" /> Top 10%</label>
+        <label class="checkbox-item"><input type="checkbox" /> Top 25%</label>
+        <label class="checkbox-item"><input type="checkbox" /> Common</label>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center"><i class="ti ti-filter"></i> Apply Filters</button>
+    </div>
+
+    <!-- NFT GRID -->
+    <div class="nft-area">
+      <div class="category-tabs">
+        <button class="cat-tab active" onclick="setCategory('all',this)">All NFTs</button>
+        <button class="cat-tab" onclick="setCategory('trending',this)">🔥 Trending</button>
+        <button class="cat-tab" onclick="setCategory('new',this)">✨ New</button>
+        <button class="cat-tab" onclick="setCategory('art',this)">🎨 Art</button>
+        <button class="cat-tab" onclick="setCategory('gaming',this)">🎮 Gaming</button>
+        <button class="cat-tab" onclick="setCategory('pfp',this)">👤 PFP</button>
+        <button class="cat-tab" onclick="setCategory('music',this)">🎵 Music</button>
+      </div>
+
+      <div class="nft-grid" id="nftGrid">
+        <!-- NFT Cards generated by JS -->
+      </div>
+
+      <div style="text-align:center;padding:32px 0">
+        <button class="btn btn-ghost" onclick="loadMore()"><i class="ti ti-refresh"></i> Load More NFTs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRENDING COLLECTIONS -->
+  <div class="trending">
+    <div class="section-hdr">
+      <h2>🔥 Trending Collections</h2>
+      <a href="#" class="btn btn-ghost btn-sm">View All <i class="ti ti-arrow-right"></i></a>
+    </div>
+    <table class="collections-table">
+      <thead class="ct-head">
+        <tr><th>#</th><th>Collection</th><th>Floor</th><th>24h Vol</th><th>7d Change</th><th>Items</th><th>Chain</th></tr>
+      </thead>
+      <tbody id="trendingBody">
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- BUY MODAL -->
+<div class="modal-overlay" id="buyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeBuyModal()"><i class="ti ti-x"></i></button>
+    <div id="buyModalContent"></div>
+  </div>
+</div>
+
+<!-- WALLET MODAL -->
+<div class="modal-overlay" id="walletModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeWalletModal()"><i class="ti ti-x"></i></button>
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:20px;font-weight:800;margin-bottom:6px">Connect Wallet</div>
+      <div style="font-size:14px;color:var(--t2)">Connect to buy, sell and trade on Valley Market</div>
+    </div>
+    <button onclick="connectWallet('metamask')" class="wallet-connect-btn" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(246,133,27,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <div style="width:30px;height:30px;border-radius:8px;background:#F6851B;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">M</div>MetaMask <span style="color:var(--t3);font-size:12px;margin-left:auto">ETH · Base · BSC</span>
+    </button>
+    <button onclick="connectWallet('phantom')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(171,159,242,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <div style="width:30px;height:30px;border-radius:8px;background:#AB9FF2;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">P</div>Phantom <span style="color:var(--t3);font-size:12px;margin-left:auto">Solana</span>
+    </button>
+    <button onclick="connectWallet('okx')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(0,0,0,.2);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <div style="width:30px;height:30px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">O</div>OKX Wallet <span style="color:var(--t3);font-size:12px;margin-left:auto">Multi-chain</span>
+    </button>
+    <button onclick="connectWallet('xverse')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(123,47,190,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#7B2FBE,#5A1A9A);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">X</div>Xverse <span style="color:var(--t3);font-size:12px;margin-left:auto">Bitcoin Ordinals</span>
+    </button>
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(51,153,255,.06);border-radius:10px;border:1px solid var(--db);font-size:12px;color:var(--t2);line-height:1.5">
+      <i class="ti ti-shield-check" style="color:var(--success)"></i> NFT Valley never holds your private keys. All trades are executed via smart contracts.
+    </div>
+  </div>
+</div>
+
+<script>
+var walletConnected=false,walletAddress='',currentChain='all',isLight=false;
+
+// NFT Data
+var nftData=[
+  {id:1,name:'Bored Ape #3429',collection:'BAYC',chain:'eth',price:'12.4',unit:'ETH',usd:'$41,200',color:'#627EEA',emoji:'🦍',rarity:'Top 5%',source:'OpenSea',likes:284},
+  {id:2,name:'Azuki #7821',collection:'Azuki',chain:'eth',price:'6.8',unit:'ETH',usd:'$22,600',color:'#FF6B6B',emoji:'🌸',rarity:'Top 12%',source:'Blur',likes:192},
+  {id:3,name:'DeGod #1204',collection:'DeGods',chain:'sol',price:'220',unit:'SOL',usd:'$31,200',color:'#9945FF',emoji:'⚡',rarity:'Top 8%',source:'Magic Eden',likes:341},
+  {id:4,name:'NodeMonke #892',collection:'Node Monkes',chain:'btc',price:'0.18',unit:'BTC',usd:'$17,800',color:'#F7931A',emoji:'🐒',rarity:'Top 3%',source:'Satflow',likes:156},
+  {id:5,name:'Pudgy #5532',collection:'Pudgy Penguins',chain:'eth',price:'18.6',unit:'ETH',usd:'$61,800',color:'#4ECDC4',emoji:'🐧',rarity:'Top 15%',source:'OpenSea',likes:428},
+  {id:6,name:'Mad Lad #3301',collection:'Mad Lads',chain:'sol',price:'180',unit:'SOL',usd:'$25,500',color:'#FFD93D',emoji:'😈',rarity:'Top 20%',source:'Magic Eden',likes:203},
+  {id:7,name:'Bitcoin Puppet #441',collection:'Bitcoin Puppets',chain:'btc',price:'0.24',unit:'BTC',usd:'$23,700',color:'#FF8E53',emoji:'🎭',rarity:'Top 6%',source:'Satflow',likes:177},
+  {id:8,name:'Based Ape #112',collection:'Based Apes',chain:'base',price:'0.8',unit:'ETH',usd:'$2,660',color:'#0052FF',emoji:'🔵',rarity:'Top 18%',source:'OpenSea',likes:89},
+  {id:9,name:'CryptoPunk #7804',collection:'CryptoPunks',chain:'eth',price:'48.2',unit:'ETH',usd:'$160,100',color:'#8FA8F5',emoji:'👓',rarity:'Top 1%',source:'Blur',likes:892},
+  {id:10,name:'Milady #2291',collection:'Milady',chain:'eth',price:'3.2',unit:'ETH',usd:'$10,600',color:'#F8A5C2',emoji:'👗',rarity:'Top 22%',source:'OpenSea',likes:312},
+  {id:11,name:'Tensorian #884',collection:'Tensorians',chain:'sol',price:'95',unit:'SOL',usd:'$13,470',color:'#45B7D1',emoji:'🤖',rarity:'Top 14%',source:'Tensor',likes:145},
+  {id:12,name:'Ink Ghost #201',collection:'Ink Ghosts',chain:'ink',price:'500',unit:'INK',usd:'$1,200',color:'#7B2FBE',emoji:'👻',rarity:'Top 9%',source:'INK DEX',likes:67},
+];
+
+var trendingData=[
+  {rank:1,name:'BAYC',chain:'ETH',chainClass:'eth-badge',floor:'12.4 ETH',vol:'$8.2M',change:'+2.3%',up:true,items:'10,000',color:'#627EEA'},
+  {rank:2,name:'CryptoPunks',chain:'ETH',chainClass:'eth-badge',floor:'48.2 ETH',vol:'$12.1M',change:'+1.1%',up:true,items:'10,000',color:'#8FA8F5'},
+  {rank:3,name:'DeGods',chain:'SOL',chainClass:'sol-badge',floor:'220 SOL',vol:'$5.4M',change:'+4.2%',up:true,items:'10,000',color:'#9945FF'},
+  {rank:4,name:'Pudgy Penguins',chain:'ETH',chainClass:'eth-badge',floor:'18.6 ETH',vol:'$6.8M',change:'+5.4%',up:true,items:'8,888',color:'#4ECDC4'},
+  {rank:5,name:'NodeMonkes',chain:'BTC',chainClass:'btc-badge',floor:'0.18 BTC',vol:'$3.2M',change:'+7.2%',up:true,items:'10,000',color:'#F7931A'},
+  {rank:6,name:'Azuki',chain:'ETH',chainClass:'eth-badge',floor:'6.8 ETH',vol:'$4.1M',change:'-0.8%',up:false,items:'10,000',color:'#FF6B6B'},
+  {rank:7,name:'Mad Lads',chain:'SOL',chainClass:'sol-badge',floor:'180 SOL',vol:'$3.8M',change:'+3.1%',up:true,items:'10,000',color:'#FFD93D'},
+  {rank:8,name:'Bitcoin Puppets',chain:'BTC',chainClass:'btc-badge',floor:'0.24 BTC',vol:'$2.9M',change:'-1.2%',up:false,items:'10,000',color:'#FF8E53'},
+];
+
+var chainBadgeMap={eth:'eth-badge',sol:'sol-badge',btc:'btc-badge',base:'base-badge',bsc:'bsc-badge',ink:'sol-badge'};
+var chainBgMap={eth:'eth-bg',sol:'sol-bg',btc:'btc-bg',base:'base-bg',bsc:'bsc-bg',ink:'ink-bg'};
+var chainLabelMap={eth:'Ethereum',sol:'Solana',btc:'Ordinals',base:'Base',bsc:'BSC',ink:'INK'};
+
+function renderNFTs(data){
+  var grid=document.getElementById('nftGrid');
+  grid.innerHTML=data.map(function(n){
+    var badgeClass=chainBadgeMap[n.chain]||'eth-badge';
+    var bgClass=chainBgMap[n.chain]||'eth-bg';
+    return `<div class="nft-card" onclick="showBuyModal(${n.id})">
+      <div class="nft-img ${bgClass}">
+        <div class="nft-img-bg">${n.emoji}</div>
+        <div class="nft-chain-badge ${badgeClass}">${chainLabelMap[n.chain]}</div>
+        <div class="nft-like" onclick="event.stopPropagation();toggleLike(this)"><i class="ti ti-heart"></i></div>
+      </div>
+      <div class="nft-info">
+        <div class="nft-collection">${n.collection} · ${n.source}</div>
+        <div class="nft-name">${n.name}</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:8px">${n.rarity}</div>
+        <div class="nft-price-row">
+          <div>
+            <div class="nft-price">${n.price} ${n.unit}</div>
+            <div class="nft-usd">${n.usd}</div>
+          </div>
+          <button class="nft-buy-btn" onclick="event.stopPropagation();showBuyModal(${n.id})">Buy Now</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTrending(){
+  var tbody=document.getElementById('trendingBody');
+  tbody.innerHTML=trendingData.map(function(c){
+    return `<tr class="ct-row">
+      <td><span class="rank-num">${c.rank}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="coll-thumb" style="background:${c.color};border-radius:10px;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;font-size:18px">🎨</div>
+          <div><div class="coll-name">${c.name}</div><div class="coll-sub">${c.items} items</div></div>
+        </div>
+      </td>
+      <td style="font-weight:700">${c.floor}</td>
+      <td style="color:var(--t2)">${c.vol}</td>
+      <td class="${c.up?'change-up':'change-down'}">${c.change}</td>
+      <td style="color:var(--t2)">${c.items}</td>
+      <td><span class="nft-chain-badge ${c.chainClass}" style="padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700">${c.chain}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterChain(chain,btn){
+  currentChain=chain;
+  document.querySelectorAll('.chain-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  var filtered=chain==='all'?nftData:nftData.filter(function(n){return n.chain===chain});
+  renderNFTs(filtered);
+}
+
+function sortNFTs(val){
+  var data=currentChain==='all'?[...nftData]:nftData.filter(function(n){return n.chain===currentChain});
+  if(val==='price_asc') data.sort(function(a,b){return parseFloat(a.usd.replace(/[^0-9.]/g,''))-parseFloat(b.usd.replace(/[^0-9.]/g,''))});
+  if(val==='price_desc') data.sort(function(a,b){return parseFloat(b.usd.replace(/[^0-9.]/g,''))-parseFloat(a.usd.replace(/[^0-9.]/g,''))});
+  if(val==='popular') data.sort(function(a,b){return b.likes-a.likes});
+  renderNFTs(data);
+}
+
+function searchNFTs(q){
+  var filtered=nftData.filter(function(n){return n.name.toLowerCase().includes(q.toLowerCase())||n.collection.toLowerCase().includes(q.toLowerCase())});
+  renderNFTs(filtered);
+}
+
+function setCategory(cat,btn){
+  document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  renderNFTs(nftData);
+}
+
+function setView(view,btn){
+  document.querySelectorAll('.view-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  var grid=document.getElementById('nftGrid');
+  if(view==='list'){grid.style.gridTemplateColumns='1fr';}
+  else{grid.style.gridTemplateColumns='';}
+}
+
+function toggleLike(el){
+  el.style.color=el.style.color==='rgb(255, 71, 87)'?'':'#FF4757';
+}
+
+function showBuyModal(id){
+  var n=nftData.find(function(x){return x.id===id});
+  if(!n) return;
+  var bgClass=chainBgMap[n.chain]||'eth-bg';
+  document.getElementById('buyModalContent').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div style="width:72px;height:72px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:36px" class="${bgClass}">${n.emoji}</div>
+      <div>
+        <div style="font-size:12px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px">${n.collection}</div>
+        <div style="font-size:20px;font-weight:800;margin:2px 0">${n.name}</div>
+        <div style="font-size:12px;color:var(--t2)">${n.rarity} · via ${n.source}</div>
+      </div>
+    </div>
+    <div style="background:rgba(51,153,255,.06);border:1px solid var(--db);border-radius:12px;padding:16px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px"><span style="color:var(--t2)">Price</span><span style="font-weight:700;font-size:18px;color:var(--p)">${n.price} ${n.unit}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--t2)">USD Value</span><span>${n.usd}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--t2)">Platform fee (0.5%)</span><span style="color:var(--t2)">Included</span></div>
+      <div style="border-top:1px solid var(--db);padding-top:10px;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--p)">${n.price} ${n.unit}</span></div>
+    </div>
+    <div style="background:rgba(0,214,143,.06);border:1px solid rgba(0,214,143,.2);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--t2);margin-bottom:16px;line-height:1.5">
+      <i class="ti ti-shield-check" style="color:var(--success)"></i> This trade executes on NFT Valley via Reservoir Protocol. Your wallet signs the transaction directly — no custody risk.
+    </div>
+    <button onclick="executeBuy(${n.id})" style="width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(51,153,255,.4)"><i class="ti ti-currency-ethereum"></i> Buy Now — ${n.price} ${n.unit}</button>
+    <button onclick="closeBuyModal()" style="width:100%;padding:11px;border-radius:12px;background:transparent;border:1px solid var(--db2);color:var(--t2);font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px">Cancel</button>
+  `;
+  document.getElementById('buyModal').style.display='flex';
+}
+
+function executeBuy(id){
+  if(!walletConnected){
+    closeBuyModal();
+    setTimeout(function(){openWalletModal();},200);
+    return;
+  }
+  var n=nftData.find(function(x){return x.id===id});
+  // In production: Reservoir SDK buy execution here
+  // reservoir.actions.buyToken({items:[{token:n.contractAddress+':'+n.tokenId}], feesOnTop:[{bps:50,recipient:PLATFORM_WALLET}]})
+  alert('✅ Purchase initiated!\n\nIn production, this would execute via Reservoir Protocol SDK with MetaMask/Phantom signing the transaction on-chain.\n\nYour wallet: '+walletAddress.substring(0,6)+'...\nNFT: '+n.name+'\nPrice: '+n.price+' '+n.unit);
+  closeBuyModal();
+}
+
+function closeBuyModal(){document.getElementById('buyModal').style.display='none';}
+function openWalletModal(){document.getElementById('walletModal').style.display='flex';}
+function closeWalletModal(){document.getElementById('walletModal').style.display='none';}
+
+async function connectWallet(type){
+  try{
+    if(type==='metamask'){
+      if(!window.ethereum) return alert('MetaMask not installed. Visit metamask.io');
+      var accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+      walletAddress=accounts[0];
+    } else if(type==='phantom'){
+      if(!window.solana||!window.solana.isPhantom) return alert('Phantom not installed. Visit phantom.app');
+      var resp=await window.solana.connect();
+      walletAddress=resp.publicKey.toString();
+    } else if(type==='okx'){
+      if(!window.okxwallet) return alert('OKX Wallet not installed. Visit okx.com/web3');
+      var r=await window.okxwallet.request({method:'eth_requestAccounts'});
+      walletAddress=r[0];
+    } else {
+      alert('Install Xverse from xverse.app for Bitcoin Ordinals trading.');
+      return;
+    }
+    walletConnected=true;
+    closeWalletModal();
+    var short=walletAddress.substring(0,6)+'...'+walletAddress.substring(walletAddress.length-4);
+    var btn=document.getElementById('walletBtn');
+    btn.innerHTML='<i class="ti ti-wallet"></i> '+short;
+    btn.style.borderColor='var(--success)';
+    btn.style.color='var(--success)';
+  } catch(e){
+    if(e.code===4001) alert('Connection rejected.');
+    else alert('Error: '+(e.message||e));
+  }
+}
+
+function showListModal(){
+  if(!walletConnected){openWalletModal();return;}
+  alert('List NFT feature — connect wallet first, then paste your NFT contract address and token ID to list for sale on Valley Market.\n\nIn production: Reservoir SDK listing API');
+}
+
+function loadMore(){
+  alert('Loading more NFTs from Reservoir API...\n\nIn production: fetch next page from https://api.reservoir.tools/tokens/v6?limit=20&continuation=NEXT_TOKEN');
+}
+
+function toggleTheme(){isLight=!isLight;document.body.classList.toggle('light',isLight);}
+
+[document.getElementById('buyModal'),document.getElementById('walletModal')].forEach(function(m){
+  m.addEventListener('click',function(e){if(e.target===m){m.style.display='none';}});
+});
+
+// Init
+renderNFTs(nftData);
+renderTrending();
+</script>
+</body>
+</html>
