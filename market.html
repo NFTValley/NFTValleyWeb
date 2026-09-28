@@ -280,60 +280,312 @@ var walletConnected=false,walletAddress='',currentChain='all';
 // ── Canvas-based avatar generator — ALWAYS renders, no CORS issues ──────────
 // Each collection has a unique color scheme and pattern drawn to canvas
 var collectionStyles={
-  'BAYC':        {bg:['#1a1a2e','#16213e'],fg:'#F7931A',icon:'🦍',text:'BAYC'},
-  'CryptoPunks': {bg:['#2d1b69','#1a0f3d'],fg:'#8FA8F5',icon:'👾',text:'PUNK'},
-  'Pudgy Penguins':{bg:['#0077b6','#00b4d8'],fg:'#fff',icon:'🐧',text:'PUDGY'},
-  'Azuki':       {bg:['#1a0a0a','#3d0000'],fg:'#FF6B6B',icon:'🌸',text:'AZUKI'},
-  'Milady':      {bg:['#1a0a2e','#2d1060'],fg:'#F8A5C2',icon:'👗',text:'MILADY'},
-  'DeGods':      {bg:['#0a0a1a','#1a1a3d'],fg:'#6C5CE7',icon:'⚡',text:'DEGODS'},
-  'Doodles':     {bg:['#1a1500','#3d3200'],fg:'#FFD93D',icon:'🌈',text:'DOODLE'},
-  'CloneX':      {bg:['#001a1a','#003d3d'],fg:'#00D68F',icon:'🤖',text:'CLONEX'},
-  'Moonbirds':   {bg:['#0a0a20','#1a1a40'],fg:'#9B59B6',icon:'🦅',text:'MOON'},
-  'Mad Lads':    {bg:['#1a0a00','#3d2000'],fg:'#FFB347',icon:'😈',text:'MAD'},
-  'Tensorians':  {bg:['#001a30','#003060'],fg:'#45B7D1',icon:'🤖',text:'TENSOR'},
-  'Okay Bears':  {bg:['#0a1a00','#1a3d00'],fg:'#8BC34A',icon:'🐻',text:'OKAY'},
-  'Famous Fox':  {bg:['#1a1000','#3d2800'],fg:'#FF8C00',icon:'🦊',text:'FOX'},
-  'Node Monkes': {bg:['#1a0800','#3d1500'],fg:'#F7931A',icon:'🐒',text:'NODE'},
-  'Bitcoin Puppets':{bg:['#1a0a00','#3d1a00'],fg:'#FF8E53',icon:'🎭',text:'PUPPET'},
-  'Based Apes':  {bg:['#000a1a','#001a3d'],fg:'#0088FF',icon:'🔵',text:'BASE'},
-  'BNB Apes':    {bg:['#1a1500','#3d3000'],fg:'#F3BA2F',icon:'🟡',text:'BNB'},
-  'Ink Ghosts':  {bg:['#0a001a','#1a003d'],fg:'#BF7FFF',icon:'👻',text:'INK'},
-  'Arc Genesis': {bg:['#001a2e','#00304d'],fg:'#00C8FF',icon:'⬡',text:'ARC'},
-  'Circle Punks':{bg:['#001428','#002244'],fg:'#00A8FF',icon:'🔵',text:'CIRCLE'},
+  'BAYC':          {bg:['#1a1a2e','#16213e'],fg:'#F7931A',shape:'ape',text:'BAYC'},
+  'CryptoPunks':   {bg:['#2d1b69','#1a0f3d'],fg:'#8FA8F5',shape:'punk',text:'PUNK'},
+  'Pudgy Penguins':{bg:['#0077b6','#00b4d8'],fg:'#ffffff',shape:'penguin',text:'PUDGY'},
+  'Azuki':         {bg:['#3d0000','#1a0000'],fg:'#FF6B6B',shape:'flower',text:'AZUKI'},
+  'Milady':        {bg:['#2d1060','#1a0a2e'],fg:'#F8A5C2',shape:'dress',text:'MILADY'},
+  'DeGods':        {bg:['#0a0a1a','#1a1a3d'],fg:'#6C5CE7',shape:'bolt',text:'DEGODS'},
+  'Doodles':       {bg:['#3d3200','#1a1500'],fg:'#FFD93D',shape:'rainbow',text:'DOODLE'},
+  'CloneX':        {bg:['#001a1a','#003d3d'],fg:'#00D68F',shape:'robot',text:'CLONEX'},
+  'Moonbirds':     {bg:['#0a0a20','#1a1a40'],fg:'#9B59B6',shape:'bird',text:'MOON'},
+  'Mad Lads':      {bg:['#3d2000','#1a0a00'],fg:'#FFB347',shape:'demon',text:'MAD'},
+  'Tensorians':    {bg:['#001a30','#003060'],fg:'#45B7D1',shape:'robot',text:'TENSOR'},
+  'Okay Bears':    {bg:['#0a1a00','#1a3d00'],fg:'#8BC34A',shape:'bear',text:'OKAY'},
+  'Famous Fox':    {bg:['#3d2800','#1a1000'],fg:'#FF8C00',shape:'fox',text:'FOX'},
+  'Node Monkes':   {bg:['#3d1500','#1a0800'],fg:'#F7931A',shape:'monkey',text:'NODE'},
+  'Bitcoin Puppets':{bg:['#3d1a00','#1a0a00'],fg:'#FF8E53',shape:'mask',text:'PUPPET'},
+  'Based Apes':    {bg:['#001a3d','#000a1a'],fg:'#0088FF',shape:'circle',text:'BASE'},
+  'BNB Apes':      {bg:['#3d3000','#1a1500'],fg:'#F3BA2F',shape:'circle',text:'BNB'},
+  'Ink Ghosts':    {bg:['#1a003d','#0a001a'],fg:'#BF7FFF',shape:'ghost',text:'INK'},
+  'Arc Genesis':   {bg:['#001a2e','#00304d'],fg:'#00C8FF',shape:'hex',text:'ARC'},
+  'Circle Punks':  {bg:['#001428','#002244'],fg:'#00A8FF',shape:'circle',text:'CIRCLE'},
+  'Lil Pudgys':    {bg:['#005580','#0077b6'],fg:'#ffffff',shape:'penguin',text:'PUDGY'},
+  'SMB Gen2':      {bg:['#200020','#400040'],fg:'#FF69B4',shape:'monkey',text:'SMB'},
+  'Ordinal Dragons':{bg:['#1a0000','#400000'],fg:'#FF4500',shape:'diamond',text:'DRAGON'},
+  'Runestones':    {bg:['#1a1000','#3d2800'],fg:'#C8A000',shape:'diamond',text:'RUNE'},
+  'Base Dawgz':    {bg:['#001540','#000a20'],fg:'#4488FF',shape:'circle',text:'DAWGZ'},
+  'Stable Apes':   {bg:['#001a1a','#003030'],fg:'#00E5CC',shape:'ape',text:'STABLE'},
+  'Arc Genesis':   {bg:['#001a2e','#00304d'],fg:'#00C8FF',shape:'hex',text:'ARC'},
+  'Circle Punks':  {bg:['#001428','#002244'],fg:'#00A8FF',shape:'punk',text:'CIRCLE'},
 };
 
+// Draw a shape using pure canvas paths — no emoji, works on ALL browsers
+function drawShape(ctx,shape,x,y,size,color){
+  ctx.fillStyle=color;
+  ctx.strokeStyle=color;
+  ctx.lineWidth=size*0.06;
+  switch(shape){
+    case 'ape':
+      // Head circle
+      ctx.beginPath();ctx.arc(x,y-size*0.05,size*0.38,0,Math.PI*2);ctx.fill();
+      // Ears
+      ctx.beginPath();ctx.arc(x-size*0.32,y-size*0.1,size*0.14,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.32,y-size*0.1,size*0.14,0,Math.PI*2);ctx.fill();
+      // Face patch
+      ctx.fillStyle=color+'88';
+      ctx.beginPath();ctx.ellipse(x,y+size*0.05,size*0.22,size*0.18,0,0,Math.PI*2);ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.13,y-size*0.1,size*0.06,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.13,y-size*0.1,size*0.06,0,Math.PI*2);ctx.fill();
+      break;
+    case 'punk':
+      // Pixel head
+      ctx.fillRect(x-size*0.25,y-size*0.35,size*0.5,size*0.5);
+      // Mohawk
+      ctx.fillStyle='#FF4500';
+      ctx.fillRect(x-size*0.08,y-size*0.58,size*0.16,size*0.28);
+      // Eyes (pixel)
+      ctx.fillStyle='#000';
+      ctx.fillRect(x-size*0.16,y-size*0.2,size*0.1,size*0.1);
+      ctx.fillRect(x+size*0.06,y-size*0.2,size*0.1,size*0.1);
+      break;
+    case 'penguin':
+      // Body
+      ctx.beginPath();ctx.ellipse(x,y+size*0.1,size*0.28,size*0.38,0,0,Math.PI*2);ctx.fill();
+      // Head
+      ctx.beginPath();ctx.arc(x,y-size*0.22,size*0.22,0,Math.PI*2);ctx.fill();
+      // Belly
+      ctx.fillStyle='#fff';
+      ctx.beginPath();ctx.ellipse(x,y+size*0.1,size*0.16,size*0.26,0,0,Math.PI*2);ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.09,y-size*0.26,size*0.05,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.09,y-size*0.26,size*0.05,0,Math.PI*2);ctx.fill();
+      // Beak
+      ctx.fillStyle='#FFA500';
+      ctx.beginPath();ctx.moveTo(x,y-size*0.16);ctx.lineTo(x-size*0.07,y-size*0.1);ctx.lineTo(x+size*0.07,y-size*0.1);ctx.closePath();ctx.fill();
+      break;
+    case 'flower':
+      // Petals
+      for(var a=0;a<6;a++){
+        var ang=a*Math.PI/3;
+        ctx.beginPath();
+        ctx.ellipse(x+Math.cos(ang)*size*0.22,y+Math.sin(ang)*size*0.22,size*0.14,size*0.2,ang,0,Math.PI*2);
+        ctx.fill();
+      }
+      // Center
+      ctx.fillStyle='#FFD700';
+      ctx.beginPath();ctx.arc(x,y,size*0.16,0,Math.PI*2);ctx.fill();
+      break;
+    case 'bolt':
+      // Lightning bolt
+      ctx.beginPath();
+      ctx.moveTo(x+size*0.12,y-size*0.42);
+      ctx.lineTo(x-size*0.1,y+size*0.04);
+      ctx.lineTo(x+size*0.06,y+size*0.04);
+      ctx.lineTo(x-size*0.12,y+size*0.44);
+      ctx.lineTo(x+size*0.1,y-size*0.04);
+      ctx.lineTo(x-size*0.06,y-size*0.04);
+      ctx.closePath();ctx.fill();
+      break;
+    case 'rainbow':
+      // Rainbow arcs
+      var colors=['#FF0000','#FF7700','#FFFF00','#00CC00','#0000FF','#8B00FF'];
+      for(var ri=0;ri<colors.length;ri++){
+        ctx.strokeStyle=colors[ri];ctx.lineWidth=size*0.065;
+        ctx.beginPath();ctx.arc(x,y+size*0.1,(size*0.38)-(ri*size*0.065),Math.PI,0);ctx.stroke();
+      }
+      break;
+    case 'robot':
+      // Body rectangle
+      ctx.fillRect(x-size*0.22,y-size*0.08,size*0.44,size*0.42);
+      // Head
+      ctx.fillRect(x-size*0.18,y-size*0.42,size*0.36,size*0.32);
+      // Eye visor
+      ctx.fillStyle='#000';
+      ctx.fillRect(x-size*0.14,y-size*0.34,size*0.28,size*0.1);
+      // Eye LEDs
+      ctx.fillStyle='#00FF88';
+      ctx.beginPath();ctx.arc(x-size*0.08,y-size*0.29,size*0.04,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.08,y-size*0.29,size*0.04,0,Math.PI*2);ctx.fill();
+      // Antenna
+      ctx.fillStyle=color;
+      ctx.fillRect(x-size*0.03,y-size*0.58,size*0.06,size*0.18);
+      ctx.beginPath();ctx.arc(x,y-size*0.6,size*0.06,0,Math.PI*2);ctx.fill();
+      break;
+    case 'bird':
+      // Body
+      ctx.beginPath();ctx.ellipse(x,y+size*0.1,size*0.2,size*0.28,0,0,Math.PI*2);ctx.fill();
+      // Head
+      ctx.beginPath();ctx.arc(x,y-size*0.2,size*0.2,0,Math.PI*2);ctx.fill();
+      // Wing
+      ctx.beginPath();ctx.ellipse(x-size*0.2,y+size*0.06,size*0.14,size*0.22,-0.4,0,Math.PI*2);ctx.fill();
+      // Eye
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x+size*0.08,y-size*0.24,size*0.05,0,Math.PI*2);ctx.fill();
+      break;
+    case 'demon':
+      // Face
+      ctx.beginPath();ctx.arc(x,y,size*0.34,0,Math.PI*2);ctx.fill();
+      // Horns
+      ctx.beginPath();ctx.moveTo(x-size*0.22,y-size*0.28);ctx.lineTo(x-size*0.32,y-size*0.52);ctx.lineTo(x-size*0.12,y-size*0.28);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(x+size*0.22,y-size*0.28);ctx.lineTo(x+size*0.32,y-size*0.52);ctx.lineTo(x+size*0.12,y-size*0.28);ctx.closePath();ctx.fill();
+      // Eyes
+      ctx.fillStyle='#FF0000';
+      ctx.beginPath();ctx.arc(x-size*0.12,y-size*0.04,size*0.08,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.12,y-size*0.04,size*0.08,0,Math.PI*2);ctx.fill();
+      // Smile
+      ctx.strokeStyle='#000';ctx.lineWidth=size*0.05;
+      ctx.beginPath();ctx.arc(x,y+size*0.06,size*0.14,0.2,Math.PI-0.2);ctx.stroke();
+      break;
+    case 'bear':
+      // Head
+      ctx.beginPath();ctx.arc(x,y,size*0.32,0,Math.PI*2);ctx.fill();
+      // Ears
+      ctx.beginPath();ctx.arc(x-size*0.26,y-size*0.26,size*0.12,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.26,y-size*0.26,size*0.12,0,Math.PI*2);ctx.fill();
+      // Snout
+      ctx.fillStyle=color+'88';
+      ctx.beginPath();ctx.ellipse(x,y+size*0.1,size*0.18,size*0.14,0,0,Math.PI*2);ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.12,y-size*0.06,size*0.06,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.12,y-size*0.06,size*0.06,0,Math.PI*2);ctx.fill();
+      // Nose
+      ctx.beginPath();ctx.arc(x,y+size*0.06,size*0.04,0,Math.PI*2);ctx.fill();
+      break;
+    case 'fox':
+      // Head triangle
+      ctx.beginPath();ctx.moveTo(x,y-size*0.38);ctx.lineTo(x-size*0.34,y+size*0.18);ctx.lineTo(x+size*0.34,y+size*0.18);ctx.closePath();ctx.fill();
+      // Ears
+      ctx.beginPath();ctx.moveTo(x-size*0.28,y-size*0.18);ctx.lineTo(x-size*0.42,y-size*0.48);ctx.lineTo(x-size*0.14,y-size*0.22);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(x+size*0.28,y-size*0.18);ctx.lineTo(x+size*0.42,y-size*0.48);ctx.lineTo(x+size*0.14,y-size*0.22);ctx.closePath();ctx.fill();
+      // White face
+      ctx.fillStyle='#fff';
+      ctx.beginPath();ctx.ellipse(x,y+size*0.02,size*0.18,size*0.22,0,0,Math.PI*2);ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.1,y-size*0.1,size*0.05,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.1,y-size*0.1,size*0.05,0,Math.PI*2);ctx.fill();
+      break;
+    case 'monkey':
+      // Head
+      ctx.beginPath();ctx.arc(x,y-size*0.08,size*0.3,0,Math.PI*2);ctx.fill();
+      // Ears
+      ctx.beginPath();ctx.arc(x-size*0.3,y-size*0.08,size*0.1,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.3,y-size*0.08,size*0.1,0,Math.PI*2);ctx.fill();
+      // Face oval
+      ctx.fillStyle=color+'66';
+      ctx.beginPath();ctx.ellipse(x,y+size*0.02,size*0.2,size*0.18,0,0,Math.PI*2);ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.1,y-size*0.12,size*0.05,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.1,y-size*0.12,size*0.05,0,Math.PI*2);ctx.fill();
+      // Nostrils
+      ctx.beginPath();ctx.arc(x-size*0.05,y+size*0.04,size*0.03,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.05,y+size*0.04,size*0.03,0,Math.PI*2);ctx.fill();
+      break;
+    case 'mask':
+      // Theatre masks
+      ctx.beginPath();ctx.arc(x-size*0.12,y,size*0.24,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=color+'aa';
+      ctx.beginPath();ctx.arc(x+size*0.12,y+size*0.04,size*0.22,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.18,y-size*0.06,size*0.05,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x-size*0.06,y-size*0.06,size*0.05,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='#000';ctx.lineWidth=size*0.04;
+      ctx.beginPath();ctx.arc(x-size*0.12,y+size*0.06,size*0.1,0,Math.PI);ctx.stroke();
+      break;
+    case 'ghost':
+      // Body
+      ctx.beginPath();
+      ctx.arc(x,y-size*0.1,size*0.28,Math.PI,0);
+      ctx.lineTo(x+size*0.28,y+size*0.2);
+      ctx.quadraticCurveTo(x+size*0.2,y+size*0.32,x+size*0.12,y+size*0.2);
+      ctx.quadraticCurveTo(x,y+size*0.36,x-size*0.12,y+size*0.2);
+      ctx.quadraticCurveTo(x-size*0.2,y+size*0.32,x-size*0.28,y+size*0.2);
+      ctx.closePath();ctx.fill();
+      // Eyes
+      ctx.fillStyle='#000';
+      ctx.beginPath();ctx.arc(x-size*0.1,y-size*0.12,size*0.07,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+size*0.1,y-size*0.12,size*0.07,0,Math.PI*2);ctx.fill();
+      break;
+    case 'hex':
+      // Hexagon
+      ctx.beginPath();
+      for(var hi=0;hi<6;hi++){
+        var ha=hi*Math.PI/3-Math.PI/6;
+        if(hi===0) ctx.moveTo(x+Math.cos(ha)*size*0.36,y+Math.sin(ha)*size*0.36);
+        else ctx.lineTo(x+Math.cos(ha)*size*0.36,y+Math.sin(ha)*size*0.36);
+      }
+      ctx.closePath();ctx.stroke();
+      ctx.lineWidth=size*0.04;
+      ctx.beginPath();
+      for(var hi2=0;hi2<6;hi2++){
+        var ha2=hi2*Math.PI/3-Math.PI/6;
+        if(hi2===0) ctx.moveTo(x+Math.cos(ha2)*size*0.22,y+Math.sin(ha2)*size*0.22);
+        else ctx.lineTo(x+Math.cos(ha2)*size*0.22,y+Math.sin(ha2)*size*0.22);
+      }
+      ctx.closePath();ctx.stroke();
+      // Center dot
+      ctx.fillStyle=color;
+      ctx.beginPath();ctx.arc(x,y,size*0.08,0,Math.PI*2);ctx.fill();
+      break;
+    case 'diamond':
+      ctx.beginPath();
+      ctx.moveTo(x,y-size*0.4);ctx.lineTo(x+size*0.3,y);
+      ctx.lineTo(x,y+size*0.4);ctx.lineTo(x-size*0.3,y);
+      ctx.closePath();ctx.fill();
+      ctx.fillStyle=color+'66';
+      ctx.beginPath();
+      ctx.moveTo(x,y-size*0.4);ctx.lineTo(x+size*0.3,y);ctx.lineTo(x,y);ctx.closePath();ctx.fill();
+      break;
+    case 'dress':
+      // Dress silhouette
+      ctx.beginPath();
+      ctx.moveTo(x-size*0.12,y-size*0.38);ctx.lineTo(x+size*0.12,y-size*0.38);
+      ctx.lineTo(x+size*0.28,y+size*0.38);ctx.lineTo(x-size*0.28,y+size*0.38);
+      ctx.closePath();ctx.fill();
+      // Neckline
+      ctx.fillStyle=color+'88';
+      ctx.beginPath();ctx.arc(x,y-size*0.38,size*0.12,0,Math.PI*2);ctx.fill();
+      break;
+    default:
+      // Circle fallback
+      ctx.beginPath();ctx.arc(x,y,size*0.34,0,Math.PI*2);ctx.fill();
+      // Inner ring
+      ctx.strokeStyle=color+'88';ctx.lineWidth=size*0.06;
+      ctx.beginPath();ctx.arc(x,y,size*0.2,0,Math.PI*2);ctx.stroke();
+      break;
+  }
+}
+
 function drawNFTCanvas(canvas,collection,tokenNum){
-  var s=collectionStyles[collection]||{bg:['#1a1a3a','#0d0d24'],fg:'#8B7FF0',icon:'🖼️',text:'NFT'};
+  var s=collectionStyles[collection]||{bg:['#1a1a3a','#0d0d24'],fg:'#8B7FF0',shape:'circle',text:'NFT'};
   var ctx=canvas.getContext('2d');
   var w=canvas.width,h=canvas.height;
   var grad=ctx.createLinearGradient(0,0,w,h);
   grad.addColorStop(0,s.bg[0]);grad.addColorStop(1,s.bg[1]);
   ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
-  // Grid pattern
-  ctx.strokeStyle=s.fg+'22';ctx.lineWidth=1;
+  // Subtle grid
+  ctx.strokeStyle=s.fg+'18';ctx.lineWidth=1;
   for(var i=0;i<w;i+=20){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,h);ctx.stroke();}
   for(var j=0;j<h;j+=20){ctx.beginPath();ctx.moveTo(0,j);ctx.lineTo(w,j);ctx.stroke();}
-  // Main emoji
-  ctx.font=Math.floor(w*0.38)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText(s.icon,w/2,h*0.42);
+  // Draw collection shape
+  drawShape(ctx,s.shape||'circle',w/2,h*0.42,w*0.7,s.fg);
   // Token number badge
-  ctx.fillStyle=s.fg+'33';ctx.beginPath();ctx.roundRect(w*0.1,h*0.72,w*0.8,h*0.2,6);ctx.fill();
-  ctx.fillStyle=s.fg;ctx.font='bold '+Math.floor(w*0.1)+'px Inter,sans-serif';
+  ctx.fillStyle=s.fg+'28';
+  if(ctx.roundRect) ctx.roundRect(w*0.08,h*0.72,w*0.84,h*0.2,6);
+  else ctx.rect(w*0.08,h*0.72,w*0.84,h*0.2);
+  ctx.fill();
+  ctx.fillStyle=s.fg;ctx.font='bold '+Math.floor(w*0.1)+'px Arial,sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillText('#'+tokenNum,w/2,h*0.82);
   // Collection label top
-  ctx.fillStyle=s.fg+'88';ctx.font=Math.floor(w*0.08)+'px Inter,sans-serif';
-  ctx.fillText(s.text,w/2,h*0.1);
+  ctx.fillStyle=s.fg+'90';ctx.font=Math.floor(w*0.08)+'px Arial,sans-serif';
+  ctx.fillText(s.text,w/2,h*0.08);
 }
 
 function drawThumbCanvas(canvas,collection){
-  var s=collectionStyles[collection]||{bg:['#1a1a3a','#0d0d24'],fg:'#8B7FF0',icon:'🖼️'};
+  var s=collectionStyles[collection]||{bg:['#1a1a3a','#0d0d24'],fg:'#8B7FF0',shape:'circle',text:'?'};
   var ctx=canvas.getContext('2d');
   var w=canvas.width,h=canvas.height;
   var grad=ctx.createLinearGradient(0,0,w,h);
   grad.addColorStop(0,s.bg[0]);grad.addColorStop(1,s.bg[1]);
   ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
-  ctx.font=Math.floor(w*0.55)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText(s.icon,w/2,h/2);
+  drawShape(ctx,s.shape||'circle',w/2,h/2,w*0.8,s.fg);
 }
 
 // NFT data — real Sept 2026 prices
