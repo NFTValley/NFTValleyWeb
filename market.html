@@ -588,41 +588,70 @@ function drawThumbCanvas(canvas,collection){
   drawShape(ctx,s.shape||'circle',w/2,h/2,w*0.8,s.fg);
 }
 
-// NFT data — real Sept 2026 prices
+// NFT data — real Sept 2026 prices + real image URLs via CORS proxy
+// Using corsproxy.io which adds Access-Control-Allow-Origin:* to any URL
+var PROXY='https://corsproxy.io/?url=';
 var nftData=[
-  {id:1,name:'Bored Ape #3429',collection:'BAYC',chain:'eth',price:'10.2',unit:'ETH',usd:'$33,900',rarity:'Top 5%',source:'OpenSea',likes:284,token:'3429'},
-  {id:2,name:'CryptoPunk #7804',collection:'CryptoPunks',chain:'eth',price:'22.4',unit:'ETH',usd:'$74,400',rarity:'Top 1%',source:'Blur',likes:892,token:'7804'},
-  {id:3,name:'Pudgy Penguin #5532',collection:'Pudgy Penguins',chain:'eth',price:'3.8',unit:'ETH',usd:'$12,640',rarity:'Top 15%',source:'OpenSea',likes:428,token:'5532'},
-  {id:4,name:'Azuki #7821',collection:'Azuki',chain:'eth',price:'8.1',unit:'ETH',usd:'$26,900',rarity:'Top 12%',source:'Blur',likes:192,token:'7821'},
-  {id:5,name:'Milady #2291',collection:'Milady',chain:'eth',price:'3.9',unit:'ETH',usd:'$12,950',rarity:'Top 22%',source:'OpenSea',likes:312,token:'2291'},
-  {id:6,name:'DeGod #1204',collection:'DeGods',chain:'eth',price:'0.16',unit:'ETH',usd:'$531',rarity:'Top 8%',source:'Blur',likes:341,token:'1204'},
-  {id:7,name:'Doodle #8914',collection:'Doodles',chain:'eth',price:'2.1',unit:'ETH',usd:'$6,980',rarity:'Top 18%',source:'OpenSea',likes:224,token:'8914'},
-  {id:8,name:'CloneX #11421',collection:'CloneX',chain:'eth',price:'1.9',unit:'ETH',usd:'$6,310',rarity:'Top 9%',source:'OpenSea',likes:189,token:'11421'},
-  {id:9,name:'Moonbird #6804',collection:'Moonbirds',chain:'eth',price:'1.4',unit:'ETH',usd:'$4,650',rarity:'Top 11%',source:'Blur',likes:167,token:'6804'},
-  {id:10,name:'Mad Lad #3301',collection:'Mad Lads',chain:'sol',price:'48.9',unit:'SOL',usd:'$6,920',rarity:'Top 20%',source:'Tensor',likes:203,token:'3301'},
-  {id:11,name:'Tensorian #884',collection:'Tensorians',chain:'sol',price:'8.5',unit:'SOL',usd:'$1,200',rarity:'Top 14%',source:'Tensor',likes:145,token:'884'},
-  {id:12,name:'Okay Bear #3841',collection:'Okay Bears',chain:'sol',price:'28',unit:'SOL',usd:'$3,960',rarity:'Top 13%',source:'Magic Eden',likes:211,token:'3841'},
-  {id:13,name:'Famous Fox #2241',collection:'Famous Fox',chain:'sol',price:'22',unit:'SOL',usd:'$3,120',rarity:'Top 8%',source:'Magic Eden',likes:178,token:'2241'},
-  {id:14,name:'NodeMonke #892',collection:'Node Monkes',chain:'btc',price:'0.13',unit:'BTC',usd:'$12,820',rarity:'Top 3%',source:'Satflow',likes:156,token:'892'},
-  {id:15,name:'Bitcoin Puppet #441',collection:'Bitcoin Puppets',chain:'btc',price:'0.09',unit:'BTC',usd:'$8,880',rarity:'Top 6%',source:'Satflow',likes:177,token:'441'},
-  {id:16,name:'Based Ape #112',collection:'Based Apes',chain:'base',price:'0.8',unit:'ETH',usd:'$2,660',rarity:'Top 18%',source:'OpenSea',likes:89,token:'112'},
-  {id:17,name:'BNB Ape #2201',collection:'BNB Apes',chain:'bsc',price:'1.2',unit:'BNB',usd:'$800',rarity:'Top 16%',source:'OpenSea',likes:55,token:'2201'},
-  {id:18,name:'Ink Ghost #201',collection:'Ink Ghosts',chain:'ink',price:'500',unit:'INK',usd:'$1,200',rarity:'Top 9%',source:'INK DEX',likes:67,token:'201'},
-  {id:19,name:'Arc Genesis #001',collection:'Arc Genesis',chain:'arc',price:'120',unit:'USDC',usd:'$120',rarity:'Top 1%',source:'Arc Native',likes:421,token:'001'},
-  {id:20,name:'Circle Punk #088',collection:'Circle Punks',chain:'arc',price:'80',unit:'USDC',usd:'$80',rarity:'Top 5%',source:'Arc Native',likes:312,token:'088'},
+  {id:1,name:'Bored Ape #3429',collection:'BAYC',chain:'eth',price:'10.2',unit:'ETH',usd:'$33,900',rarity:'Top 5%',source:'OpenSea',likes:284,token:'3429',
+   img:PROXY+'https://ipfs.io/ipfs/QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6mQ'},
+  {id:2,name:'CryptoPunk #7804',collection:'CryptoPunks',chain:'eth',price:'22.4',unit:'ETH',usd:'$74,400',rarity:'Top 1%',source:'Blur',likes:892,token:'7804',
+   img:PROXY+'https://www.larvalabs.com/public/images/cryptopunks/punk7804.png'},
+  {id:3,name:'Pudgy Penguin #5532',collection:'Pudgy Penguins',chain:'eth',price:'3.8',unit:'ETH',usd:'$12,640',rarity:'Top 15%',source:'OpenSea',likes:428,token:'5532',
+   img:PROXY+'https://ipfs.io/ipfs/QmNf1UsmdGaMbpatQ6toXSkzDpizaGmC9zfunCyoz1enD5/5532.png'},
+  {id:4,name:'Azuki #7821',collection:'Azuki',chain:'eth',price:'8.1',unit:'ETH',usd:'$26,900',rarity:'Top 12%',source:'Blur',likes:192,token:'7821',
+   img:PROXY+'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/7821.png'},
+  {id:5,name:'Milady #2291',collection:'Milady',chain:'eth',price:'3.9',unit:'ETH',usd:'$12,950',rarity:'Top 22%',source:'OpenSea',likes:312,token:'2291',
+   img:PROXY+'https://ipfs.io/ipfs/QmV8e1YBVJFbq3X1H5EZBJKYMEy2VnRfnqHkmYiXB6E5WD/2291.png'},
+  {id:6,name:'DeGod #1204',collection:'DeGods',chain:'eth',price:'0.16',unit:'ETH',usd:'$531',rarity:'Top 8%',source:'Blur',likes:341,token:'1204',
+   img:PROXY+'https://metadata.degods.com/g/1204-dead.png'},
+  {id:7,name:'Doodle #8914',collection:'Doodles',chain:'eth',price:'2.1',unit:'ETH',usd:'$6,980',rarity:'Top 18%',source:'OpenSea',likes:224,token:'8914',
+   img:PROXY+'https://ipfs.io/ipfs/QmPMc4tcBsMqLRuCQtPmPe84bpSjrC3Ky7t3JWuHXYB5vX/8914.png'},
+  {id:8,name:'CloneX #11421',collection:'CloneX',chain:'eth',price:'1.9',unit:'ETH',usd:'$6,310',rarity:'Top 9%',source:'OpenSea',likes:189,token:'11421',
+   img:PROXY+'https://ipfs.io/ipfs/QmYmSSQMHaKkByCP1kRyGrGf5FuVaxbnFJEDMT5LqTMSTS/11421.png'},
+  {id:9,name:'Moonbird #6804',collection:'Moonbirds',chain:'eth',price:'1.4',unit:'ETH',usd:'$4,650',rarity:'Top 11%',source:'Blur',likes:167,token:'6804',
+   img:PROXY+'https://live---metadata-5covpqijaa-uc.a.run.app/images/6804'},
+  {id:10,name:'Mad Lad #3301',collection:'Mad Lads',chain:'sol',price:'48.9',unit:'SOL',usd:'$6,920',rarity:'Top 20%',source:'Tensor',likes:203,token:'3301',
+   img:PROXY+'https://madlads.s3.us-west-2.amazonaws.com/images/3301.png'},
+  {id:11,name:'Tensorian #884',collection:'Tensorians',chain:'sol',price:'8.5',unit:'SOL',usd:'$1,200',rarity:'Top 14%',source:'Tensor',likes:145,token:'884',
+   img:''},
+  {id:12,name:'Okay Bear #3841',collection:'Okay Bears',chain:'sol',price:'28',unit:'SOL',usd:'$3,960',rarity:'Top 13%',source:'Magic Eden',likes:211,token:'3841',
+   img:PROXY+'https://bafybeictt4g7iawvoq7rn3dtkavb2yqnxm3l6l5hccbbnaqn5epimrk3bu.ipfs.nftstorage.link/3841.png'},
+  {id:13,name:'Famous Fox #2241',collection:'Famous Fox',chain:'sol',price:'22',unit:'SOL',usd:'$3,120',rarity:'Top 8%',source:'Magic Eden',likes:178,token:'2241',
+   img:PROXY+'https://famousfoxes.com/hd/2241.png'},
+  {id:14,name:'NodeMonke #892',collection:'Node Monkes',chain:'btc',price:'0.13',unit:'BTC',usd:'$12,820',rarity:'Top 3%',source:'Satflow',likes:156,token:'892',
+   img:''},
+  {id:15,name:'Bitcoin Puppet #441',collection:'Bitcoin Puppets',chain:'btc',price:'0.09',unit:'BTC',usd:'$8,880',rarity:'Top 6%',source:'Satflow',likes:177,token:'441',
+   img:''},
+  {id:16,name:'Based Ape #112',collection:'Based Apes',chain:'base',price:'0.8',unit:'ETH',usd:'$2,660',rarity:'Top 18%',source:'OpenSea',likes:89,token:'112',
+   img:''},
+  {id:17,name:'BNB Ape #2201',collection:'BNB Apes',chain:'bsc',price:'1.2',unit:'BNB',usd:'$800',rarity:'Top 16%',source:'OpenSea',likes:55,token:'2201',
+   img:''},
+  {id:18,name:'Ink Ghost #201',collection:'Ink Ghosts',chain:'ink',price:'500',unit:'INK',usd:'$1,200',rarity:'Top 9%',source:'INK DEX',likes:67,token:'201',
+   img:''},
+  {id:19,name:'Arc Genesis #001',collection:'Arc Genesis',chain:'arc',price:'120',unit:'USDC',usd:'$120',rarity:'Top 1%',source:'Arc Native',likes:421,token:'001',
+   img:''},
+  {id:20,name:'Circle Punk #088',collection:'Circle Punks',chain:'arc',price:'80',unit:'USDC',usd:'$80',rarity:'Top 5%',source:'Arc Native',likes:312,token:'088',
+   img:''},
 ];
 
 var trendingData=[
-  {rank:1,name:'BAYC',collection:'BAYC',chain:'ETH',floor:'10.2 ETH',vol:'$4.8M',change:'+3.1%',up:true,items:'10,000'},
-  {rank:2,name:'CryptoPunks',collection:'CryptoPunks',chain:'ETH',floor:'22.4 ETH',vol:'$7.8M',change:'+1.6%',up:true,items:'10,000'},
-  {rank:3,name:'Pudgy Penguins',collection:'Pudgy Penguins',chain:'ETH',floor:'3.8 ETH',vol:'$3.1M',change:'+5.2%',up:true,items:'8,888'},
-  {rank:4,name:'Azuki',collection:'Azuki',chain:'ETH',floor:'8.1 ETH',vol:'$2.9M',change:'-1.2%',up:false,items:'10,000'},
-  {rank:5,name:'Mad Lads',collection:'Mad Lads',chain:'SOL',floor:'48.9 SOL',vol:'$2.4M',change:'+4.1%',up:true,items:'10,000'},
-  {rank:6,name:'NodeMonkes',collection:'Node Monkes',chain:'BTC',floor:'0.13 BTC',vol:'$1.8M',change:'+6.8%',up:true,items:'10,000'},
-  {rank:7,name:'Bitcoin Puppets',collection:'Bitcoin Puppets',chain:'BTC',floor:'0.09 BTC',vol:'$1.2M',change:'-2.1%',up:false,items:'10,000'},
-  {rank:8,name:'Milady',collection:'Milady',chain:'ETH',floor:'3.9 ETH',vol:'$1.1M',change:'-2.3%',up:false,items:'10,000'},
-  {rank:9,name:'Arc Genesis',collection:'Arc Genesis',chain:'ARC',floor:'120 USDC',vol:'$48K',change:'+44.2%',up:true,items:'5,000'},
-  {rank:10,name:'DeGods',collection:'DeGods',chain:'ETH',floor:'0.16 ETH',vol:'$0.8M',change:'+2.4%',up:true,items:'8,990'},
+  {rank:1,name:'BAYC',collection:'BAYC',chain:'ETH',floor:'10.2 ETH',vol:'$4.8M',change:'+3.1%',up:true,items:'10,000',
+   img:PROXY+'https://ipfs.io/ipfs/QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6mQ'},
+  {rank:2,name:'CryptoPunks',collection:'CryptoPunks',chain:'ETH',floor:'22.4 ETH',vol:'$7.8M',change:'+1.6%',up:true,items:'10,000',
+   img:PROXY+'https://www.larvalabs.com/public/images/cryptopunks/punk7804.png'},
+  {rank:3,name:'Pudgy Penguins',collection:'Pudgy Penguins',chain:'ETH',floor:'3.8 ETH',vol:'$3.1M',change:'+5.2%',up:true,items:'8,888',
+   img:PROXY+'https://ipfs.io/ipfs/QmNf1UsmdGaMbpatQ6toXSkzDpizaGmC9zfunCyoz1enD5/5532.png'},
+  {rank:4,name:'Azuki',collection:'Azuki',chain:'ETH',floor:'8.1 ETH',vol:'$2.9M',change:'-1.2%',up:false,items:'10,000',
+   img:PROXY+'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/7821.png'},
+  {rank:5,name:'Mad Lads',collection:'Mad Lads',chain:'SOL',floor:'48.9 SOL',vol:'$2.4M',change:'+4.1%',up:true,items:'10,000',
+   img:PROXY+'https://madlads.s3.us-west-2.amazonaws.com/images/3301.png'},
+  {rank:6,name:'NodeMonkes',collection:'Node Monkes',chain:'BTC',floor:'0.13 BTC',vol:'$1.8M',change:'+6.8%',up:true,items:'10,000',img:''},
+  {rank:7,name:'Bitcoin Puppets',collection:'Bitcoin Puppets',chain:'BTC',floor:'0.09 BTC',vol:'$1.2M',change:'-2.1%',up:false,items:'10,000',img:''},
+  {rank:8,name:'Milady',collection:'Milady',chain:'ETH',floor:'3.9 ETH',vol:'$1.1M',change:'-2.3%',up:false,items:'10,000',
+   img:PROXY+'https://ipfs.io/ipfs/QmV8e1YBVJFbq3X1H5EZBJKYMEy2VnRfnqHkmYiXB6E5WD/2291.png'},
+  {rank:9,name:'Arc Genesis',collection:'Arc Genesis',chain:'ARC',floor:'120 USDC',vol:'$48K',change:'+44.2%',up:true,items:'5,000',img:''},
+  {rank:10,name:'DeGods',collection:'DeGods',chain:'ETH',floor:'0.16 ETH',vol:'$0.8M',change:'+2.4%',up:true,items:'8,990',
+   img:PROXY+'https://metadata.degods.com/g/1204-dead.png'},
 ];
 
 var chainLabel={eth:'Ethereum',sol:'Solana',btc:'Ordinals',base:'Base',bsc:'BSC',ink:'INK',arc:'ARC'};
@@ -630,8 +659,12 @@ var chainBg={eth:'#1a1a3a',sol:'#2a1050',btc:'#2a1500',base:'#001030',bsc:'#2a20
 
 function renderNFTs(data){
   document.getElementById('nftGrid').innerHTML=data.map(function(n){
+    var imgHtml=n.img
+      ? '<img src="'+n.img+'" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;z-index:2" loading="lazy" alt="'+n.name+'" onerror="this.style.display=\'none\'"/>'
+      : '';
     return '<div class="nft-card" onclick="showBuyModal('+n.id+')">'
       +'<div class="nft-img" style="background:'+chainBg[n.chain]+'">'
+      +imgHtml
       +'<canvas class="nft-canvas" width="400" height="400" data-col="'+n.collection+'" data-tok="'+n.token+'"></canvas>'
       +'<div class="nft-badge">'+chainLabel[n.chain]+'</div>'
       +'<div class="nft-like" onclick="event.stopPropagation();toggleLike(this)"><i class="ti ti-heart"></i></div>'
@@ -645,7 +678,7 @@ function renderNFTs(data){
       +'<button class="nft-buy" onclick="event.stopPropagation();showBuyModal('+n.id+')">Buy Now</button>'
       +'</div></div></div>';
   }).join('');
-  // Draw canvases after DOM insertion
+  // Canvas is always drawn as background — shows when img fails/missing
   document.querySelectorAll('.nft-canvas').forEach(function(cv){
     drawNFTCanvas(cv,cv.dataset.col,cv.dataset.tok);
   });
@@ -654,9 +687,12 @@ function renderNFTs(data){
 function renderTrending(){
   document.getElementById('trendingBody').innerHTML=trendingData.map(function(c){
     var cvId='thumb-'+c.rank;
+    var imgHtml=c.img
+      ? '<img src="'+c.img+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:2;border-radius:9px" loading="lazy" alt="'+c.name+'" onerror="this.style.display=\'none\'"/>'
+      : '';
     return '<tr><td style="font-weight:700;color:var(--t3)">'+c.rank+'</td>'
       +'<td><div style="display:flex;align-items:center">'
-      +'<div class="t-thumb"><canvas id="'+cvId+'" width="80" height="80" data-col="'+c.collection+'"></canvas></div>'
+      +'<div class="t-thumb" style="position:relative">'+imgHtml+'<canvas id="'+cvId+'" width="80" height="80" data-col="'+c.collection+'" style="position:absolute;inset:0;z-index:1;width:100%;height:100%"></canvas></div>'
       +'<div><div style="font-weight:600">'+c.name+'</div><div style="font-size:11px;color:var(--t3)">'+c.items+' items</div></div>'
       +'</div></td>'
       +'<td style="font-weight:700">'+c.floor+'</td>'
