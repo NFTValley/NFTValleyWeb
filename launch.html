@@ -166,7 +166,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,6,14,.92);
 
   <!-- HERO -->
   <div class="launch-hero">
-    <div class="hero-tag"><i class="ti ti-rocket"></i> NFT Launchpad — Valley Launch</div>
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.3);color:#00C8FF;margin-bottom:12px">
+    ⬡ NFT Valley now supports ARC Chain — Circle's USDC-native L1. Mainnet: Sept 16, 2026. <a href="https://arc.io" target="_blank" style="color:#00C8FF;margin-left:6px;text-decoration:underline">Learn more →</a>
+  </div>
+  <div class="hero-tag"><i class="ti ti-rocket"></i> NFT Launchpad — Valley Launch</div>
     <h1>Launch Your NFT<br>to the World</h1>
     <p>Submit your collection, set your mint date and reach 120,000+ collectors across 5 chains. We handle the exposure — you focus on the art.</p>
     <div class="hero-btns">
@@ -298,6 +301,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,6,14,.92);
             <option value="base">Base</option>
             <option value="bsc">BSC (BNB)</option>
             <option value="ink">INK Chain</option>
+            <option value="arc">⬡ ARC (Circle — USDC gas, sub-second finality)</option>
           </select>
         </div>
         <div class="field">
@@ -386,13 +390,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,6,14,.92);
       <div style="font-size:14px;color:var(--t2)">Connect to mint and manage whitelist</div>
     </div>
     <button onclick="connectWallet('metamask')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(246,133,27,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif">
-      <div style="width:30px;height:30px;border-radius:8px;background:#F6851B;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">M</div>MetaMask
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:30px;height:30px;border-radius:8px;background:#fff;padding:2px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="MetaMask"/>
+      <span style="width:30px;height:30px;border-radius:8px;background:#F6851B;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">M</span>MetaMask
     </button>
     <button onclick="connectWallet('phantom')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(171,159,242,.08);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif">
-      <div style="width:30px;height:30px;border-radius:8px;background:#AB9FF2;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">P</div>Phantom
+      <img src="https://187760183-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-MVOiF6Zqit57erLfKAm%2Fuploads%2FHEjleywo9QOnfYeBBnKm%2FPhantom_SVG_Icon.svg?alt=media&token=71ba6d70-b2b7-4af7-b3b0-53be1a4b99b7" style="width:30px;height:30px;border-radius:8px;background:#AB9FF2;padding:2px;object-fit:contain;flex-shrink:0" onerror="this.src='https://phantom.app/favicon.ico'" alt="Phantom"/>Phantom
     </button>
     <button onclick="connectWallet('okx')" style="width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);background:rgba(0,0,0,.2);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:'Inter',sans-serif">
-      <div style="width:30px;height:30px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">O</div>OKX Wallet
+      <img src="https://static.okx.com/cdn/assets/imgs/221/87A2E7B5AE454365.png" style="width:30px;height:30px;border-radius:8px;background:#000;padding:2px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="OKX"/>
+      <span style="width:30px;height:30px;border-radius:8px;background:#000;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">O</span>OKX Wallet
     </button>
   </div>
 </div>
@@ -407,6 +413,8 @@ var launches=[
   {id:4,name:'Base Bots',collection:'Base Bots',chain:'Base',status:'upcoming',emoji:'🤖',color:'#0052FF',desc:'8,888 generative robots on Base chain. Low cost, high concept.',mintPrice:'0.05 ETH',supply:8888,minted:0,mintDate:new Date(Date.now()+5*24*60*60*1000),wlSpots:3000,wlLeft:1422,featured:false,source:'Standard'},
   {id:5,name:'INK Specters',collection:'INK Specters',chain:'INK',status:'upcoming',emoji:'👻',color:'#7B2FBE',desc:'2,000 haunted specters on INK Chain. First major collection on INK.',mintPrice:'500 INK',supply:2000,minted:0,mintDate:new Date(Date.now()+8*24*60*60*1000),wlSpots:800,wlLeft:800,featured:false,source:'Standard'},
   {id:6,name:'Neon Cats',collection:'Neon Cats',chain:'ETH',status:'ended',emoji:'🐱',color:'#FF6B6B',desc:'Fully minted. 10,000 neon cats that defined the 2025 NFT season.',mintPrice:'0.06 ETH',supply:10000,minted:10000,mintDate:null,wlSpots:0,wlLeft:0,featured:false,source:'Standard'},
+  {id:7,name:'Arc Genesis Collection',collection:'Arc Genesis',chain:'ARC',status:'upcoming',emoji:'⬡',color:'#00C8FF',desc:'The first-ever NFT collection on ARC Chain — Circle\'s USDC-native L1. Mint price in USDC. Gas fees paid in USDC. Sub-second finality.',mintPrice:'50 USDC',supply:5000,minted:0,mintDate:new Date(Date.now()+7*24*60*60*1000),wlSpots:2000,wlLeft:1842,featured:true,source:'Featured'},
+  {id:8,name:'Circle Punks',collection:'Circle Punks',chain:'ARC',status:'upcoming',emoji:'🔵',color:'#0088FF',desc:'10,000 generative punks on ARC Chain. All prices in USDC — no gas volatility, no surprises. First PFP collection on Circle\'s blockchain.',mintPrice:'25 USDC',supply:10000,minted:0,mintDate:new Date(Date.now()+10*24*60*60*1000),wlSpots:3000,wlLeft:2841,featured:false,source:'Standard'},
 ];
 
 function setTab(tab,btn){

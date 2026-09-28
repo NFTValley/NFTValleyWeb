@@ -194,6 +194,8 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
     <div class="ticker-item"><span class="ticker-name">Milady</span><span class="ticker-price">3.2 ETH</span><span class="ticker-down">▼2.1%</span></div>
     <div class="ticker-item"><span class="ticker-name">NodeMonkes</span><span class="ticker-price">0.18 BTC</span><span class="ticker-up">▲7.2%</span></div>
     <div class="ticker-item"><span class="ticker-name">Tensorians</span><span class="ticker-price">95 SOL</span><span class="ticker-up">▲1.8%</span></div>
+    <div class="ticker-item"><span class="ticker-name" style="color:#00C8FF">⬡ Arc Genesis</span><span class="ticker-price">120 USDC</span><span class="ticker-up">▲44.2%</span></div>
+    <div class="ticker-item"><span class="ticker-name" style="color:#00C8FF">⬡ Circle Punks</span><span class="ticker-price">80 USDC</span><span class="ticker-up">▲28.1%</span></div>
     <!-- Duplicate for seamless loop -->
     <div class="ticker-item"><span class="ticker-name">BAYC</span><span class="ticker-price">12.4 ETH</span><span class="ticker-up">▲2.3%</span></div>
     <div class="ticker-item"><span class="ticker-name">CryptoPunks</span><span class="ticker-price">48.2 ETH</span><span class="ticker-up">▲1.1%</span></div>
@@ -205,6 +207,8 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
     <div class="ticker-item"><span class="ticker-name">Milady</span><span class="ticker-price">3.2 ETH</span><span class="ticker-down">▼2.1%</span></div>
     <div class="ticker-item"><span class="ticker-name">NodeMonkes</span><span class="ticker-price">0.18 BTC</span><span class="ticker-up">▲7.2%</span></div>
     <div class="ticker-item"><span class="ticker-name">Tensorians</span><span class="ticker-price">95 SOL</span><span class="ticker-up">▲1.8%</span></div>
+    <div class="ticker-item"><span class="ticker-name" style="color:#00C8FF">⬡ Arc Genesis</span><span class="ticker-price">120 USDC</span><span class="ticker-up">▲44.2%</span></div>
+    <div class="ticker-item"><span class="ticker-name" style="color:#00C8FF">⬡ Circle Punks</span><span class="ticker-price">80 USDC</span><span class="ticker-up">▲28.1%</span></div>
   </div>
 </div>
 
@@ -232,7 +236,7 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
 <div class="hero pt-ticker">
   <div class="hero-badge">
     <span class="badge-dot"></span>
-    Live on ETH · Solana · Base · BSC · Ordinals
+    Live on ETH · Solana · Base · BSC · Ordinals · <span style="color:#00C8FF">ARC ⬡ NEW</span>
   </div>
   <h1>
     <span class="line1">The Digital Collectibles</span>
@@ -247,7 +251,7 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-val" id="vol">$2.4B+</div><div class="hstat-lbl">Total Volume</div></div>
     <div class="hstat"><div class="hstat-val" id="cols">48K+</div><div class="hstat-lbl">Collections</div></div>
-    <div class="hstat"><div class="hstat-val" id="chains">5</div><div class="hstat-lbl">Chains</div></div>
+    <div class="hstat"><div class="hstat-val" id="chains">7</div><div class="hstat-lbl">Chains</div></div>
     <div class="hstat"><div class="hstat-val" id="users">120K+</div><div class="hstat-lbl">Users</div></div>
   </div>
 </div>
@@ -303,6 +307,11 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
       <div class="chain-icon" style="background:linear-gradient(135deg,#7B2FBE,#5A1A9A);color:#fff">I</div>
       <span class="chain-name">INK Chain</span>
     </div>
+    <div class="chain-item" style="border-color:rgba(0,180,255,.3);position:relative">
+      <div class="chain-icon" style="background:linear-gradient(135deg,#00C8FF,#0088FF);color:#fff">A</div>
+      <span class="chain-name">ARC Chain</span>
+      <span style="position:absolute;top:-8px;right:-8px;background:linear-gradient(135deg,#00C8FF,#0088FF);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;letter-spacing:.3px">NEW</span>
+    </div>
   </div>
 </div>
 
@@ -327,6 +336,7 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
             <li>Real wallet connection — MetaMask, Phantom, OKX</li>
             <li>Best price routing across all marketplaces</li>
             <li>Bitcoin Ordinals via Satflow integration</li>
+            <li>ARC Chain — USDC gas, sub-second finality</li>
             <li>0.5% platform fee — lowest in the industry</li>
           </ul>
           <a href="market.html" class="sc-arrow">Explore Valley Market <i class="ti ti-arrow-right"></i></a>
@@ -513,17 +523,24 @@ footer{background:rgba(7,7,20,.97);border-top:1px solid var(--db);padding:60px 4
       <div style="font-size:22px;font-weight:800;margin-bottom:6px">Connect Wallet</div>
       <div style="font-size:14px;color:var(--t2)">Connect your wallet to start trading on NFT Valley</div>
     </div>
-    <button onclick="connectWallet('metamask')" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(246,133,27,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s" onmouseover="this.style.borderColor='#F6851B'" onmouseout="this.style.borderColor='rgba(139,127,240,.2)'">
-      <div style="width:32px;height:32px;border-radius:8px;background:#F6851B;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">M</div>MetaMask
+    <button onclick="connectWallet('metamask')" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(246,133,27,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:32px;height:32px;border-radius:8px;background:#fff;padding:2px;object-fit:contain" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="MetaMask"/>
+      <span style="width:32px;height:32px;border-radius:8px;background:#F6851B;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">M</span>
+      <div style="text-align:left"><div>MetaMask</div><div style="font-size:11px;color:#9090C0">ETH · Base · BSC</div></div>
     </button>
-    <button onclick="connectWallet('phantom')" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(171,159,242,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
-      <div style="width:32px;height:32px;border-radius:8px;background:#AB9FF2;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">P</div>Phantom
+    <button onclick="connectWallet('phantom')" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(171,159,242,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <img src="https://187760183-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-MVOiF6Zqit57erLfKAm%2Fuploads%2FHEjleywo9QOnfYeBBnKm%2FPhantom_SVG_Icon.svg?alt=media&token=71ba6d70-b2b7-4af7-b3b0-53be1a4b99b7" style="width:32px;height:32px;border-radius:8px;background:#AB9FF2;padding:2px;object-fit:contain" onerror="this.src='https://phantom.app/favicon.ico'" alt="Phantom"/>
+      <div style="text-align:left"><div>Phantom</div><div style="font-size:11px;color:#9090C0">Solana · Ethereum</div></div>
     </button>
-    <button onclick="connectWallet('okx')" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(0,0,0,.2);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
-      <div style="width:32px;height:32px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">O</div>OKX Wallet
+    <button onclick="connectWallet('okx')" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(0,0,0,.2);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <img src="https://static.okx.com/cdn/assets/imgs/221/87A2E7B5AE454365.png" style="width:32px;height:32px;border-radius:8px;background:#000;padding:2px;object-fit:contain" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="OKX"/>
+      <span style="width:32px;height:32px;border-radius:8px;background:#000;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">O</span>
+      <div style="text-align:left"><div>OKX Wallet</div><div style="font-size:11px;color:#9090C0">Multi-chain</div></div>
     </button>
-    <button onclick="connectWallet('xverse')" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(139,127,240,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
-      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7B2FBE,#5A1A9A);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">X</div>Xverse (Bitcoin)
+    <button onclick="connectWallet('xverse')" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,127,240,.2);background:rgba(139,127,240,.08);color:var(--t1);font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">
+      <img src="https://xverse.app/favicon.ico" style="width:32px;height:32px;border-radius:8px;background:#7B2FBE;padding:4px;object-fit:contain" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="Xverse"/>
+      <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7B2FBE,#5A1A9A);display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">X</span>
+      <div style="text-align:left"><div>Xverse</div><div style="font-size:11px;color:#9090C0">Bitcoin Ordinals · Runes</div></div>
     </button>
   </div>
 </div>
