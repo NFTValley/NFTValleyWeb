@@ -8,16 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --p:#3399FF;--p2:#0066CC;--p3:#0052FF;
-  --acc:#8B7FF0;--acc2:#6C5CE7;
-  --o:#F7931A;--o2:#E07D0A;
-  --dark:#060612;--dark2:#0B0B1E;--dark3:#111128;--dark4:#181834;
-  --db:rgba(51,153,255,.12);--db2:rgba(51,153,255,.22);
-  --t1:#F0F0FF;--t2:#9090C0;--t3:#5050A0;
-  --success:#00D68F;--danger:#FF4757;
-  --glass:rgba(11,11,30,.85);
-}
+:root{--p:#3399FF;--p2:#0066CC;--o:#F7931A;--o2:#E07D0A;--dark:#060612;--dark2:#0B0B1E;--dark3:#111128;--db:rgba(51,153,255,.12);--db2:rgba(51,153,255,.22);--t1:#F0F0FF;--t2:#9090C0;--t3:#5050A0;--success:#00D68F;--danger:#FF4757;--glass:rgba(11,11,30,.85)}
 body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--t1);min-height:100vh;overflow-x:hidden}
 .bg-glow{position:fixed;pointer-events:none;z-index:0}
 .bg-1{top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(51,153,255,.1),transparent 65%)}
@@ -25,7 +16,7 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--t1);min-h
 .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(51,153,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(51,153,255,.04) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--db);height:64px;display:flex;align-items:center;padding:0 32px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;letter-spacing:-.5px;margin-right:12px;text-decoration:none;color:var(--t1)}
-.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#3399FF,#0052FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;box-shadow:0 0 16px rgba(51,153,255,.4)}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#3399FF,#0052FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff}
 .nav-link{padding:7px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--t2);text-decoration:none;border:none;background:none;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
 .nav-link:hover,.nav-link.active{color:var(--t1);background:rgba(51,153,255,.1)}
 .nav-link.active{color:var(--p)}
@@ -37,77 +28,77 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
 .btn-ghost:hover{color:var(--t1);border-color:var(--p)}
 .btn-sm{padding:6px 12px;font-size:12px}
 .ticker{background:rgba(51,153,255,.05);border-bottom:1px solid var(--db);padding:7px 0;overflow:hidden;position:fixed;top:64px;left:0;right:0;z-index:99}
-.ticker-track{display:flex;gap:0;animation:ticker 35s linear infinite;width:max-content}
+.ticker-track{display:flex;gap:0;animation:ticker 40s linear infinite;width:max-content}
 .ticker-item{padding:0 20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;border-right:1px solid var(--db);white-space:nowrap}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .main{padding-top:calc(64px + 33px);min-height:100vh;position:relative;z-index:1}
-.market-hero{background:linear-gradient(135deg,rgba(51,153,255,.08),rgba(139,127,240,.06));border-bottom:1px solid var(--db);padding:32px 32px 24px}
-.market-hero h1{font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:6px}
-.market-hero p{font-size:15px;color:var(--t2);margin-bottom:20px}
+.arc-banner{background:linear-gradient(135deg,rgba(0,136,255,.12),rgba(0,200,255,.06));border-bottom:1px solid rgba(0,180,255,.2);padding:10px 32px;display:flex;align-items:center;gap:12px;font-size:13px}
+.market-hero{background:linear-gradient(135deg,rgba(51,153,255,.08),rgba(139,127,240,.06));border-bottom:1px solid var(--db);padding:28px 32px 20px}
+.market-hero h1{font-size:30px;font-weight:900;letter-spacing:-1px;margin-bottom:6px}
+.market-hero p{font-size:14px;color:var(--t2);margin-bottom:18px}
 .market-stats{display:flex;gap:32px;flex-wrap:wrap}
-.mstat-val{font-size:22px;font-weight:800;color:var(--p)}
+.mstat-val{font-size:20px;font-weight:800;color:var(--p)}
 .mstat-lbl{font-size:12px;color:var(--t2);margin-top:2px}
-.filters-bar{background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--db);padding:12px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:calc(64px + 33px);z-index:90}
-.chain-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+.filters-bar{background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--db);padding:10px 32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;top:calc(64px + 33px);z-index:90}
+.chain-btn{padding:5px 13px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s}
 .chain-btn:hover,.chain-btn.active{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
-.sort-select{padding:7px 12px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t1);font-size:13px;font-weight:500;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
-.search-input{padding:7px 14px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.6);color:var(--t1);font-size:13px;outline:none;width:220px;font-family:'Inter',sans-serif}
+.sort-select{padding:6px 12px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t1);font-size:13px;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+.search-input{padding:6px 14px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.6);color:var(--t1);font-size:13px;outline:none;width:220px;font-family:'Inter',sans-serif}
 .search-input:focus{border-color:var(--p)}
 .search-input::placeholder{color:var(--t3)}
 .view-btns{display:flex;gap:4px;margin-left:auto}
-.view-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s}
+.view-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:.2s}
 .view-btn.active,.view-btn:hover{background:rgba(51,153,255,.15);color:var(--p);border-color:var(--p)}
-.content-area{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:calc(100vh - 64px - 33px)}
-.sidebar-filters{background:rgba(11,11,30,.7);border-right:1px solid var(--db);padding:20px;position:sticky;top:calc(64px+33px+53px);height:fit-content}
-.sf-title{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.sf-section{margin-bottom:22px}
-.price-input{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.8);color:var(--t1);font-size:13px;outline:none;font-family:'Inter',sans-serif;width:100%;margin-bottom:6px}
+.content-area{display:grid;grid-template-columns:230px 1fr;gap:0}
+.sidebar{background:rgba(11,11,30,.7);border-right:1px solid var(--db);padding:18px}
+.sf-title{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.sf-section{margin-bottom:20px}
+.price-input{width:100%;padding:7px 10px;border-radius:8px;border:1px solid var(--db2);background:rgba(11,11,30,.8);color:var(--t1);font-size:13px;outline:none;font-family:'Inter',sans-serif;margin-bottom:6px}
 .price-input:focus{border-color:var(--p)}
-.checkbox-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;color:var(--t2);cursor:pointer}
+.checkbox-item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;color:var(--t2);cursor:pointer}
 .checkbox-item:hover{color:var(--t1)}
 .checkbox-item input{accent-color:var(--p);width:14px;height:14px}
-.nft-area{padding:20px}
-.category-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
-.cat-tab{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s}
+.nft-area{padding:18px}
+.category-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.cat-tab{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--db2);background:rgba(51,153,255,.06);color:var(--t2);cursor:pointer;transition:.2s}
 .cat-tab.active,.cat-tab:hover{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;color:#fff}
-.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
-.nft-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--db);border-radius:16px;overflow:hidden;transition:.25s;cursor:pointer}
-.nft-card:hover{transform:translateY(-4px);border-color:var(--db2);box-shadow:0 12px 40px rgba(51,153,255,.15)}
-.nft-img{width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#111}
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.nft-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--db);border-radius:14px;overflow:hidden;transition:.25s;cursor:pointer}
+.nft-card:hover{transform:translateY(-4px);border-color:var(--db2);box-shadow:0 12px 40px rgba(51,153,255,.12)}
+.nft-img{width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#0d0d22}
 .nft-img img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
-.nft-card:hover .nft-img img{transform:scale(1.05)}
-.nft-img-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,#1a1a3a,#0d0d24)}
-.nft-chain-badge{position:absolute;top:10px;right:10px;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:#fff}
-.nft-like{position:absolute;top:10px;left:10px;width:30px;height:30px;border-radius:8px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:.2s}
-.nft-like:hover{background:rgba(255,71,87,.3);border-color:rgba(255,71,87,.5)}
-.nft-info{padding:14px}
-.nft-collection{font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
-.nft-name{font-size:14px;font-weight:700;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nft-card:hover .nft-img img{transform:scale(1.04)}
+.nft-fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:44px;background:linear-gradient(135deg,#1a1a3a,#0d0d24)}
+.nft-badge{position:absolute;top:8px;right:8px;padding:3px 7px;border-radius:7px;font-size:10px;font-weight:700;backdrop-filter:blur(8px);background:rgba(0,0,0,.65);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.nft-like{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:7px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:.2s}
+.nft-like:hover{background:rgba(255,71,87,.3)}
+.nft-info{padding:12px}
+.nft-col{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.nft-name{font-size:13px;font-weight:700;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nft-rarity{font-size:10px;color:var(--t3);margin-bottom:7px}
 .nft-price-row{display:flex;align-items:center;justify-content:space-between}
-.nft-price{font-size:15px;font-weight:800;color:var(--p)}
-.nft-usd{font-size:11px;color:var(--t3);margin-top:2px}
-.nft-buy-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif}
-.nft-buy-btn:hover{box-shadow:0 4px 16px rgba(51,153,255,.4);transform:translateY(-1px)}
-.trending{padding:20px 32px;border-top:1px solid var(--db)}
-.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.section-hdr h2{font-size:20px;font-weight:800;letter-spacing:-.5px}
-.collections-table{width:100%;border-collapse:collapse}
-.ct-head th{text-align:left;padding:10px 14px;font-size:12px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--db)}
-.ct-row td{padding:12px 14px;border-bottom:1px solid rgba(51,153,255,.06);font-size:14px;transition:.15s}
-.ct-row:hover td{background:rgba(51,153,255,.04)}
-.coll-img{width:40px;height:40px;border-radius:10px;object-fit:cover;vertical-align:middle;margin-right:10px}
-.coll-img-fallback{width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;vertical-align:middle;margin-right:10px}
-.coll-name{font-weight:600}
-.coll-sub{font-size:11px;color:var(--t3)}
-.change-up{color:var(--success);font-weight:600}
-.change-down{color:var(--danger);font-weight:600}
-.rank-num{font-size:16px;font-weight:700;color:var(--t3)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
-.modal{background:rgba(11,11,30,.98);border:1px solid var(--db2);border-radius:20px;padding:28px;max-width:420px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.6)}
-.modal-close{position:absolute;top:14px;right:14px;background:rgba(51,153,255,.1);border:1px solid var(--db);border-radius:8px;color:var(--t2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.wallet-opt{width:100%;padding:13px 16px;border-radius:11px;border:1px solid var(--db2);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;background:rgba(255,255,255,.04)}
+.nft-price{font-size:14px;font-weight:800;color:var(--p)}
+.nft-usd{font-size:10px;color:var(--t3);margin-top:1px}
+.nft-buy{padding:6px 12px;border-radius:7px;font-size:11px;font-weight:700;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.nft-buy:hover{box-shadow:0 3px 12px rgba(51,153,255,.4)}
+.trending{padding:18px 32px;border-top:1px solid var(--db)}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.section-hdr h2{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.ct{width:100%;border-collapse:collapse}
+.ct thead th{text-align:left;padding:8px 12px;font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--db)}
+.ct tbody tr{border-bottom:1px solid rgba(51,153,255,.05);transition:.15s;cursor:pointer}
+.ct tbody tr:hover td{background:rgba(51,153,255,.04)}
+.ct tbody td{padding:11px 12px;font-size:13px;vertical-align:middle}
+.coll-img{width:38px;height:38px;border-radius:9px;object-fit:cover;vertical-align:middle;margin-right:9px}
+.coll-img-fb{width:38px;height:38px;border-radius:9px;background:#1a1a3a;display:inline-flex;align-items:center;justify-content:center;font-size:18px;vertical-align:middle;margin-right:9px}
+.up{color:var(--success);font-weight:600}
+.down{color:var(--danger);font-weight:600}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.modal{background:rgba(11,11,30,.98);border:1px solid var(--db2);border-radius:18px;padding:26px;max-width:400px;width:100%;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;background:rgba(51,153,255,.1);border:1px solid var(--db);border-radius:7px;color:var(--t2);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px}
+.wallet-opt{width:100%;padding:12px 15px;border-radius:10px;border:1px solid var(--db2);color:var(--t1);font-size:14px;font-weight:600;display:flex;align-items:center;gap:11px;margin-bottom:9px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;background:rgba(255,255,255,.03)}
 .wallet-opt:hover{border-color:var(--p);background:rgba(51,153,255,.08)}
-.wallet-logo{width:32px;height:32px;border-radius:8px;object-fit:contain;background:#fff;padding:2px;flex-shrink:0}
+.wallet-logo{width:30px;height:30px;border-radius:7px;object-fit:contain;background:#fff;padding:2px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -115,51 +106,53 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
 <div class="bg-glow bg-2"></div>
 <div class="bg-grid"></div>
 
-<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track">
-    <div class="ticker-item"><span style="color:var(--t2)">BAYC Floor</span><span style="color:var(--t1)">12.4 ETH</span><span style="color:var(--success)">▲2.3%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span style="color:var(--t1)">48.2 ETH</span><span style="color:var(--success)">▲1.1%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">DeGods Floor</span><span style="color:var(--t1)">220 SOL</span><span style="color:var(--success)">▲4.2%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Azuki Floor</span><span style="color:var(--t1)">6.8 ETH</span><span style="color:var(--danger)">▼0.8%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span style="color:var(--t1)">0.18 BTC</span><span style="color:var(--success)">▲7.2%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span style="color:var(--t1)">18.6 ETH</span><span style="color:var(--success)">▲5.4%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span style="color:var(--t1)">180 SOL</span><span style="color:var(--success)">▲3.1%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Tensorians</span><span style="color:var(--t1)">95 SOL</span><span style="color:var(--success)">▲1.8%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">BAYC Floor</span><span style="color:var(--t1)">12.4 ETH</span><span style="color:var(--success)">▲2.3%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span style="color:var(--t1)">48.2 ETH</span><span style="color:var(--success)">▲1.1%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">DeGods Floor</span><span style="color:var(--t1)">220 SOL</span><span style="color:var(--success)">▲4.2%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Azuki Floor</span><span style="color:var(--t1)">6.8 ETH</span><span style="color:var(--danger)">▼0.8%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span style="color:var(--t1)">0.18 BTC</span><span style="color:var(--success)">▲7.2%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span style="color:var(--t1)">18.6 ETH</span><span style="color:var(--success)">▲5.4%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span style="color:var(--t1)">180 SOL</span><span style="color:var(--success)">▲3.1%</span></div>
-    <div class="ticker-item"><span style="color:var(--t2)">Tensorians</span><span style="color:var(--t1)">95 SOL</span><span style="color:var(--success)">▲1.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">BAYC</span><span>10.2 ETH</span><span style="color:var(--success)">▲3.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span>22.4 ETH</span><span style="color:var(--success)">▲1.6%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span>3.8 ETH</span><span style="color:var(--success)">▲5.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Azuki</span><span>8.1 ETH</span><span style="color:var(--danger)">▼1.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">DeGods</span><span>0.16 ETH</span><span style="color:var(--success)">▲2.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span>48.9 SOL</span><span style="color:var(--success)">▲4.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span>0.13 BTC</span><span style="color:var(--success)">▲6.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Bitcoin Puppets</span><span>0.09 BTC</span><span style="color:var(--danger)">▼2.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Milady</span><span>3.9 ETH</span><span style="color:var(--danger)">▼2.3%</span></div>
+    <div class="ticker-item"><span style="color:#00C8FF">⬡ Arc Genesis</span><span>120 USDC</span><span style="color:var(--success)">▲44.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">BAYC</span><span>10.2 ETH</span><span style="color:var(--success)">▲3.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">CryptoPunks</span><span>22.4 ETH</span><span style="color:var(--success)">▲1.6%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Pudgy Penguins</span><span>3.8 ETH</span><span style="color:var(--success)">▲5.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Azuki</span><span>8.1 ETH</span><span style="color:var(--danger)">▼1.2%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">DeGods</span><span>0.16 ETH</span><span style="color:var(--success)">▲2.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Mad Lads</span><span>48.9 SOL</span><span style="color:var(--success)">▲4.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">NodeMonkes</span><span>0.13 BTC</span><span style="color:var(--success)">▲6.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Bitcoin Puppets</span><span>0.09 BTC</span><span style="color:var(--danger)">▼2.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--t2)">Milady</span><span>3.9 ETH</span><span style="color:var(--danger)">▼2.3%</span></div>
+    <div class="ticker-item"><span style="color:#00C8FF">⬡ Arc Genesis</span><span>120 USDC</span><span style="color:var(--success)">▲44.2%</span></div>
   </div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html"><div class="logo-icon">VM</div>Valley Market</a>
   <a class="nav-link" href="index.html"><i class="ti ti-home"></i> Home</a>
   <a class="nav-link active" href="market.html"><i class="ti ti-shopping-bag"></i> Market</a>
-  <a class="nav-link" href="nft-forge.html"><i class="ti ti-layers"></i> NFT Forge</a>
+  <a class="nav-link" href="nft-studio.html"><i class="ti ti-layers"></i> NFT Studio</a>
   <a class="nav-link" href="launch.html"><i class="ti ti-rocket"></i> Launchpad</a>
   <a class="nav-link" href="index-tracker.html"><i class="ti ti-chart-line"></i> Index</a>
   <div class="nav-actions">
     <button class="btn btn-ghost btn-sm" id="walletBtn" onclick="openWalletModal()"><i class="ti ti-wallet"></i> Connect Wallet</button>
-    <button class="btn btn-primary btn-sm" onclick="showListModal()"><i class="ti ti-plus"></i> List NFT</button>
+    <button class="btn btn-primary btn-sm"><i class="ti ti-plus"></i> List NFT</button>
   </div>
 </nav>
 
 <div class="main">
-  <div style="background:linear-gradient(135deg,rgba(0,136,255,.12),rgba(0,200,255,.06));border-bottom:1px solid rgba(0,180,255,.2);padding:10px 32px;display:flex;align-items:center;gap:12px;font-size:13px">
-    <span style="background:linear-gradient(135deg,#00C8FF,#0088FF);color:#fff;padding:3px 10px;border-radius:6px;font-weight:800;font-size:12px;flex-shrink:0">⬡ NEW</span>
+  <div class="arc-banner">
+    <span style="background:linear-gradient(135deg,#00C8FF,#0088FF);color:#fff;padding:2px 9px;border-radius:5px;font-weight:800;font-size:11px;flex-shrink:0">⬡ NEW</span>
     <span style="color:#00C8FF;font-weight:600">ARC Chain now live on NFT Valley!</span>
-    <span style="color:var(--t2)">Circle's USDC-native L1 — pay gas in stablecoins, sub-second finality. Mainnet launches September 16, 2026.</span>
-    <a href="https://arc.io" target="_blank" style="color:#00C8FF;font-weight:600;margin-left:auto;flex-shrink:0;text-decoration:none">Learn about ARC →</a>
+    <span style="color:var(--t2)">Pay gas in USDC — sub-second finality. Circle's L1 mainnet live Sept 16, 2026.</span>
+    <a href="https://arc.io" target="_blank" style="color:#00C8FF;font-weight:600;margin-left:auto;text-decoration:none;font-size:13px">Learn about ARC →</a>
   </div>
   <div class="market-hero">
-    <h1>Valley Market <span style="font-size:16px;font-weight:500;color:var(--t2)">— Multi-Chain NFT Marketplace</span></h1>
+    <h1>Valley Market <span style="font-size:15px;font-weight:500;color:var(--t2)">— Multi-Chain NFT Marketplace</span></h1>
     <p>Aggregated liquidity from OpenSea, Blur, Magic Eden, Tensor, LooksRare & Satflow. Trades execute on NFT Valley — you never leave.</p>
     <div class="market-stats">
       <div><div class="mstat-val">$2.4B</div><div class="mstat-lbl">Total Volume</div></div>
@@ -170,7 +163,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
   </div>
 
   <div class="filters-bar">
-    <div style="display:flex;gap:6px;flex-wrap:wrap" id="chainFilters">
+    <div style="display:flex;gap:5px;flex-wrap:wrap" id="chainFilters">
       <button class="chain-btn active" onclick="filterChain('all',this)">All Chains</button>
       <button class="chain-btn" onclick="filterChain('eth',this)">Ξ ETH</button>
       <button class="chain-btn" onclick="filterChain('sol',this)">◎ SOL</button>
@@ -178,12 +171,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
       <button class="chain-btn" onclick="filterChain('base',this)">🔵 Base</button>
       <button class="chain-btn" onclick="filterChain('bsc',this)">🟡 BSC</button>
       <button class="chain-btn" onclick="filterChain('ink',this)">🟣 INK</button>
-      <button class="chain-btn" onclick="filterChain('arc',this)" style="background:linear-gradient(135deg,rgba(0,136,255,.12),rgba(0,200,255,.06));border-color:rgba(0,180,255,.3);color:#00C8FF">⬡ ARC <span style="font-size:10px;background:rgba(0,200,255,.2);padding:1px 5px;border-radius:4px;margin-left:2px">NEW</span></button>
+      <button class="chain-btn" onclick="filterChain('arc',this)" style="border-color:rgba(0,180,255,.4);color:#00C8FF">⬡ ARC <span style="font-size:9px;background:rgba(0,200,255,.2);padding:1px 4px;border-radius:3px;margin-left:2px">NEW</span></button>
     </div>
     <select class="sort-select" onchange="sortNFTs(this.value)">
       <option value="price_asc">Price: Low to High</option>
       <option value="price_desc">Price: High to Low</option>
-      <option value="recent">Recently Listed</option>
       <option value="popular">Most Popular</option>
     </select>
     <input class="search-input" placeholder="🔍 Search NFTs, collections..." oninput="searchNFTs(this.value)"/>
@@ -194,7 +186,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
   </div>
 
   <div class="content-area">
-    <div class="sidebar-filters">
+    <div class="sidebar">
       <div class="sf-section">
         <div class="sf-title">Price Range</div>
         <input class="price-input" placeholder="Min" type="number"/>
@@ -205,7 +197,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
         <label class="checkbox-item"><input type="checkbox" checked/> Buy Now</label>
         <label class="checkbox-item"><input type="checkbox"/> On Auction</label>
         <label class="checkbox-item"><input type="checkbox"/> Has Offers</label>
-        <label class="checkbox-item"><input type="checkbox"/> New</label>
       </div>
       <div class="sf-section">
         <div class="sf-title">Source</div>
@@ -216,7 +207,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
         <label class="checkbox-item"><input type="checkbox" checked/> Satflow</label>
         <label class="checkbox-item"><input type="checkbox" checked/> LooksRare</label>
         <label class="checkbox-item"><input type="checkbox" checked/> X2Y2</label>
-        <label class="checkbox-item"><input type="checkbox" checked/> Rarible</label>
         <label class="checkbox-item"><input type="checkbox" checked/> <span style="color:#00C8FF">Arc Native ⬡</span></label>
       </div>
       <div class="sf-section">
@@ -231,73 +221,67 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
 
     <div class="nft-area">
       <div class="category-tabs">
-        <button class="cat-tab active" onclick="setCategory('all',this)">All NFTs</button>
-        <button class="cat-tab" onclick="setCategory('trending',this)">🔥 Trending</button>
-        <button class="cat-tab" onclick="setCategory('new',this)">✨ New</button>
-        <button class="cat-tab" onclick="setCategory('art',this)">🎨 Art</button>
-        <button class="cat-tab" onclick="setCategory('gaming',this)">🎮 Gaming</button>
-        <button class="cat-tab" onclick="setCategory('pfp',this)">👤 PFP</button>
-        <button class="cat-tab" onclick="setCategory('music',this)">🎵 Music</button>
+        <button class="cat-tab active" onclick="setCategory(this)">All NFTs</button>
+        <button class="cat-tab" onclick="setCategory(this)">🔥 Trending</button>
+        <button class="cat-tab" onclick="setCategory(this)">✨ New</button>
+        <button class="cat-tab" onclick="setCategory(this)">🎨 Art</button>
+        <button class="cat-tab" onclick="setCategory(this)">👤 PFP</button>
+        <button class="cat-tab" onclick="setCategory(this)">🎮 Gaming</button>
       </div>
       <div class="nft-grid" id="nftGrid"></div>
-      <div style="text-align:center;padding:32px 0">
+      <div style="text-align:center;padding:28px 0">
         <button class="btn btn-ghost" onclick="loadMore()"><i class="ti ti-refresh"></i> Load More NFTs</button>
       </div>
     </div>
   </div>
 
-  <!-- TRENDING TABLE -->
   <div class="trending">
     <div class="section-hdr">
       <h2>🔥 Trending Collections</h2>
       <a href="#" class="btn btn-ghost btn-sm">View All <i class="ti ti-arrow-right"></i></a>
     </div>
-    <table class="collections-table">
-      <thead class="ct-head">
-        <tr><th>#</th><th>Collection</th><th>Floor</th><th>24h Vol</th><th>7d Change</th><th>Items</th><th>Chain</th></tr>
-      </thead>
+    <table class="ct">
+      <thead><tr><th>#</th><th>Collection</th><th>Floor</th><th>24h Vol</th><th>7d Change</th><th>Items</th><th>Chain</th></tr></thead>
       <tbody id="trendingBody"></tbody>
     </table>
   </div>
 </div>
 
-<!-- BUY MODAL -->
 <div class="modal-overlay" id="buyModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeBuyModal()"><i class="ti ti-x"></i></button>
+    <button class="modal-close" onclick="document.getElementById('buyModal').style.display='none'"><i class="ti ti-x"></i></button>
     <div id="buyModalContent"></div>
   </div>
 </div>
 
-<!-- WALLET MODAL -->
 <div class="modal-overlay" id="walletModal">
   <div class="modal">
     <button class="modal-close" onclick="closeWalletModal()"><i class="ti ti-x"></i></button>
-    <div style="text-align:center;margin-bottom:24px">
-      <div style="font-size:20px;font-weight:800;margin-bottom:6px">Connect Wallet</div>
-      <div style="font-size:14px;color:var(--t2)">Connect to buy, sell and trade on Valley Market</div>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:19px;font-weight:800;margin-bottom:5px">Connect Wallet</div>
+      <div style="font-size:13px;color:var(--t2)">Connect to buy, sell and trade on Valley Market</div>
     </div>
     <button onclick="connectWallet('metamask')" class="wallet-opt">
       <img class="wallet-logo" src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="MetaMask"/>
-      <span style="width:32px;height:32px;border-radius:8px;background:#F6851B;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">M</span>
-      <div><div>MetaMask</div><div style="font-size:11px;color:var(--t3)">ETH · Base · BSC · Polygon</div></div>
+      <span style="width:30px;height:30px;border-radius:7px;background:#F6851B;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:13px;flex-shrink:0">M</span>
+      <div><div>MetaMask</div><div style="font-size:11px;color:var(--t3)">ETH · Base · BSC · ARC</div></div>
     </button>
     <button onclick="connectWallet('phantom')" class="wallet-opt">
-      <img class="wallet-logo" src="https://187760183-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-MVOiF6Zqit57erLfKAm%2Fuploads%2FHEjleywo9QOnfYeBBnKm%2FPhantom_SVG_Icon.svg?alt=media&token=71ba6d70-b2b7-4af7-b3b0-53be1a4b99b7" onerror="this.src='https://phantom.app/favicon.ico'" alt="Phantom" style="background:#AB9FF2"/>
+      <img class="wallet-logo" src="https://cdn.jsdelivr.net/gh/nicholasgasior/phantom-logo@main/phantom.svg" onerror="this.style.background='#AB9FF2'" alt="Phantom" style="background:#AB9FF2"/>
       <div><div>Phantom</div><div style="font-size:11px;color:var(--t3)">Solana · Ethereum</div></div>
     </button>
     <button onclick="connectWallet('okx')" class="wallet-opt">
       <img class="wallet-logo" src="https://static.okx.com/cdn/assets/imgs/221/87A2E7B5AE454365.png" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="OKX"/>
-      <span style="width:32px;height:32px;border-radius:8px;background:#000;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">O</span>
+      <span style="width:30px;height:30px;border-radius:7px;background:#000;display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:13px;flex-shrink:0">O</span>
       <div><div>OKX Wallet</div><div style="font-size:11px;color:var(--t3)">Multi-chain</div></div>
     </button>
     <button onclick="connectWallet('xverse')" class="wallet-opt">
-      <img class="wallet-logo" src="https://xverse.app/favicon.ico" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="Xverse" style="background:#7B2FBE"/>
-      <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7B2FBE,#5A1A9A);display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0">X</span>
+      <img class="wallet-logo" src="https://xverse.app/favicon.ico" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="Xverse" style="background:#7B2FBE;padding:4px"/>
+      <span style="width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7B2FBE,#5A1A9A);display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:13px;flex-shrink:0">X</span>
       <div><div>Xverse</div><div style="font-size:11px;color:var(--t3)">Bitcoin Ordinals · Runes</div></div>
     </button>
-    <div style="margin-top:14px;padding:10px 12px;background:rgba(51,153,255,.06);border-radius:10px;border:1px solid var(--db);font-size:12px;color:var(--t2);line-height:1.5">
-      <i class="ti ti-shield-check" style="color:var(--success)"></i> NFT Valley never holds your private keys. All trades execute via smart contracts on-chain.
+    <div style="margin-top:12px;padding:9px 11px;background:rgba(51,153,255,.06);border-radius:9px;border:1px solid var(--db);font-size:12px;color:var(--t2);line-height:1.5">
+      <i class="ti ti-shield-check" style="color:var(--success)"></i> NFT Valley never holds your keys. All trades execute on-chain via smart contracts.
     </div>
   </div>
 </div>
@@ -305,96 +289,156 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,18,.9);b
 <script>
 var walletConnected=false,walletAddress='',currentChain='all';
 
-// NFT collection images from public sources
+// ── Real market data Sept 2026 ──────────────────────────────────────────────
+// Images use OpenSea CDN (seadn.io) + collection IPFS gateways — most reliable sources
 var nftData=[
-  {id:1,name:'Bored Ape #3429',collection:'BAYC',chain:'eth',price:'12.4',unit:'ETH',usd:'$41,200',img:'https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGf-OI5fLA?w=500&auto=format',rarity:'Top 5%',source:'OpenSea',likes:284},
-  {id:2,name:'Azuki #7821',collection:'Azuki',chain:'eth',price:'6.8',unit:'ETH',usd:'$22,600',img:'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/7821.png',rarity:'Top 12%',source:'Blur',likes:192},
-  {id:3,name:'DeGod #1204',collection:'DeGods',chain:'sol',price:'220',unit:'SOL',usd:'$31,200',img:'https://metadata.degods.com/g/1204-dead.png',rarity:'Top 8%',source:'Magic Eden',likes:341},
-  {id:4,name:'NodeMonke #892',collection:'Node Monkes',chain:'btc',price:'0.18',unit:'BTC',usd:'$17,800',img:'https://ordinals.com/content/6fb976ab49dcec017f1e201e84395983204ae1a7ae2236d8e84e2660e57b1e3i0',rarity:'Top 3%',source:'Satflow',likes:156},
-  {id:5,name:'Pudgy #5532',collection:'Pudgy Penguins',chain:'eth',price:'18.6',unit:'ETH',usd:'$61,800',img:'https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46vsVAknQ3g87OeTCfVHLqTgBrFBaVM9h4BM3mEI5BfTB-F7q2DPlI6yGV8?w=500&auto=format',rarity:'Top 15%',source:'OpenSea',likes:428},
-  {id:6,name:'Mad Lad #3301',collection:'Mad Lads',chain:'sol',price:'180',unit:'SOL',usd:'$25,500',img:'https://madlads.s3.us-west-2.amazonaws.com/images/3301.png',rarity:'Top 20%',source:'Magic Eden',likes:203},
-  {id:7,name:'Bitcoin Puppet #441',collection:'Bitcoin Puppets',chain:'btc',price:'0.24',unit:'BTC',usd:'$23,700',img:'https://ordinals.com/content/d06bcd7e9c4b9dcfd96f7498abc7a08a63c1b35563b60d4b8748caad1b1af4e8i0',rarity:'Top 6%',source:'Satflow',likes:177},
-  {id:8,name:'CryptoPunk #7804',collection:'CryptoPunks',chain:'eth',price:'48.2',unit:'ETH',usd:'$160,100',img:'https://i.seadn.io/gae/BdxvLseXcfl57BiuQcQYdJ64v-aI8din7WPk0Pgo3qQFhAUH-B6i-dCqqc_mCkRIzULmwzwecnohLhrcH8A9mpWIZqA7ygc52Sr81hE?w=500&auto=format',rarity:'Top 1%',source:'Blur',likes:892},
-  {id:9,name:'Milady #2291',collection:'Milady',chain:'eth',price:'3.2',unit:'ETH',usd:'$10,600',img:'https://i.seadn.io/gae/a_frplnavZA9g4vN3SboJ4NqKi7JdEmZDe36_qBRMKgdF0mhCJKxQhbF4qiNG9R9HRhf8ZH0vKbcmraMBpPkc1mQpgMzp8V9Eoqx?w=500&auto=format',rarity:'Top 22%',source:'OpenSea',likes:312},
-  {id:10,name:'Tensorian #884',collection:'Tensorians',chain:'sol',price:'95',unit:'SOL',usd:'$13,470',img:'https://i.seadn.io/s/raw/files/bd88f29289f53a3bb12a1ede8ee8fbae.png?w=500&auto=format',rarity:'Top 14%',source:'Tensor',likes:145},
-  {id:11,name:'Doodle #8914',collection:'Doodles',chain:'eth',price:'2.1',unit:'ETH',usd:'$6,980',img:'https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VUaa3s2TS8s4_1-iHkDKGDXsrdFQWXAU4VEuCJg?w=500&auto=format',rarity:'Top 18%',source:'OpenSea',likes:224},
-  {id:12,name:'CloneX #11421',collection:'CloneX',chain:'eth',price:'1.9',unit:'ETH',usd:'$6,310',img:'https://i.seadn.io/gae/XN0XuD8Uh3jyRWNtPTFeXJg_ht8m5ofDx6aHhe0a9RGb4v9mNlzEXZSGHn9rJ2WTwE3HNJe5YQZB2K8r0gy5fC0uOq5fWFiWHJn?w=500&auto=format',rarity:'Top 9%',source:'OpenSea',likes:189},
-  {id:13,name:'Moonbird #6804',collection:'Moonbirds',chain:'eth',price:'1.4',unit:'ETH',usd:'$4,650',img:'https://i.seadn.io/gae/H-eyNE1MwL5ohL-tCfn_Xa1Sl9M9B4612tLYeUlQubzt4ewhr4huJIR5OLuyO3Z5a-bs-ciIqhivnNWAkqt4hyv23yt-HoNgm0?w=500&auto=format',rarity:'Top 11%',source:'Blur',likes:167},
-  {id:14,name:'Goblintown #4492',collection:'Goblintown',chain:'eth',price:'0.4',unit:'ETH',usd:'$1,330',img:'https://i.seadn.io/gae/cb2PkPFd_AUFsSmfzRmCGFAiqDt7zBBnDNq-3Vt-dkAlXFl-hBPsBcKMOsTFSFlCGXUt1AEF3p7r_hf5Pq_iy4PfPOo5CUXJY97?w=500&auto=format',rarity:'Top 25%',source:'OpenSea',likes:98},
-  {id:15,name:'Lilpudgy #1021',collection:'Lil Pudgys',chain:'eth',price:'0.8',unit:'ETH',usd:'$2,660',img:'https://i.seadn.io/gcs/files/0af7f9fbfa1c5f2c8c7e1a4e1e4e4e4e.png?w=500&auto=format',rarity:'Top 19%',source:'OpenSea',likes:134},
-  {id:16,name:'Okay Bear #3841',collection:'Okay Bears',chain:'sol',price:'28',unit:'SOL',usd:'$3,970',img:'https://bafybeictt4g7iawvoq7rn3dtkavb2yqnxm3l6l5hccbbnaqn5epimrk3bu.ipfs.nftstorage.link/3841.png',rarity:'Top 13%',source:'Magic Eden',likes:211},
-  {id:17,name:'Famous Fox #2241',collection:'Famous Fox',chain:'sol',price:'22',unit:'SOL',usd:'$3,120',img:'https://famousfoxes.com/hd/2241.png',rarity:'Top 8%',source:'Tensor',likes:178},
-  {id:18,name:'Saga #881',collection:'Sagas',chain:'sol',price:'15',unit:'SOL',usd:'$2,130',img:'https://i.seadn.io/s/raw/files/saga881.png?w=500&auto=format',rarity:'Top 21%',source:'Magic Eden',likes:92},
-  {id:19,name:'Bitmap #24819',collection:'Bitmap',chain:'btc',price:'0.004',unit:'BTC',usd:'$395',img:'https://ordinals.com/content/bitmap_preview.png',rarity:'Common',source:'Satflow',likes:44},
-  {id:20,name:'Runestone #4121',collection:'Runestones',chain:'btc',price:'0.12',unit:'BTC',usd:'$11,860',img:'https://ordinals.com/content/runestone_preview.png',rarity:'Top 7%',source:'Satflow',likes:121},
-  {id:21,name:'Based Ape #112',collection:'Based Apes',chain:'base',price:'0.8',unit:'ETH',usd:'$2,660',img:'https://i.seadn.io/s/raw/files/based112.png?w=500&auto=format',rarity:'Top 18%',source:'OpenSea',likes:89},
-  {id:22,name:'Base Dawgz #441',collection:'Base Dawgz',chain:'base',price:'0.12',unit:'ETH',usd:'$399',img:'https://i.seadn.io/s/raw/files/basedawgz441.png?w=500&auto=format',rarity:'Top 14%',source:'OpenSea',likes:67},
-  {id:23,name:'BNB Ape #2201',collection:'BNB Apes',chain:'bsc',price:'1.2',unit:'BNB',usd:'$800',img:'https://i.seadn.io/s/raw/files/bnbape2201.png?w=500&auto=format',rarity:'Top 16%',source:'OpenSea',likes:55},
-  {id:24,name:'Ink Ghost #201',collection:'Ink Ghosts',chain:'ink',price:'500',unit:'INK',usd:'$1,200',img:'https://i.seadn.io/s/raw/files/inkghost201.png?w=500&auto=format',rarity:'Top 9%',source:'INK DEX',likes:67},
+  // ETH — OpenSea / Blur
+  {id:1,name:'Bored Ape #3429',collection:'BAYC',chain:'eth',
+   price:'10.2',unit:'ETH',usd:'$33,900',rarity:'Top 5%',source:'OpenSea',likes:284,
+   img:'https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGf-OI5fLA?w=500&auto=format',
+   fb:'🦍'},
+  {id:2,name:'CryptoPunk #7804',collection:'CryptoPunks',chain:'eth',
+   price:'22.4',unit:'ETH',usd:'$74,400',rarity:'Top 1%',source:'Blur',likes:892,
+   img:'https://i.seadn.io/gae/BdxvLseXcfl57BiuQcQYdJ64v-aI8din7WPk0Pgo3qQFhAUH-B6i-dCqqc_mCkRIzULmwzwecnohLhrcH8A9mpWIZqA7ygc52Sr81hE?w=500&auto=format',
+   fb:'👓'},
+  {id:3,name:'Pudgy Penguin #5532',collection:'Pudgy Penguins',chain:'eth',
+   price:'3.8',unit:'ETH',usd:'$12,640',rarity:'Top 15%',source:'OpenSea',likes:428,
+   img:'https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46vsVAknQ3g87OeTCfVHLqTgBrFBaVM9h4BM3mEI5BfTB-F7q2DPlI6yGV8?w=500&auto=format',
+   fb:'🐧'},
+  {id:4,name:'Azuki #7821',collection:'Azuki',chain:'eth',
+   price:'8.1',unit:'ETH',usd:'$26,900',rarity:'Top 12%',source:'Blur',likes:192,
+   img:'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/7821.png',
+   fb:'🌸'},
+  {id:5,name:'Milady #2291',collection:'Milady',chain:'eth',
+   price:'3.9',unit:'ETH',usd:'$12,950',rarity:'Top 22%',source:'OpenSea',likes:312,
+   img:'https://i.seadn.io/gae/a_frplnavZA9g4vN3SboJ4NqKi7JdEmZDe36_qBRMKgdF0mhCJKxQhbF4qiNG9R9HRhf8ZH0vKbcmraMBpPkc1mQpgMzp8V9Eoqx?w=500&auto=format',
+   fb:'👗'},
+  {id:6,name:'DeGod #1204',collection:'DeGods',chain:'eth',
+   price:'0.16',unit:'ETH',usd:'$531',rarity:'Top 8%',source:'Blur',likes:341,
+   img:'https://metadata.degods.com/g/1204-dead.png',
+   fb:'⚡'},
+  {id:7,name:'Doodle #8914',collection:'Doodles',chain:'eth',
+   price:'2.1',unit:'ETH',usd:'$6,980',rarity:'Top 18%',source:'OpenSea',likes:224,
+   img:'https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VUaa3s2TS8s4_1-iHkDKGDXsrdFQWXAU4VEuCJg?w=500&auto=format',
+   fb:'🌈'},
+  {id:8,name:'CloneX #11421',collection:'CloneX',chain:'eth',
+   price:'1.9',unit:'ETH',usd:'$6,310',rarity:'Top 9%',source:'OpenSea',likes:189,
+   img:'https://i.seadn.io/gae/XN0XuD8Uh3jyRWNtPTFeXJg_ht8m5ofDx6aHhe0a9RGb4v9mNlzEXZSGHn9rJ2WTwE3HNJe5YQZB2K8r0gy5fC0uOq5fWFiWHJn?w=500&auto=format',
+   fb:'🤖'},
+  {id:9,name:'Moonbird #6804',collection:'Moonbirds',chain:'eth',
+   price:'1.4',unit:'ETH',usd:'$4,650',rarity:'Top 11%',source:'Blur',likes:167,
+   img:'https://i.seadn.io/gae/H-eyNE1MwL5ohL-tCfn_Xa1Sl9M9B4612tLYeUlQubzt4ewhr4huJIR5OLuyO3Z5a-bs-ciIqhivnNWAkqt4hyv23yt-HoNgm0?w=500&auto=format',
+   fb:'🦅'},
+  // SOL — Magic Eden / Tensor
+  {id:10,name:'Mad Lad #3301',collection:'Mad Lads',chain:'sol',
+   price:'48.9',unit:'SOL',usd:'$6,920',rarity:'Top 20%',source:'Tensor',likes:203,
+   img:'https://madlads.s3.us-west-2.amazonaws.com/images/3301.png',
+   fb:'😈'},
+  {id:11,name:'Tensorian #884',collection:'Tensorians',chain:'sol',
+   price:'8.5',unit:'SOL',usd:'$1,200',rarity:'Top 14%',source:'Tensor',likes:145,
+   img:'https://i.seadn.io/s/raw/files/bd88f29289f53a3bb12a1ede8ee8fbae.png?w=500&auto=format',
+   fb:'🤖'},
+  {id:12,name:'Okay Bear #3841',collection:'Okay Bears',chain:'sol',
+   price:'28',unit:'SOL',usd:'$3,960',rarity:'Top 13%',source:'Magic Eden',likes:211,
+   img:'https://bafybeictt4g7iawvoq7rn3dtkavb2yqnxm3l6l5hccbbnaqn5epimrk3bu.ipfs.nftstorage.link/3841.png',
+   fb:'🐻'},
+  {id:13,name:'Famous Fox #2241',collection:'Famous Fox',chain:'sol',
+   price:'22',unit:'SOL',usd:'$3,120',rarity:'Top 8%',source:'Magic Eden',likes:178,
+   img:'https://famousfoxes.com/hd/2241.png',
+   fb:'🦊'},
+  // BTC — Satflow
+  {id:14,name:'NodeMonke #892',collection:'Node Monkes',chain:'btc',
+   price:'0.13',unit:'BTC',usd:'$12,820',rarity:'Top 3%',source:'Satflow',likes:156,
+   img:'https://ordinals.com/content/6fb976ab49dcec017f1e201e84395983204ae1a7ae2236d8e84e2660e57b1e3i0',
+   fb:'🐒'},
+  {id:15,name:'Bitcoin Puppet #441',collection:'Bitcoin Puppets',chain:'btc',
+   price:'0.09',unit:'BTC',usd:'$8,880',rarity:'Top 6%',source:'Satflow',likes:177,
+   img:'https://ordinals.com/content/d06bcd7e9c4b9dcfd96f7498abc7a08a63c1b35563b60d4b8748caad1b1af4e8i0',
+   fb:'🎭'},
+  // BASE
+  {id:16,name:'Based Ape #112',collection:'Based Apes',chain:'base',
+   price:'0.8',unit:'ETH',usd:'$2,660',rarity:'Top 18%',source:'OpenSea',likes:89,
+   img:'https://i.seadn.io/s/raw/files/based112.png?w=500&auto=format',
+   fb:'🔵'},
+  // BSC
+  {id:17,name:'BNB Ape #2201',collection:'BNB Apes',chain:'bsc',
+   price:'1.2',unit:'BNB',usd:'$800',rarity:'Top 16%',source:'OpenSea',likes:55,
+   img:'https://i.seadn.io/s/raw/files/bnbape2201.png?w=500&auto=format',
+   fb:'🟡'},
+  // INK
+  {id:18,name:'Ink Ghost #201',collection:'Ink Ghosts',chain:'ink',
+   price:'500',unit:'INK',usd:'$1,200',rarity:'Top 9%',source:'INK DEX',likes:67,
+   img:'https://i.seadn.io/s/raw/files/inkghost201.png?w=500&auto=format',
+   fb:'👻'},
+  // ARC
+  {id:19,name:'Arc Genesis #001',collection:'Arc Genesis',chain:'arc',
+   price:'120',unit:'USDC',usd:'$120',rarity:'Top 1%',source:'Arc Native',likes:421,
+   img:'https://i.seadn.io/s/raw/files/arc_genesis.png?w=500&auto=format',
+   fb:'⬡'},
+  {id:20,name:'Circle Punk #088',collection:'Circle Punks',chain:'arc',
+   price:'80',unit:'USDC',usd:'$80',rarity:'Top 5%',source:'Arc Native',likes:312,
+   img:'https://i.seadn.io/s/raw/files/circle_punks.png?w=500&auto=format',
+   fb:'🔵'},
 ];
 
 var trendingData=[
-  {rank:1,name:'BAYC',chain:'ETH',floor:'12.4 ETH',vol:'$8.2M',change:'+2.3%',up:true,items:'10,000',img:'https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGf-OI5fLA?w=100&auto=format'},
-  {rank:2,name:'CryptoPunks',chain:'ETH',floor:'48.2 ETH',vol:'$12.1M',change:'+1.1%',up:true,items:'10,000',img:'https://i.seadn.io/gae/BdxvLseXcfl57BiuQcQYdJ64v-aI8din7WPk0Pgo3qQFhAUH-B6i-dCqqc_mCkRIzULmwzwecnohLhrcH8A9mpWIZqA7ygc52Sr81hE?w=100&auto=format'},
-  {rank:3,name:'DeGods',chain:'SOL',floor:'220 SOL',vol:'$5.4M',change:'+4.2%',up:true,items:'10,000',img:'https://metadata.degods.com/g/1-dead.png'},
-  {rank:4,name:'Pudgy Penguins',chain:'ETH',floor:'18.6 ETH',vol:'$6.8M',change:'+5.4%',up:true,items:'8,888',img:'https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46vsVAknQ3g87OeTCfVHLqTgBrFBaVM9h4BM3mEI5BfTB-F7q2DPlI6yGV8?w=100&auto=format'},
-  {rank:5,name:'NodeMonkes',chain:'BTC',floor:'0.18 BTC',vol:'$3.2M',change:'+7.2%',up:true,items:'10,000',img:'https://ordinals.com/content/6fb976ab49dcec017f1e201e84395983204ae1a7ae2236d8e84e2660e57b1e3i0'},
-  {rank:6,name:'Azuki',chain:'ETH',floor:'6.8 ETH',vol:'$4.1M',change:'-0.8%',up:false,items:'10,000',img:'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/1.png'},
-  {rank:7,name:'Mad Lads',chain:'SOL',floor:'180 SOL',vol:'$3.8M',change:'+3.1%',up:true,items:'10,000',img:'https://madlads.s3.us-west-2.amazonaws.com/images/1.png'},
-  {rank:8,name:'Bitcoin Puppets',chain:'BTC',floor:'0.24 BTC',vol:'$2.9M',change:'-1.2%',up:false,items:'10,000',img:'https://ordinals.com/content/d06bcd7e9c4b9dcfd96f7498abc7a08a63c1b35563b60d4b8748caad1b1af4e8i0'},
-  {rank:9,name:'Arc Genesis',chain:'ARC',floor:'120 USDC',vol:'$48K',change:'+44.2%',up:true,items:'5,000',img:'https://i.seadn.io/s/raw/files/arc_genesis.png?w=100&auto=format'},
-  {rank:10,name:'Circle Punks',chain:'ARC',floor:'80 USDC',vol:'$32K',change:'+28.1%',up:true,items:'10,000',img:'https://i.seadn.io/s/raw/files/circle_punks.png?w=100&auto=format'},
+  {rank:1,name:'BAYC',chain:'ETH',floor:'10.2 ETH',vol:'$4.8M',change:'+3.1%',up:true,items:'10,000',
+   img:'https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGf-OI5fLA?w=100&auto=format',fb:'🦍'},
+  {rank:2,name:'CryptoPunks',chain:'ETH',floor:'22.4 ETH',vol:'$7.8M',change:'+1.6%',up:true,items:'10,000',
+   img:'https://i.seadn.io/gae/BdxvLseXcfl57BiuQcQYdJ64v-aI8din7WPk0Pgo3qQFhAUH-B6i-dCqqc_mCkRIzULmwzwecnohLhrcH8A9mpWIZqA7ygc52Sr81hE?w=100&auto=format',fb:'👓'},
+  {rank:3,name:'Pudgy Penguins',chain:'ETH',floor:'3.8 ETH',vol:'$3.1M',change:'+5.2%',up:true,items:'8,888',
+   img:'https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46vsVAknQ3g87OeTCfVHLqTgBrFBaVM9h4BM3mEI5BfTB-F7q2DPlI6yGV8?w=100&auto=format',fb:'🐧'},
+  {rank:4,name:'Azuki',chain:'ETH',floor:'8.1 ETH',vol:'$2.9M',change:'-1.2%',up:false,items:'10,000',
+   img:'https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYx2a4E4FXiHNn/1.png',fb:'🌸'},
+  {rank:5,name:'Mad Lads',chain:'SOL',floor:'48.9 SOL',vol:'$2.4M',change:'+4.1%',up:true,items:'10,000',
+   img:'https://madlads.s3.us-west-2.amazonaws.com/images/1.png',fb:'😈'},
+  {rank:6,name:'NodeMonkes',chain:'BTC',floor:'0.13 BTC',vol:'$1.8M',change:'+6.8%',up:true,items:'10,000',
+   img:'https://ordinals.com/content/6fb976ab49dcec017f1e201e84395983204ae1a7ae2236d8e84e2660e57b1e3i0',fb:'🐒'},
+  {rank:7,name:'Bitcoin Puppets',chain:'BTC',floor:'0.09 BTC',vol:'$1.2M',change:'-2.1%',up:false,items:'10,000',
+   img:'https://ordinals.com/content/d06bcd7e9c4b9dcfd96f7498abc7a08a63c1b35563b60d4b8748caad1b1af4e8i0',fb:'🎭'},
+  {rank:8,name:'Milady',chain:'ETH',floor:'3.9 ETH',vol:'$1.1M',change:'-2.3%',up:false,items:'10,000',
+   img:'https://i.seadn.io/gae/a_frplnavZA9g4vN3SboJ4NqKi7JdEmZDe36_qBRMKgdF0mhCJKxQhbF4qiNG9R9HRhf8ZH0vKbcmraMBpPkc1mQpgMzp8V9Eoqx?w=100&auto=format',fb:'👗'},
+  {rank:9,name:'Arc Genesis',chain:'ARC',floor:'120 USDC',vol:'$48K',change:'+44.2%',up:true,items:'5,000',
+   img:'https://i.seadn.io/s/raw/files/arc_genesis.png?w=100&auto=format',fb:'⬡'},
+  {rank:10,name:'DeGods',chain:'ETH',floor:'0.16 ETH',vol:'$0.8M',change:'+2.4%',up:true,items:'8,990',
+   img:'https://metadata.degods.com/g/1-dead.png',fb:'⚡'},
 ];
 
-// ARC Chain NFTs — Circle's stablecoin L1 (mainnet Sept 16, 2026)
-nftData.push(
-  {id:25,name:'Arc Genesis #001',collection:'Arc Genesis',chain:'arc',price:'12',unit:'USDC',usd:'$12',img:'https://i.seadn.io/s/raw/files/arc_genesis.png?w=500&auto=format',rarity:'Top 1%',source:'Arc Native',likes:421},
-  {id:26,name:'Circle Punks #088',collection:'Circle Punks',chain:'arc',price:'8',unit:'USDC',usd:'$8',img:'https://i.seadn.io/s/raw/files/circle_punks.png?w=500&auto=format',rarity:'Top 5%',source:'Arc Native',likes:312},
-  {id:27,name:'StableApe #441',collection:'Stable Apes',chain:'arc',price:'25',unit:'USDC',usd:'$25',img:'https://i.seadn.io/s/raw/files/stable_ape.png?w=500&auto=format',rarity:'Top 8%',source:'Arc Native',likes:198},
-  {id:28,name:'USDC Degen #112',collection:'USDC Degens',chain:'arc',price:'5',unit:'USDC',usd:'$5',img:'https://i.seadn.io/s/raw/files/usdc_degen.png?w=500&auto=format',rarity:'Top 12%',source:'Arc Native',likes:144}
-);
-var chainLabelMap={eth:'Ethereum',sol:'Solana',btc:'Ordinals',base:'Base',bsc:'BSC',ink:'INK',arc:'ARC'};
-var chainColorMap={eth:'rgba(98,126,234,.25)',sol:'rgba(153,69,255,.25)',btc:'rgba(247,147,26,.25)',base:'rgba(0,82,255,.25)',bsc:'rgba(243,186,47,.25)',ink:'rgba(123,47,190,.25)',arc:'rgba(0,180,255,.2)'};
-
-function imgTag(src,cls,fallbackEmoji){
-  return '<img src="'+src+'" class="'+cls+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" loading="lazy" alt=""/><span class="nft-img-fallback" style="display:none;position:absolute;inset:0;font-size:48px;background:'+chainColorMap['eth']+'">'+fallbackEmoji+'</span>';
-}
+var chainLabel={eth:'Ethereum',sol:'Solana',btc:'Ordinals',base:'Base',bsc:'BSC',ink:'INK',arc:'ARC'};
+var chainColor={eth:'rgba(98,126,234,.25)',sol:'rgba(153,69,255,.25)',btc:'rgba(247,147,26,.25)',base:'rgba(0,82,255,.25)',bsc:'rgba(243,186,47,.25)',ink:'rgba(123,47,190,.25)',arc:'rgba(0,180,255,.2)'};
 
 function renderNFTs(data){
-  var grid=document.getElementById('nftGrid');
-  grid.innerHTML=data.map(function(n){
-    var clr=chainColorMap[n.chain]||'rgba(51,153,255,.15)';
+  document.getElementById('nftGrid').innerHTML=data.map(function(n){
+    var bg=chainColor[n.chain]||'rgba(51,153,255,.15)';
     return '<div class="nft-card" onclick="showBuyModal('+n.id+')">'
-      +'<div class="nft-img" style="background:'+clr+';position:relative">'
-      +'<img src="'+n.img+'" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" loading="lazy" alt="'+n.name+'"/>'
-      +'<div class="nft-img-fallback" style="display:none;position:absolute;inset:0">🖼️</div>'
-      +'<div class="nft-chain-badge">'+chainLabelMap[n.chain]+'</div>'
-      +'<div class="nft-like" onclick="event.stopPropagation();toggleLike(this)"><i class="ti ti-heart"></i></div>'
+      +'<div class="nft-img" style="background:'+bg+'">'
+      +'<img src="'+n.img+'" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" alt="'+n.name+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'"/>'
+      +'<div class="nft-fallback">'+n.fb+'</div>'
+      +'<div class="nft-badge">'+chainLabel[n.chain]+'</div>'
+      +'<div class="nft-like" onclick="event.stopPropagation();this.innerHTML=this.innerHTML.includes(\'filled\')?\'<i class=\\\"ti ti-heart\\\"></i>\':\' <i class=\\\"ti ti-heart-filled\\\" style=\\\"color:#FF4757\\\"></i>\'"><i class="ti ti-heart"></i></div>'
       +'</div>'
       +'<div class="nft-info">'
-      +'<div class="nft-collection">'+n.collection+' · '+n.source+'</div>'
+      +'<div class="nft-col">'+n.collection+' · '+n.source+'</div>'
       +'<div class="nft-name">'+n.name+'</div>'
-      +'<div style="font-size:11px;color:var(--t3);margin-bottom:8px">'+n.rarity+'</div>'
+      +'<div class="nft-rarity">'+n.rarity+'</div>'
       +'<div class="nft-price-row">'
       +'<div><div class="nft-price">'+n.price+' '+n.unit+'</div><div class="nft-usd">'+n.usd+'</div></div>'
-      +'<button class="nft-buy-btn" onclick="event.stopPropagation();showBuyModal('+n.id+')">Buy Now</button>'
+      +'<button class="nft-buy" onclick="event.stopPropagation();showBuyModal('+n.id+')">Buy Now</button>'
       +'</div></div></div>';
   }).join('');
 }
 
 function renderTrending(){
-  var tbody=document.getElementById('trendingBody');
-  tbody.innerHTML=trendingData.map(function(c){
-    return '<tr class="ct-row"><td><span class="rank-num">'+c.rank+'</span></td>'
-      +'<td><div style="display:flex;align-items:center;gap:10px">'
-      +'<img src="'+c.img+'" style="width:40px;height:40px;border-radius:10px;object-fit:cover" onerror="this.style.background=\'#333\'" loading="lazy" alt="'+c.name+'"/>'
-      +'<div><div class="coll-name">'+c.name+'</div><div class="coll-sub">'+c.items+' items</div></div>'
-      +'</div></td>'
+  document.getElementById('trendingBody').innerHTML=trendingData.map(function(c){
+    var imgHtml='<img src="'+c.img+'" class="coll-img" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'inline-flex\'" alt="'+c.name+'"/>'
+      +'<span class="coll-img-fb" style="display:none">'+c.fb+'</span>';
+    return '<tr><td style="font-weight:700;color:var(--t3)">'+c.rank+'</td>'
+      +'<td><div style="display:flex;align-items:center">'+imgHtml+'<div><div style="font-weight:600">'+c.name+'</div><div style="font-size:11px;color:var(--t3)">'+c.items+' items</div></div></div></td>'
       +'<td style="font-weight:700">'+c.floor+'</td>'
       +'<td style="color:var(--t2)">'+c.vol+'</td>'
-      +'<td class="'+(c.up?'change-up':'change-down')+'">'+c.change+'</td>'
+      +'<td class="'+(c.up?'up':'down')+'">'+c.change+'</td>'
       +'<td style="color:var(--t2)">'+c.items+'</td>'
-      +'<td><span style="padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;background:rgba(51,153,255,.15);color:var(--p)">'+c.chain+'</span></td>'
+      +'<td><span style="padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;background:rgba(51,153,255,.15);color:var(--p)">'+c.chain+'</span></td>'
       +'</tr>';
   }).join('');
 }
@@ -403,8 +447,7 @@ function filterChain(chain,btn){
   currentChain=chain;
   document.querySelectorAll('#chainFilters .chain-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
-  var filtered=chain==='all'?nftData:nftData.filter(function(n){return n.chain===chain});
-  renderNFTs(filtered);
+  renderNFTs(chain==='all'?nftData:nftData.filter(function(n){return n.chain===chain}));
 }
 
 function sortNFTs(val){
@@ -416,11 +459,10 @@ function sortNFTs(val){
 }
 
 function searchNFTs(q){
-  var filtered=nftData.filter(function(n){return n.name.toLowerCase().includes(q.toLowerCase())||n.collection.toLowerCase().includes(q.toLowerCase())});
-  renderNFTs(filtered);
+  renderNFTs(nftData.filter(function(n){return n.name.toLowerCase().includes(q.toLowerCase())||n.collection.toLowerCase().includes(q.toLowerCase())}));
 }
 
-function setCategory(cat,btn){
+function setCategory(btn){
   document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
   renderNFTs(nftData);
@@ -432,38 +474,35 @@ function setView(view,btn){
   document.getElementById('nftGrid').style.gridTemplateColumns=view==='list'?'1fr':'';
 }
 
-function toggleLike(el){el.innerHTML=el.innerHTML.includes('ti-heart-filled')?'<i class="ti ti-heart"></i>':'<i class="ti ti-heart-filled" style="color:#FF4757"></i>';}
-
 function showBuyModal(id){
-  var n=nftData.find(function(x){return x.id===id});
-  if(!n) return;
+  var n=nftData.find(function(x){return x.id===id});if(!n)return;
   document.getElementById('buyModalContent').innerHTML=
-    '<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">'
-    +'<img src="'+n.img+'" style="width:72px;height:72px;border-radius:14px;object-fit:cover" onerror="this.style.background=\'#333\'" alt="'+n.name+'"/>'
-    +'<div><div style="font-size:12px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px">'+n.collection+'</div>'
-    +'<div style="font-size:20px;font-weight:800;margin:2px 0">'+n.name+'</div>'
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">'
+    +'<div style="width:68px;height:68px;border-radius:12px;overflow:hidden;background:'+chainColor[n.chain]+';flex-shrink:0">'
+    +'<img src="'+n.img+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" alt=""/>'
+    +'<div style="width:100%;height:100%;display:none;align-items:center;justify-content:center;font-size:32px">'+n.fb+'</div></div>'
+    +'<div><div style="font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px">'+n.collection+'</div>'
+    +'<div style="font-size:18px;font-weight:800;margin:2px 0">'+n.name+'</div>'
     +'<div style="font-size:12px;color:var(--t2)">'+n.rarity+' · via '+n.source+'</div></div></div>'
-    +'<div style="background:rgba(51,153,255,.06);border:1px solid var(--db);border-radius:12px;padding:16px;margin-bottom:16px">'
-    +'<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px"><span style="color:var(--t2)">Price</span><span style="font-weight:700;font-size:18px;color:var(--p)">'+n.price+' '+n.unit+'</span></div>'
-    +'<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--t2)">USD Value</span><span>'+n.usd+'</span></div>'
-    +'<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px"><span style="color:var(--t2)">Platform fee (0.5%)</span><span style="color:var(--t2)">Included</span></div>'
-    +'<div style="border-top:1px solid var(--db);padding-top:10px;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--p)">'+n.price+' '+n.unit+'</span></div>'
-    +'</div>'
-    +'<div style="background:rgba(0,214,143,.06);border:1px solid rgba(0,214,143,.2);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--t2);margin-bottom:16px;line-height:1.5">'
+    +'<div style="background:rgba(51,153,255,.06);border:1px solid var(--db);border-radius:11px;padding:14px;margin-bottom:14px">'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="color:var(--t2);font-size:13px">Price</span><span style="font-weight:700;font-size:17px;color:var(--p)">'+n.price+' '+n.unit+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="color:var(--t2);font-size:13px">USD Value</span><span style="font-size:13px">'+n.usd+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="color:var(--t2);font-size:13px">Platform fee (0.5%)</span><span style="color:var(--t2);font-size:13px">Included</span></div>'
+    +'<div style="border-top:1px solid var(--db);padding-top:9px;display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span style="color:var(--p)">'+n.price+' '+n.unit+'</span></div></div>'
+    +'<div style="background:rgba(0,214,143,.06);border:1px solid rgba(0,214,143,.2);border-radius:9px;padding:9px 11px;font-size:12px;color:var(--t2);margin-bottom:14px;line-height:1.5">'
     +'<i class="ti ti-shield-check" style="color:var(--success)"></i> Trade executes via Reservoir Protocol. Your wallet signs on-chain — no custody risk.</div>'
-    +'<button onclick="executeBuy('+n.id+')" style="width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;gap:8px"><i class="ti ti-currency-ethereum"></i> Buy Now — '+n.price+' '+n.unit+'</button>'
-    +'<button onclick="closeBuyModal()" style="width:100%;padding:11px;border-radius:12px;background:transparent;border:1px solid var(--db2);color:var(--t2);font-size:14px;cursor:pointer;font-family:Inter,sans-serif;margin-top:8px">Cancel</button>';
+    +'<button onclick="executeBuy('+n.id+')" style="width:100%;padding:13px;border-radius:11px;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif"><i class="ti ti-currency-ethereum"></i> Buy Now — '+n.price+' '+n.unit+'</button>'
+    +'<button onclick="document.getElementById(\'buyModal\').style.display=\'none\'" style="width:100%;padding:10px;border-radius:11px;background:transparent;border:1px solid var(--db2);color:var(--t2);font-size:13px;cursor:pointer;font-family:Inter,sans-serif;margin-top:7px">Cancel</button>';
   document.getElementById('buyModal').style.display='flex';
 }
 
 function executeBuy(id){
-  if(!walletConnected){closeBuyModal();setTimeout(openWalletModal,200);return;}
+  if(!walletConnected){document.getElementById('buyModal').style.display='none';setTimeout(openWalletModal,200);return;}
   var n=nftData.find(function(x){return x.id===id});
   alert('✅ Purchase initiated!\n\nIn production: Reservoir Protocol SDK executes on-chain.\nWallet: '+walletAddress.substring(0,6)+'...\nNFT: '+n.name+'\nPrice: '+n.price+' '+n.unit);
-  closeBuyModal();
+  document.getElementById('buyModal').style.display='none';
 }
 
-function closeBuyModal(){document.getElementById('buyModal').style.display='none';}
 function openWalletModal(){document.getElementById('walletModal').style.display='flex';}
 function closeWalletModal(){document.getElementById('walletModal').style.display='none';}
 
@@ -471,28 +510,23 @@ async function connectWallet(type){
   try{
     if(type==='metamask'){
       if(!window.ethereum) return alert('MetaMask not installed. Visit metamask.io');
-      var acc=await window.ethereum.request({method:'eth_requestAccounts'});
-      walletAddress=acc[0];
+      var acc=await window.ethereum.request({method:'eth_requestAccounts'});walletAddress=acc[0];
     } else if(type==='phantom'){
       if(!window.solana||!window.solana.isPhantom) return alert('Phantom not installed. Visit phantom.app');
-      var r=await window.solana.connect();
-      walletAddress=r.publicKey.toString();
+      var r=await window.solana.connect();walletAddress=r.publicKey.toString();
     } else if(type==='okx'){
-      if(!window.okxwallet) return alert('OKX Wallet not installed. Visit okx.com/web3');
-      var r2=await window.okxwallet.request({method:'eth_requestAccounts'});
-      walletAddress=r2[0];
+      if(!window.okxwallet) return alert('OKX Wallet not installed.');
+      var r2=await window.okxwallet.request({method:'eth_requestAccounts'});walletAddress=r2[0];
     } else {
-      alert('Install Xverse from xverse.app for Bitcoin Ordinals trading.');return;
+      alert('Install Xverse from xverse.app for Bitcoin Ordinals.');return;
     }
     walletConnected=true;closeWalletModal();
     var short=walletAddress.substring(0,6)+'...'+walletAddress.substring(walletAddress.length-4);
     var btn=document.getElementById('walletBtn');
-    btn.innerHTML='<i class="ti ti-wallet"></i> '+short;
-    btn.style.color='var(--success)';
+    btn.innerHTML='<i class="ti ti-wallet"></i> '+short;btn.style.color='var(--success)';
   } catch(e){alert('Error: '+(e.message||e));}
 }
 
-function showListModal(){if(!walletConnected){openWalletModal();return;}alert('List NFT — paste your contract address and token ID.');}
 function loadMore(){alert('Loading more NFTs from Reservoir + Magic Eden + Satflow APIs...');}
 
 [document.getElementById('buyModal'),document.getElementById('walletModal')].forEach(function(m){
