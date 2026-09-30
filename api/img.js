@@ -1,14 +1,4 @@
-/**
- * NFT Valley — Image Proxy
- * Route: /api/img?url=<encoded_image_url>
- *
- * This runs on Vercel's server — no CORS restrictions.
- * Fetches any NFT image (OpenSea, IPFS, etc.) and serves it
- * back to the browser with Access-Control-Allow-Origin: *
- */
-
-export default async function handler(req, res) {
-  // Allow all origins
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
 
@@ -17,20 +7,15 @@ export default async function handler(req, res) {
   }
 
   const { url } = req.query;
+  if (!url) return res.status(400).json({ error: 'Missing url' });
 
-  if (!url) {
-    return res.status(400).json({ error: 'Missing url parameter' });
-  }
-
-  // Decode the URL
   let targetUrl;
   try {
     targetUrl = decodeURIComponent(url);
-  } catch {
+  } catch(e) {
     return res.status(400).json({ error: 'Invalid url' });
   }
 
-  // Security: only allow image hosts we trust
   const allowedHosts = [
     'i.seadn.io',
     'ipfs.io',
@@ -45,7 +30,6 @@ export default async function handler(req, res) {
     'famousfoxes.com',
     'www.larvalabs.com',
     'live---metadata-5covpqijaa-uc.a.run.app',
-    'bafybeictt4g7iawvoq7rn3dtkavb2yqnxm3l6l5hccbbnaqn5epimrk3bu.ipfs.nftstorage.link',
     'api.pudgypenguins.io',
     'ordinals.com',
     'res.cloudinary.com',
@@ -56,38 +40,40 @@ export default async function handler(req, res) {
   let parsedUrl;
   try {
     parsedUrl = new URL(targetUrl);
-  } catch {
+  } catch(e) {
     return res.status(400).json({ error: 'Malformed URL' });
   }
 
-  if (!allowedHosts.some(h => parsedUrl.hostname === h || parsedUrl.hostname.endsWith('.' + h))) {
+  const hostAllowed = allowedHosts.some(function(h) {
+    return parsedUrl.hostname === h || parsedUrl.hostname.endsWith('.' + h);
+  });
+
+  if (!hostAllowed) {
     return res.status(403).json({ error: 'Host not allowed: ' + parsedUrl.hostname });
   }
 
   try {
     const response = await fetch(targetUrl, {
       headers: {
-        'User-Agent': 'NFTValley/1.0',
+        'User-Agent': 'Mozilla/5.0 NFTValley/1.0',
         'Accept': 'image/*,*/*',
       },
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: 'Upstream error: ' + response.status });
+      return res.status(response.status).json({ error: 'Upstream: ' + response.status });
     }
 
     const contentType = response.headers.get('content-type') || 'image/png';
     const buffer = await response.arrayBuffer();
 
-    // Cache for 1 hour
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
     res.setHeader('Content-Type', contentType);
     res.setHeader('Content-Length', buffer.byteLength);
-
     return res.status(200).send(Buffer.from(buffer));
 
-  } catch (err) {
-    console.error('Image proxy error:', err.message);
-    return res.status(500).json({ error: 'Failed to fetch image' });
+  } catch(err) {
+    console.error('Proxy error:', err.message);
+    return res.status(500).json({ error: 'Failed to fetch: ' + err.message });
   }
-}
+};
