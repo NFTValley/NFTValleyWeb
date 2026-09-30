@@ -20,7 +20,6 @@ module.exports = async function handler(req, res) {
     'i.seadn.io',
     'ipfs.io',
     'cloudflare-ipfs.com',
-    'cf-ipfs.com',
     'ikzttp.mypinata.cloud',
     'gateway.pinata.cloud',
     'nftstorage.link',
@@ -73,7 +72,6 @@ module.exports = async function handler(req, res) {
     return res.status(200).send(Buffer.from(buffer));
 
   } catch(err) {
-    console.error('Proxy error:', err.message);
-    return res.status(500).json({ error: 'Failed to fetch: ' + err.message });
+    return res.status(500).json({ error: 'Failed: ' + err.message });
   }
 };
