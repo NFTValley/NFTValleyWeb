@@ -1,8 +1,5 @@
 {
   "name": "nftvalley",
   "version": "1.0.0",
-  "description": "NFT Valley — Multi-Chain NFT Platform",
-  "engines": {
-    "node": "18.x"
-  }
+  "engines": { "node": "18.x" }
 }
